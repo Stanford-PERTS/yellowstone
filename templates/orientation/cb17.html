@@ -1,0 +1,604 @@
+{% extends "p3-base.html" %}
+
+{% set program_title = "Social-Belonging for College Students" %}
+{% set program_tagline = "A free, evidence-based program designed to support a sense of belonging on campus to improve engagement, retention, and achievement for students at four-year colleges and universities." %}
+{% set cta_text = "Get Updates" %}
+
+{% block title %}
+{{ program_title }} | PERTS
+{% endblock %}
+
+{% block meta_description %}
+{{ program_tagline }}
+{% endblock %}
+
+{% set title = program_title + ' | PERTS' %}
+{% set description = program_tagline %}
+
+{% block content %}
+
+<!-- @todo(chris) this "cg17" class is bringing in most of the style rules.
+     Should generalize and rename this class. -->
+<div class="program-page cg17">
+
+  <div class="page-masthead page-masthead--centered">
+    <div class="background-image"
+         image-loader
+         image="/static/images/programs/cg17-cover.jpg"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+          <h1>{{ program_title }}</h1>
+          <p>{{ program_tagline }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="play-button"
+               data-toggle="modal"
+               data-target="#videoModal"></div>
+          <div class="spot-counter"></div>
+
+<!-- Structure of spot counter here for when we re-open. -->
+<!--             <div class="spot-counter__spots">
+              0 / 200
+            </div>
+            <div class="spot-counter__description">
+              Spots filled for <em>Fall 2018</em>
+            </div>
+ -->
+            <div class="spot-counter__description" style="border-top: none">
+              Closed For Fall
+            </div>
+
+            <a id="get-started-page-button" href="#get-started" class="perts-button btn-accent">{{ cta_text }}</a>
+            <a href="{{ neptune_protocol }}://{{ neptune_domain }}/login" class="cta-secondary">Already registered? Sign in</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-section page-section--about-program" id="about">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <p>
+            Almost all first-year students experience challenges in the
+            transition to college, such as failing a test or feeling like they
+            aren&rsquo;t making friends. For students who are socially
+            disadvantaged in higher education&mdash;including students of
+            color, low income students, and first-generation college
+            students&mdash;persistent negative stereotypes and
+            underrepresentation can lead them to wonder if they belong in
+            college, especially when faced with challenges and setbacks. This
+            concern can lead to social and academic withdrawal which, in turn,
+            leads to lower academic achievement and persistence.
+          </p>
+          <p>
+            The Social-Belonging Program aims to help all students view
+            challenges encountered in the transition to college as normal and
+            improvable so they are more able to remain socially and
+            academically engaged in the face of challenges. In previous
+            studies, the Social-Belonging Program has been effective in
+            improving both social and academic engagement on campus as well as
+            GPA and retention among socially disadvantaged students.
+          </p>
+          <p>
+            Social-Belonging for College Students is a joint partnership
+            between the <a class="reverse"
+            href="http://collegetransitioncollaborative.org">College Transition
+            Collaborative</a> (CTC) and PERTS.
+          </p>
+        </div>
+        <div class="col-sm-6">
+          <q class="pullquote">
+            <div class="quote">
+              &ldquo;I don't tell my friends, but I&rsquo;m nervous for
+              college. I&rsquo;m nervous I&rsquo;ll feel out of place with kids
+              who go out to eat…or that I&rsquo;ll be in for a big shock when I
+              get what would have been a great assignment at home back with a
+              poor grade. But college is essentially a lot of people, and all
+              of them are different…professors are people, people who care
+              about students and learning. I will feel a little out of my depth
+              at first, but so does every other person there. That&rsquo;s why
+              [my college] has resources to help ease the transition, like
+              advisors&hellip;So I&rsquo;m nervous about the first part,
+              getting through to the security, but I know that&rsquo;s coming,
+              so everything WILL be okay!&rdquo;
+            </div>
+            <div class="author">
+              Student essay from past implementation of Social-Belonging for
+              College Students
+            </div>
+          </q>
+
+          <q class="pullquote">
+            <div class="quote">
+              &ldquo;One of the things that&rsquo;s really difficult when
+              you&rsquo;re on the ground in an institution is to do this work
+              and know it&rsquo;s working. To know what we&rsquo;re doing has
+              solid research behind it is priceless&rdquo;
+            </div>
+            <div class="author">
+              Administrator at CTC partner institution
+            </div>
+          </q>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="about-the-program"
+    class="page-section page-section--about-the-program"
+  >
+    <div class="container">
+
+      <div class="row">
+        <!-- section heading -->
+        <div class="col-sm-12">
+          <h2>About the Program</h2>
+        </div>
+
+        <!-- section content -->
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+
+            <!-- section content item -->
+            <div class="about-the-program-item row">
+              <div class="col-md-4">
+                <div class="program-graphic">
+                  <img src="/static/images/programs/cg17-4.png"
+                       alt="Student using online program" />
+                </div>
+              </div>
+              <div class="col-md-8">
+                <h3>Short, easy-to-implement</h3>
+                <p>
+                  This 30-minute online program includes reading short essays,
+                  a brief reflection exercise, and brief survey questions.
+                  Students will read and write short essays designed to
+                  emphasize how difficulties in the transition to college are
+                  normal and can be overcome with time.
+                </p>
+              </div>
+            </div>
+
+            <!-- section content item -->
+            <div class="about-the-program-item row">
+              <div class="col-md-4 col-md-push-8">
+                <div class="program-graphic">
+                  <img src="/static/images/programs/cg17-2.png"
+                       alt="Chart with data and graphs" />
+                </div>
+              </div>
+              <div class="col-md-8 col-md-pull-4">
+                <h3>Evidence-based</h3>
+                <p>
+                  Rigorously tested in multiple randomized controlled trials
+                  with thousands of college students. Findings include:
+                </p>
+                <ul>
+                  <li>
+                    <strong>13 percentage point increase in first-year,
+                    full-time enrollment</strong> among college-admitted high
+                    school seniors at four urban charter school
+                  </li>
+                  <li>
+                    <strong>4 percentage point increase in first-year,
+                    full-time enrollment</strong> among minority and
+                    first-generation students at a large, public four-year
+                    university
+                  </li>
+                  <li>
+                    <strong>.09 increase in cumulative first-year GPA</strong>
+                    among minority and first-generation students at a
+                    selective, private four-year university
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+
+            <!-- section content item -->
+            <div class="about-the-program-item row">
+              <div class="col-md-4">
+                <div class="program-graphic">
+                  <img src="/static/images/programs/cg17-5.png"
+                       alt="Puzzle pieces fitting together" />
+                </div>
+              </div>
+              <div class="col-md-8">
+                <h3>Complementary with other student success efforts</h3>
+                <p>
+                  The Social-Belonging Program is typically implemented as one
+                  component of new  student orientation among other activities.
+                  It is meant to complement your  institution&rsquo;s existing
+                  student success efforts. It can also help provide  insights
+                  into student experiences at your school, which may inform
+                  other institutional programs around student achievement,
+                  persistence, and wellbeing.
+                </p>
+              </div>
+            </div>
+
+            <!-- section content item -->
+            <div class="about-the-program-item row">
+              <div class="col-md-4 col-md-push-8">
+                <div class="program-graphic">
+                  <img src="/static/images/programs/cg17-3.png"
+                       alt="School building" />
+                </div>
+              </div>
+              <div class="col-md-8 col-md-pull-4">
+                <h3>Free</h3>
+                <p>
+                  We&rsquo;re thrilled to bring you Social-Belonging for
+                  College Students for the first time as an open enrollment
+                  program, and we want to involve as many colleges as possible.
+                </p>
+                <p>
+                  We&rsquo;re a small team and we want everyone who
+                  participates to have a great experience. At this time,
+                  we&rsquo;re offering our programs for free to the first 200
+                  approved colleges. If you&rsquo;re not in the first 200,
+                  don&rsquo;t worry! You&rsquo;ll be added to our wait list for
+                  future program launches.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <div id="how-it-works" class="page-section page-section--enroll-steps">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2>How It Works</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 col-md-3">
+          <img class="research-image"
+               src="/static/images/home/program-icon-register-dark.png"
+               alt="">
+          <h4>1. Learn &amp; Discuss</h4>
+          <p>
+            Download the
+            <a target="_blank"
+               href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/cb17/information_packet.pdf">
+              Program Information Packet</a>
+            to learn how participation works.
+          </p>
+        </div>
+        <div class="col-sm-6 col-md-3">
+          <img class="research-image"
+               src="/static/images/home/program-icon-signup-dark.png"
+               alt="">
+          <h4>2. Sign-up</h4>
+          <p>
+            Create a user account and prepare to
+            participate using our online platform.
+          </p>
+        </div>
+        <div class="col-sm-6 col-md-3">
+          <img class="research-image"
+               src="/static/images/home/program-icon-participate-dark-2.png"
+               alt="">
+          <h4>3. Participate</h4>
+          <p>
+            Incoming first-year students complete a 30-min web module
+            independently over the summer or on campus during new student
+            orientation.
+          </p>
+        </div>
+        <div class="col-sm-6 col-md-3">
+          <img class="research-image"
+               src="/static/images/home/program-icon-track-dark.png"
+               alt="">
+          <h4>4. Track Impact</h4>
+          <p>
+            See how many students completed the program, and receive a report
+            about the program&rsquo;s impact at your school.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="learn-more" class="page-section page-section--cg17-learn-more page-section--wedge-right">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-7 col-md-6">
+          <h2>Learn more</h2>
+
+          <p>
+            Here you can find additional information to learn about how to
+            bring Social-Belonging for College Students to your campus. This
+            section includes promotional materials and sample implementation
+            documents.
+          </p>
+
+          <div id="program-information" class="subgroup">
+            <h4>Program Information</h4>
+            <div class="row">
+              <div class="col-md-8">
+                <p>
+                  These documents provide a helpful introduction to the
+                  program. You can use these materials to familiarize
+                  yourself with the program or to share with your colleagues.
+                  The brochure is great for a brief introduction to the
+                  program, while the Program Information Packet goes
+                  in-depth about the research behind the program and how to
+                  get your college signed up. We&rsquo;ve also compiled the
+                  answers to your most frequently asked questions here.
+                </p>
+              </div>
+              <div class="col-md-4">
+                <h5>Materials</h5>
+                <p><a href="/cb/brochure">Brochure</a></p>
+                <p><a href="/cb/information-packet">Program Information Packet</a></p>
+                <p><a href="/cb/FAQ">FAQ</a></p>
+              </div>
+            </div>
+
+            <div id="supporting-documents" class="subgroup">
+              <h4>Supporting Documents</h4>
+              <div class="row">
+                <div class="col-md-8">
+                  <p>
+                    These documents provide more information about the program
+                    process, including how you&rsquo;ll get your college signed up,
+                    sample instructions, and information about using our programs.
+                  </p>
+                </div>
+                <div class="col-md-4">
+                  <h5>Materials</h5>
+                  <p><a href="/cb/implementation-checklist">Implementation checklist</a></p>
+                  <p><a href="/templates/cb17_facilitator_instructions.html">Sample Facilitator Instructions</a></p>
+                  <p><a href="/templates/cb17_student_handout.html">Student Handout</a></p>
+                  <p><a href="/cb/FAQ">FAQ</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <a class="perts-button" target="_blank"
+             href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/cb17/information_packet.pdf">Download now</a>
+        </div>
+      </div>
+    </div>
+    <div class="graphic-right">
+      <div class="background-image" image-loader
+        image="/static/images/programs/cb17-doc-preview.png">
+      </div>
+    </div>
+  </div>
+
+  <!-- @todo put the invitation section here, with Nash' new text
+
+
+  -->
+  <div class="page-section page-section--cg17-ready">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2">
+          <h2 id="get-started">
+            Sign up to get updates about future program launches
+          </h2>
+          <p>
+            We are excited to hear from you! Please fill out the form below to
+            learn how your college can get involved.
+          </p>
+          <div class="tiny-form">
+            <form
+              id="invite-form"
+              class="bordered-inset"
+              name="insightly_web_to_lead"
+              action="https://dlf6qebo.insight.ly/WebToLead/Create"
+              method="post"
+            >
+
+              <input type="hidden" name="formId"
+                     value="9zsIqn4YDxUVALfLBGezSg==">
+
+              <div class="form_inner">
+                <div class="input-wrapper">
+                  <label for="insightly_FirstName">First Name: </label>
+                  <input id="insightly_FirstName" name="FirstName" type="text">
+                </div>
+              </div>
+              <div class="form_inner">
+                <div class="input-wrapper">
+                  <label for="insightly_LastName">Last Name: </label>
+                  <input id="insightly_LastName" name="LastName" type="text">
+                </div>
+              </div>
+              <div class="form_inner">
+                <div class="input-wrapper">
+                  <label for="insightly_Organization">
+                    Organization Name:
+                  </label>
+                  <input id="insightly_Organization" name="OrganizationName"
+                         type="text">
+                </div>
+              </div>
+              <div class="form_inner">
+                <div class="input-wrapper">
+                  <label for="insightly_Title">Title: </label>
+                  <input id="insightly_Title" name="Title" type="text">
+                </div>
+              </div>
+              <div class="form_inner">
+                <div class="input-wrapper">
+                  <label for="insightly_Email">Email: </label>
+                  <input id="insightly_Email" name="email" type="email">
+                </div>
+              </div>
+              <div class="form_inner">
+                <div class="input-wrapper">
+                  <label for="insightly_Phone">Phone: </label>
+                  <input id="insightly_Phone" name="phone" type="tel">
+                </div>
+              </div>
+
+              <br><br>
+
+              <p>
+                Please check all of the boxes that you are interested in:
+              </p>
+
+              <label class="checkbox-inline">
+                <input type="checkbox" name="website"
+                       value="wants-updates-on-research-and-results.com">
+                Updates on further research and results
+              </label>
+              <br>
+              <label class="checkbox-inline">
+                <input type="checkbox" name="Description"
+                       value="willing-to-do-interviews">
+                Interviews or focus groups
+              </label>
+              <br>
+              <label class="checkbox-inline">
+                <input type="checkbox" name="AddressStreet"
+                       value="interested-in-available-programs">
+                  Learning more about programs for your campus
+              </label>
+
+              <br><br>
+
+              <!-- We use the "fax" field for the program code. -->
+              <input type="hidden" id="insightly_Fax" name="Fax" value="CB17">
+              <input type="hidden" id="insightly_ResponsibleUser"
+                     name="ResponsibleUser" value="927431">
+              <input type="hidden" id="insightly_LeadSource" name="LeadSource"
+                     value="174881">
+
+              <input type="submit" value="Submit" class="perts-button">
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-section page-section--cg17-about-perts">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+          <h2>About PERTS</h2>
+          <p>
+            PERTS is an applied research center based out of Stanford
+            University. We believe that evidence-based strategies should
+            benefit all students, not just the privileged few. To make research
+            accessible to all, we empower educators everywhere to implement
+            evidence-based strategies cost-effectively. We are so excited to
+            bring you Social-Belonging for College Students and to make the
+            latest research on social belonging strategies actionable to every
+            college in the United States.
+          </p>
+          <h2>About the CTC</h2>
+          <p>
+            The <a href="http://collegetransitioncollaborative.org/">College
+            Transition Collaborative</a> (CTC) brings together researchers and
+            higher education leaders to create learning environments that
+            produce more equitable post-secondary outcomes. Our work places the
+            student experience at the center of student success initiatives,
+            conveying to all students they are valued, respected, and can excel
+            even in the face of difficulties and setbacks. We work with
+            colleges and universities to ensure that, particularly during
+            moments of challenge, students feel like they are able to persevere
+            and that their school cares about their success.
+          </p>
+          <h2>For more information</h2>
+          <ul>
+            <li>
+              Learn more about our work and how schools can get involved on our
+              <a href="http://collegetransitioncollaborative.org/">website</a>.
+            </li>
+            <li>
+              Read about our previous work as covered by The New York Times <a
+              href="https://www.nytimes.com/2014/05/18/magazine/who-gets-to-graduate.html?_r=1">here</a>
+              and <a
+              href="https://www.nytimes.com/2016/08/21/opinion/sunday/conquering-the-freshman-fear-of-failure.html">here</a>.
+            </li>
+            <li>
+              Read more about the results of our latest large-scale trials,
+              published <a
+              href="http://www.pnas.org/content/113/24/E3341.abstract">in
+              PNAS</a>.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% include 'orientation/navbar-cb.html' %}
+  </div>
+
+  {% include 'components/navbar_top_inverted_orientation.html' %}
+
+</div>
+
+{% endblock %}
+
+{% block navbar %}
+
+  {% include 'components/navbar_orientation.html' %}
+
+<div class="mobile-footer">
+  <a href="#get-started">{{ cta_text }}</a>
+</div>
+
+{% endblock %}
+
+{% block modals %}
+<div class="modal fade video-modal" tabindex="-1" role="dialog" id="videoModal">
+  <div class="modal-dialog" onclick="yt_players['videoPlayer'].pauseVideo();" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <!-- 16:9 aspect ratio -->
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe id="videoPlayer" class="ytplayer"
+                  class="embed-responsive-item"
+                  src="https://www.youtube.com/embed/YYJLMmWZiMQ?enablejsapi=1&wmode=transparent&amp;rel=0&amp;showinfo=0"
+                  allowfullscreen="true"></iframe>
+        </div>
+      </div>
+      <button type="button" class="close" data-dismiss="modal"
+              aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <script type="text/javascript">
+        var yt_int, yt_players={},
+          initYT = function() {
+            $(".ytplayer").each(function() {
+                yt_players[this.id] = new YT.Player(this.id);
+            });
+          };
+        $.getScript("//www.youtube.com/player_api", function() {
+          yt_int = setInterval(function(){
+            if(typeof YT === "object"){
+              initYT();
+              clearInterval(yt_int);
+            }
+          },500);
+        });
+        $('body').on('click', function (e) {
+          if (yt_players['videoPlayer']) {
+            yt_players['videoPlayer'].pauseVideo();
+          }
+        });
+      </script>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+{% endblock %}

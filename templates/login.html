@@ -1,0 +1,373 @@
+{# Sign in for everyone but students. #}
+
+{% extends "base.html" %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block header %}
+
+<style>
+
+.invisible {
+    visibility: hidden;
+}
+
+#google_button {
+    margin: 0;
+    padding: 7px 12px 12px 12px;
+    height: 121px;
+    width: 104px;
+    text-align: center;
+}
+
+#google_button.button {
+    text-decoration: none;
+}
+
+#google_button img {
+    width: 80px;
+}
+
+#loginContainer h4 {
+    margin: 10px 0;
+    height: 20px;
+}
+
+#loginContainer label {
+    margin: 10px 0;
+    height: 20px;
+}
+
+#loginContainer input {
+    margin: 0;
+    /* overall height of input should match buttons */
+    height: 36px;
+    display: inline-block;
+}
+
+#loginContainer form span {
+    margin-left: 20px;
+}
+
+#loginContainer button {
+    margin: 0;
+    height: 35px;
+}
+
+#loginContainer a {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#loginContainer p.success {
+    height: 53px;
+}
+
+hr {
+    margin: 25px 0 25px 0;
+}
+
+.btn img {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin: 0px;
+}
+
+form.ng-valid-email i.email, form.ng-valid-pattern i.password {
+    display: none;
+}
+
+input.form-control {
+    width: 200px;
+}
+
+</style>
+
+<script>
+var programId = '{{ program_id if program_id else '' }}';
+
+{% if error_message %}
+
+util.displayUserMessage('error', '{{ error_message|safe }}');
+
+{% elif success_message %}
+
+util.displayUserMessage('success', '{{ success_message|safe }}');
+
+{% endif %}
+
+function redirectToGoogleLogin(email) {
+    alert("Next time, use your Google account (" + email + ") to sign in.");
+    window.location.href = '{{google_login_url|safe}}';
+}
+
+PertsApp.controller('LoginController', [
+    '$scope', '$pertsAjax', '$window',
+    function ($scope, $pertsAjax, $window) {
+        $scope.emailBlurred = false;
+        $scope.loginAttempted = false;
+        $scope.requestedPassword = false;
+        $scope.emailSent = false;
+        $scope.emailNotSent = false;
+        $scope.signIn = function () {
+            $scope.invalidCredentials = false;
+            $scope.emailSent = false;
+            $scope.emailNotSent = false;
+            $pertsAjax({
+                url: '/api/login',
+                method: 'POST',
+                params: {
+                    username: $scope.username,
+                    password: $scope.password,
+                    auth_type: 'direct'
+                }
+            }).then(function (response) {
+                if (response === 'invalid_credentials' ||
+                    response === 'wrong_auth_type public') {
+                    $scope.invalidCredentials = true;
+                    $scope.loginAttempted = true;
+                } else if (response === 'wrong_auth_type google') {
+                    $scope.loginAttempted = true;
+                    redirectToGoogleLogin($scope.username);
+                } else if (response === 'signed_in') {
+                    $window.location.reload();
+                }
+            });
+        };
+        $scope.forgotPassword = function () {
+            $scope.emailSent = false;
+            $scope.emailNotSent = false;
+            $pertsAjax({
+                url: '/api/forgot_password',
+                params: {email: $scope.username}
+            }).then(function (response) {
+                // @todo 'sent' or 'not_sent' ??
+                $scope.invalidCredentials = false;
+                $scope.loginAttempted = false;
+                if (response === 'sent') {
+                    $scope.emailSent = true;
+                } else if (response === 'not_sent') {
+                    $scope.emailNotSent = true;
+                }
+            });
+        };
+    }
+]);
+
+PertsApp.controller('RegisterController', [
+    '$scope', '$pertsAjax', '$window',
+    function ($scope, $pertsAjax, $window) {
+        $scope.emailBlurred = false;
+        $scope.passwordBlurred = false;
+        $scope.remindGmailUser = false;
+        $scope.passwordRegex = /{{ config.password_pattern }}/;
+        $scope.register = function () {
+            // On-blur UI warnings will tell the user what the problem is.
+            if ($scope.registerForm.$invalid) { return; }
+
+            $pertsAjax({
+                url: '/api/register',
+                method: 'POST',
+                params: {
+                    username: $scope.username,
+                    password: $scope.password,
+                    auth_type: 'direct',
+                    program: $window.programId
+                }
+            }).then(function (response) {
+                if (response === 'wrong_auth_type') {
+                    redirectToGoogleLogin($scope.username);
+                } else {
+                    var user = response.user;
+                    if (user.registration_complete ||
+                        ['god', 'researcher'].contains(user.user_type)) {
+                        // trigger redirect as currently written in URL
+                        $window.location.reload();
+                    } else {
+                        // go to registration survey
+                        var url = '/registration_survey?';
+                        if (response.user_is_new) {
+                            url += 'registration_email_sent=true&';
+                        }
+                        if ($window.programId) {
+                            url += 'program=' + $window.programId;
+                        }
+                        $window.location.href = url;
+                    }
+                }
+            });
+        };
+        $scope.$watch('username', function (username) {
+            if (/@gmail\.com/.exec(username)) {
+                $scope.remindGmailUser = true;
+            }
+        });
+    }
+]);
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container" id="loginContainer">
+
+    {% if program_name %}
+    <h2>You're signing up for the {{ program_name }}.</h2>
+    {% else %}
+    <h2>Please sign in</h2>
+    {% endif %}
+
+    <hr>
+
+    {% if show_google_login %}
+
+    <div class="row" ng-hide>
+        <div class="col-md-5">
+
+            {% if show_registration %}
+            <h4>Sign up with your Google account.</h4>
+            {% else %}
+            <h4>Log in with your Google account.</h4>
+            {% endif %}
+
+        </div>
+        <div class="col-md-6">
+            <a class="button" id="google_button" href="{{google_login_url}}">
+                sign in<br>
+                <img class="google_button" src="/static/images/google_128.png">
+            </a>
+        </div>
+    </div>
+
+    <hr>
+
+    {% endif %}
+
+    {% if not show_registration %}
+    
+    <div class="row" ng-controller="LoginController">
+        <div class="col-md-5">
+            <h4>Log in with your email address.</h4>
+            <div class="alert alert-danger" role="alert"
+                 ng-show="invalidCredentials">
+                Email or password not recognized.
+            </div>
+            <div class="alert alert-success" role="alert"
+                 ng-show="emailSent">
+                We have sent you an email to reset your password.
+            </div>
+            <div class="alert alert-danger" role="alert"
+                 ng-show="emailNotSent">
+                We have no record of that email address.
+            </div>
+        </div>
+        <div class="col-md-6">
+            <!-- Angular doesn't play well with browsers who pre-fill forms when using 
+                 autocompleted fields; we're putting 'autocomplete="off"' to avoid 
+                 issues that arise when autocomplete fills out a form. [1]
+                 [1]: https://github.com/angular/angular.js/issues/1460 -->
+            <!-- why "novalidate"? http://stackoverflow.com/questions/22148080/an-invalid-form-control-with-name-is-not-focusable -->
+            <form name="loginForm" autocomplete="off" role="form" novalidate>
+                <div class="form-group">
+                    <label for="login_username">email</label>
+                    <br>
+                    <input id="login_username" type="email" ng-model="username"
+                           name="login_username" ng-blur="emailBlurred=true"
+                           class="form-control" required>
+                    <span class="email"
+                          ng-show="emailBlurred && loginForm.login_username.$invalid">
+                        <i class="glyphicon glyphicon-warning-sign"></i>
+                        invalid email address
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label ng-hide="requestedPassword" for="login_password">password</label>
+                    <br>
+                    <input ng-hide="requestedPassword" id="login_password"
+                           type="password" ng-model="password" required
+                           class="form-control">
+                    <span ng-hide="requestedPassword" class="pseudolink"
+                          ng-click="requestedPassword=true">
+                        I forgot my password</span>
+                </div>
+                <button ng-click="signIn()"
+                        ng-hide="requestedPassword"
+                        ng-disabled="loginForm.$invalid">
+                    sign in
+                </button>
+                <button ng-show="requestedPassword"
+                        ng-click="forgotPassword()"
+                        ng-disabled="!requestedPassword || loginForm.login_username.$invalid">
+                    reset my password
+                </button>
+                <span ng-show="requestedPassword" class="pseudolink"
+                      ng-click="requestedPassword=false">
+                    cancel</span>
+                <input type="hidden" ng-model="page_action" value="login">
+                <input type="hidden" ng-model="auth_type" value="direct">
+            </form>
+        </div>
+    </div>
+
+    <div class="clear"></div>
+    <hr>
+
+    {% endif %}
+
+    {% if program_id %}
+
+    <div class="row" ng-controller="RegisterController">
+        <div class="col-md-5">
+            <h4>Sign up with your email address.</h4>
+            <p class="error" ng-show="remindGmailUser">
+                If you have a google account, please sign in with Google above.
+            </p>
+        </div>
+        <div class="col-md-6">
+            <!-- why "novalidate"? http://stackoverflow.com/questions/22148080/an-invalid-form-control-with-name-is-not-focusable -->
+            <form name="registerForm" role="form" novalidate>
+                <div class="form-group">
+                    <label for="register_username">email</label>
+                    <br>
+                    <input id="register_username" type="email" ng-model="username" 
+                           name="register_username" required
+                           class="form-control" ng-blur="emailBlurred=true">
+                    <span class="email"
+                          ng-show="emailBlurred && registerForm.register_username.$invalid">
+                        <i class="glyphicon glyphicon-warning-sign"></i>
+                        invalid email address
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="register_password">password</label>
+                    <br>
+                    <!-- at least 8 characters, ascii only -->
+                    <!-- http://stackoverflow.com/questions/5185326/java-script-regular-expression-for-detecting-non-ascii-characters -->
+                    <input id="register_password" type="password" required
+                           ng-model="password" name="register_password"
+                           ng-blur="passwordBlurred=true" class="form-control"
+                           ng-pattern="passwordRegex">
+                    <span class="password"
+                          ng-show="passwordBlurred && registerForm.register_password.$invalid">
+                        <i class="glyphicon glyphicon-warning-sign"></i>
+                        at least 8 characters, please
+                    </span>
+                    <input type="hidden" ng-model="page_action" value="register">
+                    <input type="hidden" ng-model="auth_type" value="direct">
+                </div>
+                <button ng-click="register()">
+                    sign up
+                </button>
+            </form>
+        </div>
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

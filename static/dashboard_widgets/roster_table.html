@@ -1,0 +1,197 @@
+<style>
+    #certify_button[disabled] {
+        background-color: white;
+        color: #333; /* dark-gray */
+        border: 1px solid #ddd; /* very-light-gray */
+        cursor: default;
+    }
+
+    .makeup-button[disabled="disabled"] {
+        background-color: #f15a23; /* orange */
+    }
+
+    form[name="addCsvUsersForm"] button {
+        margin-top: 10px;
+    }
+
+    form[name="addCsvUsersForm"] img {
+        position: relative;
+        top: 12px;
+        margin-left: 10px;
+        margin-bottom: 0;
+    }
+
+</style>
+
+<table class="dashboard-table roster_summary" ng-hide="makeups">
+    <colgroup>
+        <col ng-repeat="col in summaryColumns" class="[[col.colClass]]" span="1">
+    </colgroup>
+    <thead>
+        <tr>
+            <th ng-repeat="col in summaryColumns" class="[['col' + $index]]"
+                tooltip="[[col.tooltip]]">
+                [[ col.name ]]
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="s in sessions">
+            <td class="col0">Session [[ s.activity_ordinal ]]</td>
+            <td class="col1">[[ summary[s.activity_ordinal].certified ]]</td>
+            <td class="col2">[[ summary[s.activity_ordinal].studyIneligible ]]</td>
+            <td class="col3">[[ summary[s.activity_ordinal].completed ]]</td>
+            <td class="col4">[[ summary[s.activity_ordinal].makeupIneligible ]]</td>
+            <td class="col5">[[ summary[s.activity_ordinal].makeupEligible ]]</td>
+            <td class="col6">[[ summary[s.activity_ordinal].uncoded ]]</td>
+        </tr>
+    </tbody>
+</table>
+
+<hr ng-hide="makeups"></hr>
+
+<div class="row dashboard-table-controls">
+    <div class="col-xs-12">
+        <input type="text" ng-model="filterText" placeholder="Search..."
+               ng-focus="$broadcast('/dashboardTable/filterFocus')">
+        <span ng-show="$root.level == 'classroom'">
+            <select chosen-select
+                    data-placeholder="Move student(s) to..."
+                    select-options="availableClassrooms"
+                    ng-options="c as c.name for c in availableClassrooms"
+                    ng-model="moveToClassroom"
+                    ng-disabled="selectedUsers.length == 0 || availableClassrooms.length == 0">
+                <!-- Empty option tag works around bug in chosen plugin. -->
+                <!-- http://stackoverflow.com/questions/19369250/uncaught-typeerror-cannot-set-property-selected-of-undefined -->
+                <option value=""></option>
+            </select>
+        </span>
+        <button class="icon_button" ng-disabled="selectedUsers.length == 0"
+                ng-click="deleteSelectedUsers()">
+            <i class="glyphicon glyphicon-trash"></i>
+        </button>
+
+        <!-- Roster action buttons -->
+        <!-- Only show the add students button if this is a regular, classroom-
+             level roster view and the cohort does NOT use alias
+             identification. Viewing makeups, or school-wide rosters, or
+             cohorts that DO use alias identification do NOT get the button.-->
+        <button ng-click="showAddForm = true" ng-disabled="showAddForm"
+                class="pull-right"
+                ng-show="!makeups && $root.level == 'classroom' &&
+                         $root.cohort.identification_type == 'default'">
+            <i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Add Student(s)
+        </button>
+
+        <!-- Makeups view control buttons -->
+        <div class="pull-right" ng-show="makeups">
+            Session:
+            <select styled-select ng-model="makeupSession"
+                    ng-options="s.activity_ordinal as s.activity_ordinal for s in sessions">
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="row" ng-show="showAddForm">
+    <div class="col-md-12">
+        <fieldset>
+            <i class="pull-right glyphicon glyphicon-remove close-button"
+               ng-click="showAddForm = false"></i>
+            <form name="addSingleUserForm" role="form">
+                <div class="row">
+                    <div class="form-group col-xs-3">
+                        <label>
+                            First
+                            <input type="text" ng-model="newStudent.first_name"
+                                   class="form-control"
+                                   placeholder="first name" required>
+                        </label>
+                    </div>
+                    <div class="form-group col-xs-3">
+                        <label>
+                            Middle initial
+                            <input type="text" ng-model="newStudent.middle_initial"
+                                   alpha-only to-upper-case maxlength="1"
+                                   placeholder="middle initial"
+                                   class="form-control">
+                        </label>
+                    </div>
+                    <div class="form-group col-xs-3">
+                        <label>
+                            Last name
+                            <input type="text" ng-model="newStudent.last_name"
+                                   class="form-control"
+                                   placeholder="last name" required>
+                        </label>
+                    </div>
+                </div>
+                <button ng-click="addSingleUser()"
+                        ng-disabled="addSingleUserForm.$invalid">
+                    Add single student
+                </button>
+                <span id="confirm_add_single_user" style="display:none">
+                    <i class="glyphicon glyphicon-ok"></i>&nbsp;Done
+                </span>
+            </form>
+            <hr>
+            <form name="addCsvUsersForm">
+                <p>
+
+                    Paste tab-separated values here to add many users at once.
+                    Copying and pasting from a spreadsheet is recommended.
+
+                </p>
+                <p>
+
+                    Use three columns, and include the column headings
+                    "first_name", "middle_initial", and "last_name".
+
+                </p>
+                <p ng-show="alert" class="alert alert-[[alert.type]]">
+                    [[ alert.msg ]]
+                </p>
+                <textarea ng-model="userCsv" style="width: 100%;" required
+                          autogrow placeholder="Name your columns 'first_name', 'middle_initial', and 'last_name'">
+                </textarea>
+                <br>
+                <button ng-click="addCsvUsers()"
+                        ng-disabled="addCsvUsersForm.$invalid || addCsvUsersBusy">
+                    Add multiple students
+                </button>
+                <img src="/static/images/better_loading.gif"
+                     ng-show="addCsvUsersBusy">
+                <span id="confirm_add_csv_users" style="display:none">
+                    <i class="icon-ok"></i>&nbsp;Done
+                </span>
+            </form>
+        </fieldset>
+    </div>
+</div>
+
+<table class="dashboard-table roster_table"
+       ng-class="{cohort: $root.level == 'cohort', classroom: $root.level == 'classroom'}">
+    <colgroup>
+        <col ng-repeat="col in columns" class="[[col.colClass]]" span="1">
+    </colgroup>
+    <thead>
+        <tr>
+            <th ng-repeat="col in columns" ng-click="sortBy($index)"
+                class="[[sortIconClass($index)]]">
+                [[ col.name ]]
+                <input type="checkbox" ng-show="col.colClass == 'select'"
+                       ng-model="allSelected"
+                       ng-change="toggleSelectAll(allSelected)">
+            </th>
+        </tr>
+    </thead>
+    <tbody ng-repeat="user in userList" roster-row
+           user-id="[[ user.id ]]" filter-text="filterText"
+           sessions="sessions" classroom="classroom"
+           makeups="makeups" makeup-session="makeupSession">
+    </tbody>
+</table>
+
+<div id="makeups_view_hint" ng-show="makeups && !makeupSession">
+    To view make-up eligible students, choose a session using the buttons above.
+</div>

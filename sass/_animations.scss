@@ -1,0 +1,64 @@
+// _animations
+
+// Contains universal animations for application
+
+// Apply an animation property and value with the correct browser support
+@mixin animation-support($property, $value) {
+  @include experimental($property, $value, -moz, -webkit, -o, -ms, not -khtml, official); }
+
+// Name of any animation as a string.
+$default-animation-name             : false !default;
+
+// Duration of the entire animation in seconds.
+$default-animation-duration         : false !default;
+
+// Delay for start of animation in seconds.
+$default-animation-delay            : false !default;
+
+// The timing function(s) to be used between keyframes. [ease | linear | ease-in | ease-out | ease-in-out | cubic-bezier($number, $number, $number, $number)]
+$default-animation-timing-function  : false !default;
+
+// The number of times an animation cycle is played. [infinite | $number]
+$default-animation-iteration-count  : false !default;
+
+// Whether or not the animation should play in reverse on alternate cycles. [normal | alternate]
+$default-animation-direction        : false !default;
+
+// What values are applied by the animation outside the time it is executing. [none | forwards | backwards | both]
+$default-animation-fill-mode        : false !default;
+
+// Whether the animation is running or paused. [running | paused]
+$default-animation-play-state       : false !default;
+
+@mixin animation($animation-1: default, $animation-2: false, $animation-3: false, $animation-4: false, $animation-5: false, $animation-6: false, $animation-7: false, $animation-8: false, $animation-9: false, $animation-10: false) {
+  @if $animation-1 == default {
+    $animation-1: -compass-space-list(compact($default-animation-name, $default-animation-duration, $default-animation-timing-function, $default-animation-delay, $default-animation-iteration-count, $default-animation-direction, $default-animation-fill-mode, $default-animation-play-state)); }
+  $animation: compact($animation-1, $animation-2, $animation-3, $animation-4, $animation-5, $animation-6, $animation-7, $animation-8, $animation-9, $animation-10);
+  @include animation-support(animation, $animation); }
+
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+
+// Rotations
+
+@mixin rotate($degrees) {
+  -webkit-transform: rotate($degrees);
+  -moz-transform: rotate($degrees);
+  -ms-transform: rotate($degrees);
+  -o-transform: rotate($degrees);
+  transform: rotate($degrees);
+  -ms-filter: "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=#{cos($degrees)}, M12=#{-1*sin($degrees)}, M21=#{sin($degrees)}, M22=#{cos($degrees)})";
+  filter:  progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', M11=#{cos($degrees)}, M12=#{-1*sin($degrees)}, M21=#{sin($degrees)}, M22=#{cos($degrees)});
+}

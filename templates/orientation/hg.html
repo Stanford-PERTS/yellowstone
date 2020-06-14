@@ -1,0 +1,260 @@
+{# PERTS : Template : Program Orientation Page #}
+
+{# DO NOT CHANGE #}
+{% extends "orientation/_template.orientation.html" %}
+
+{# TODO: Update the following program information: #}
+{% set program_name = "Growth Mindset for 9th Graders" %}
+{% set program_label = "hg17" %}
+{% set program_cohort = "2020-2021" %}
+{% set program_description = "
+  A free, evidence-based program designed to increase students' engagement, motivation, and ultimately success by laying the foundation for a growth mindset.
+" %}
+
+{# TODO: Set program participation settings: #}
+{% set enrollment_is_unlimited = true %}
+{% set unlimited_enrollment_message = "Free for all high schools" %}
+{% set participation_is_open = true %}
+{% set participation_enrolled = 0 %}
+{% set participation_slots = 1 %}
+
+{# TODO: Set program YouTube video's ID or false if not using one:            #}
+{#       Example: if the YouTube video's location is                          #}
+{#         https://www.youtube.com/watch?v=YYJLMmWZiMQ                        #}
+{#         then {% set youtube = "YYJLMmWZiMQ" %}                             #}
+{% set youtube = false %}
+
+{% block spotcounter %}
+{# No spot counter, open for all. #}
+{% endblock %}
+
+{% block content %}
+
+<!-- INTRODUCTION -->
+<div class="section">
+  <div class="row">
+    <div class="col-md-8">
+      <p>
+        Many students hold debilitating beliefs about their intelligence.
+        They believe things like, &ldquo;I&rsquo;m not smart enough&rdquo;
+        or &ldquo;This subject just isn’t for me.&rdquo; These beliefs can
+        be especially damaging during  the academically and socially
+        challenging transition to high school. Left unaddressed, these
+        fears can become self-fulfilling prophecies that feed a destructive
+        cycle of reduced motivation, engagement, and academic performance.
+      </p>
+      <p>
+        However, research shows that schools can boost
+        performance—particularly for students with a history of academic
+        struggle—by helping students develop a growth mindset: the belief
+        that they can develop their academic abilities through effective
+        study strategies. Growth Mindset for 9th Graders is designed to help
+        students understand that academic aptitude can be improved.
+      </p>
+    </div>
+    <div class="col-md-4">
+      <img class="img-fluid" src="https://www.perts.net/static/images/home/survey_screenshot.png" alt="">
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT THE PROGRAM -->
+<div class="section color1">
+  <h2 id="about">About the Program</h2>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h3 id="about-simple">Short, Simple</h3>
+      <p>
+        Online program delivered in two 30-minute sessions. Includes
+        survey questions, short reading passages, and brief reflection
+        exercises. Students will learn:
+      </p>
+      <ul>
+        <li>Scientific evidence showing that the brain is
+        malleable.</li>
+        <li>Specific behaviors that can rewire the brain and increase
+        one’s intellectual abilities.</li>
+        <li>The importance of effective study strategies and of
+        getting help from others.</li>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <p><img class="img-fluid rounded" src="/static/images/programs/cg17-4.png" alt=""></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h3 id="about-evidence-based">Evidence-based</h3>
+      <p>
+        Tested since 2010 in multiple randomized controlled trials
+        with thousands of high school students. Past findings include:
+      </p>
+      <ul>
+        <li>
+          <strong>6.4% point increase</strong> in satisfactory course
+          completion among students who had a
+          GPA of 2.0 or below prior to the program.
+        </li>
+        <li>
+          <strong>4% point increase</strong> in satisfactory course
+          completion among underperforming students in a replication
+          and extension of the study above.
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-4 order-md-first">
+      <p><img class="img-fluid rounded" src="/static/images/programs/cg17-2.png" alt=""></p>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-8">
+      <h3 id="about-free">Free</h3>
+      <p>
+        We are thrilled to make Growth Mindset for 9th Graders
+        available to all high schools in the United States. This
+        program is free thanks to the generous financial and
+        programmatic support from The Character Lab, the Bezos Family
+        Foundation, and the Raikes Foundation.
+      </p>
+    </div>
+    <div class="col-md-4">
+      <p><img class="img-fluid rounded" src="/static/images/programs/cg17-3.png" alt=""></p>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section color3">
+  <h2 id="how-it-works">How It Works</h2>
+
+  <div class="row">
+    <div class="col-md-6 text-center">
+      <p><img style="height: 120px;" src="/static/images/home/program-icon-register-dark.png" alt="" /></p>
+      <h3>1. Learn & Discuss</h3>
+      <p>Download the <a href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/{{ program_label }}/information_packet.pdf">Program Information Packet</a> to learn how participation works.</p>
+    </div>
+
+    <div class="col-md-6 text-center">
+      <p><img style="height: 120px;" src="/static/images/home/program-icon-signup-dark.png" alt="" /></p>
+      <h3>2. Sign-up</h3>
+      <p>Create a user account and prepare to participate using our online platform.</p>
+    </div>
+
+    <div class="col-md-6 text-center">
+      <p><img style="height: 120px;" src="/static/images/home/program-icon-participate-dark-2.png" alt="" /></p>
+      <h3>3. Participate</h3>
+      <p>
+        9th grade students complete the two 30-minute web modules during
+        class. The modules should spaced about 1-4 weeks apart.
+      </p>
+    </div>
+
+    <div class="col-md-6 text-center">
+      <p><img style="height: 120px;" src="/static/images/home/program-icon-track-dark.png" alt="" /></p>
+      <h3>4. Track Impact</h3>
+      <p>
+        See how many students completed the program, and receive a report
+        about the program's impact at your school.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- INFORMATION PACKET -->
+<div class="section color4 background-image" style="background-image: url(/static/images/programs/cg-doc-preview.png);">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 id="pip">Information Packet</h2>
+      <p>Download the Program Information Packet to learn more about the research and how to run {{ program_name }} at your school. We suggest reading through the packet and reviewing it with your colleagues before signing up.</p>
+      <p><a class="btn btn-white" href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/{{ program_label }}/information_packet.pdf">Download Now</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block aboutperts %}
+<div id="about-perts" class="section color5">
+  <h2>About PERTS</h2>
+  <p>
+    PERTS is an applied research center based out of Stanford
+    University. We believe that evidence-based strategies should benefit
+    all students, not just the privileged few. To make research
+    accessible to all, we empower educators everywhere to implement
+    evidence-based strategies cost-effectively. We are so excited to
+    bring you Growth Mindset for 9th Graders and to make the latest
+    research on growth mindset strategies actionable to every high
+    school in the United States.
+  </p>
+  <br>
+  <p>
+    Growth Mindset for 9th Graders is based on a long line of studies
+    conducted by researchers at Stanford University and the University
+    of Texas at Austin, including Drs. Carol Dweck, Dave Paunesku,
+    Carissa Romero, Greg Walton, and David Yeager. The Growth Mindset
+    for 9th Graders module was developed and tested through the National
+    Mindset Study, a project of the Mindset Scholars Network led by
+    Principal Investigator David Yeager which was supported by ICF
+    International and PERTS. The software, logistical processes, and
+    materials used to help schools run Growth Mindset for 9th Graders
+    were created by PERTS in partnership with multiple schools across
+    the country.
+  </p>
+</div>
+{% endblock %}
+
+{% block aboutctc %}
+{# Do not display About CTC section #}
+{% endblock %}
+
+{% block moreinfo %}
+<div id="more-info" class="section color5">
+  <h2>For More Information</h2>
+  <ul>
+    <li>
+      Read about PERTS and the mindset programs in the
+      <a href="http://www.nytimes.com/2016/08/21/opinion/sunday/conquering-the-freshman-fear-of-failure.html?_r=1">New York Times</a>.
+    </li>
+    <li>
+      Get more background about mindsets from the
+      <a href="http://mindsetscholarsnetwork.org/">Mindset Scholars Network</a>.
+    </li>
+    <li>
+      Read
+      <a href="/research">published research articles</a>
+      about our work to advance mindset science.
+    </li>
+  </ul>
+</div>
+{% endblock %}
+
+{% block thankyou %}
+<div id="thank-you" class="section">
+  <h2>Thank you</h2>
+  <p>
+    Thanks to the generous financial support from The Character Lab, the Bezos
+    Family Foundation, and the Raikes Foundation, we are thrilled to make Growth
+    Mindset for 9th Graders freely available to all high schools in the United
+    States. In doing so, we hope to advance our mission to empower educators
+    everywhere to implement evidence-based strategies effectively.
+  </p>
+
+  <div class="row text-center">
+    <div class="col-sm-4">
+      <img src="/static/images/bezos-family-foundation-logo.png" class="logo" alt="Bezos Family Foundation" />
+    </div>
+    <div class="col-sm-4">
+      <img src="/static/images/character-lab-logo.png" class="logo" alt="Character Lab" />
+    </div>
+    <div class="col-sm-4">
+      <img src="/static/images/raikes-foundation-logo.png" class="logo" alt="Raikes Foundation" />
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+<!-- Secondary navbar for lower content -->
+<nav class="navbar" ng-class="{open: navOpen}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="nav-left">
+        <a href="/" class="logo-link">
+          <img src="/static/images/pertslogo.png" height="36px" alt="PERTS">
+        </a>
+        <div class="nav-toggler"
+             ng-click="toggleNav()"
+             ng-show="navOpen">
+          <i class="fa fa-times"></i>
+        </div>
+        <div class="nav-toggler"
+             ng-click="toggleNav()"
+             ng-hide="navOpen">
+          <i class="fa fa-bars"></i>
+        </div>
+      </div>
+      <div class="nav-right">
+        <a class="{{'active' if template_name == 'about' else ''}}"
+           href="/about">About Us</a>
+        <a class="{{'active' if template_name == 'our-work' else ''}}"
+           href="/our-work">Our Work</a>
+        <a class="{{'active' if template_name == 'resources' else ''}}"
+           href="/resources">Resources</a>
+        <a class="{{'active' if template_name == 'research' else ''}}"
+           href="/research">Research</a>
+        <a class="{{'active' if template_name == 'programs' else ''}}"
+           href="/programs">Programs</a>
+        <a class="{{'active' if template_name == 'contact' else ''}}"
+           href="/contact">Contact</a>
+        <a class="highlighted"
+           href="#get-started">Get Started</a>
+      </div>
+    </div>
+  </div>
+</nav>

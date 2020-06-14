@@ -1,0 +1,97 @@
+<div class="row dashboard-table-controls">
+    <div class="col-xs-12">
+        <input type="text" ng-model="filterText" placeholder="Search..."
+               ng-focus="$broadcast('/dashboardTable/filterFocus')">
+        <button ng-click="showAddForm = true"
+                ng-disabled="showAddForm || $root.userType == 'school_admin'"
+                class="pull-right">
+            <i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;Add School
+        </button>
+    </div>
+</div>
+
+<div class="row" ng-show="showAddForm">
+    <div id="add_school">
+        <fieldset>
+            <i class="pull-right glyphicon glyphicon-remove close-button"
+               ng-click="showAddForm = false"></i>
+            <!-- Schools and cohorts get created at the same time. -->
+            <form name="addSchoolForm" onsubmit="return false"
+                  class="form-inline" role="form">
+                <div class="form-group col-sm-3">
+                    <label>
+                        Name
+                        <input type="text" ng-model="schoolName" required
+                               class="form-control"
+                               placeholder="school name">
+                    </label>
+                </div>
+                <div class="form-group col-sm-5">
+                    <label>How will participants sign in?</label>
+                    <label class="radio">
+                        <input type="radio" name="identificationType"
+                               ng-model="identificationType" required
+                               value="default">
+                        First and last name with middle intial
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="identificationType"
+                               ng-model="identificationType" required
+                               value="alias">
+                        Whitelisted aliases
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="identificationType"
+                               ng-model="identificationType" required
+                               value="dissemination">
+                        Three letters each of first and last name
+                    </label>
+                </div>
+                <!-- The school and cohort will have the same name, and the cohort code -->
+                <!-- will be generated automaticaly. Pretty nifty. -->
+
+                <div class="col-sm-1">
+                    <button ng-disabled="addSchoolForm.$invalid"
+                            ng-click="addSchool()">
+                        Add
+                    </button>
+                </div>
+            </form>
+        </fieldset>
+    </div>
+</div>
+
+<table class="dashboard-table cohort_progress_list">
+    <colgroup>
+        <col ng-repeat="col in columns" class="[[col.colClass]]" span="1">
+    </colgroup>
+    <thead>
+        <!-- This first row is essentially categories of columns. The colX
+        classes allow us to apply borders only on certain columns. -->
+        <tr>
+            <th colspan="2" class="col0 col1"><!-- blank --></th>
+            <th colspan="4" class="col2 col3 col4 col5">
+                Classroom Session Status
+            </th>
+            <th colspan="5" class="col6 col7 col8 col9 col10">
+                Study Eligible Students
+            </th>
+        </tr>
+        <tr>
+            <th ng-repeat="col in columns" ng-click="sortBy($index)"
+                class="[[sortIconClass($index)]] [['col' + $index]]">
+                <span tooltip="[[col.tooltip]]">[[ col.name ]]</span>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="row in rows" aggregate-cohort-progress
+            show-cohort-column="true" filter-text="filterText"
+            cohort-ids="[[ row.cohortIds ]]"
+            activity-ordinal="[[ row.activityOrdinal ]]"
+            name="[[ row.name ]]" sessions="sessions"
+            filter-text="filterText"></tr>
+    </tbody>
+</table>
+
+

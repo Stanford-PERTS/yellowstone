@@ -1,0 +1,91 @@
+{% extends "p3-base.html" %}
+
+{% set title = "Contact | PERTS" %}
+{% set description = "Contact the central PERTS office with press inquiries or to request a speaking engagement." %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block meta_description %}
+{{ description }}
+{% endblock %}
+
+{% block content %}
+
+<div class="contact-page">
+
+  <div class="contact-form_outer">
+    <div class="contact-form_inner">
+
+      <h1>Get in Touch</h1>
+      <div class="contact-form_wrapper">
+        <div class="contact-form_info">
+          <h2>1</h2>
+          <p>
+            Learn about opportunities to leverage evidence-based tools and
+            strategies to elevate equitable student experiences, engagement,
+            and learning.
+          </p>
+          <h2>2</h2>
+          <p>
+            Inquire about implementing one of our current or upcoming programs.
+          </p>
+          <h2>3</h2>
+          <p>
+            Say hello. We love hearing from educators!
+          </p>
+        </div>
+        <form id="contactForm"
+              ng-controller="ContactCtrl"
+              ng-submit="submitContact()">
+          <div class="form_inner">
+            <div class="input-wrapper">
+              <label>Your name</label>
+              <input type="text"
+                     name="name"
+                     ng-model="contact.name"
+                     placeholder="Your name"
+                     required>
+            </div>
+            <div class="input-wrapper">
+              <label>Email address</label>
+              <input type="email"
+                     name="email"
+                     ng-model="contact.email"
+                     placeholder=""
+                     required>
+            </div>
+            <div class="input-wrapper">
+              <label>Organization name (optional)</label>
+              <input type="text"
+                     name="organization"
+                     ng-model="contact.organization"
+                     placeholder="Your organization">
+            </div>
+            <div class="input-wrapper">
+              <label>Your message</label>
+              <textarea name="message"
+                        ng-model="contact.message"
+                        placeholder="Message..."
+                        required></textarea>
+            </div>
+            <div class="error-message" ng-show="messageError" ng-cloak>Error sending, please try again.</div>
+            <div class="input-wrapper">
+              <div class="submit-wrapper" ng-class="{sent: messageSent, sending: sending}">
+                <input type="submit" value="Send message">
+                <span class="success-message">Message sent!</span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  {% include 'components/navbar_top_inverted.html' %}
+
+</div>
+
+{% endblock %}

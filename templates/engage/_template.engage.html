@@ -1,0 +1,82 @@
+{% set page_title = "PERTS : Copilot Elevate" %}
+{% set page_description = page_description if page_description else description.replace('\n', ' ') %}
+{% set page_body_class = program_label %}
+
+{# Allow easier neptune linking #}
+{% set neptune_prefix = neptune_protocol ~ '://' ~ neptune_domain %}
+
+{# Necessary to pass through to included templates: #}
+{% set youtube = youtube %}
+{% set wistia = wistia %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  {% include "_includes.head-2018.html" %}
+  <link rel="stylesheet" href="/static/css/engage.css" />
+  <script type="text/javascript" src="/static/js/mindfor.affix.js"></script>
+</head>
+
+<body
+  class="orientation {{ page_body_class }}"
+  data-spy="scroll"
+  data-target="#engage-navbar"
+  data-offset="2"
+>
+
+{# blocks have a different scope: need to pass variable through #}
+{% set login_url = login_url %}
+
+{% include "orientation/_includes.navbar.html" %}
+
+<div class="section banner masthead">
+  <div class="container text-center">
+
+    <!-- Program Name and Description -->
+    <div class="row space-bottom">
+      <div class="col masthead-section">
+        <h1>{{ title }}</h1>
+        <p>
+          {# The `safe` filter disables automatic escaping, this allows HTML  #}
+          {# entities such as &rsquo; and &mdash;.                            #}
+          {{ description | safe }}
+        </p>
+      </div>
+    </div>
+
+    {% block masthead %}
+    {% endblock %}
+
+  </div>
+</div>
+
+
+<div class="container">
+  <div class="row">
+    <div class="content-main col-12">
+      {% block content %}
+      {# blocks have a different scope: need to pass variable through #}
+      {% set neptune_prefix = neptune_prefix %}
+      {% include "orientation/_includes.content.html" %}
+      {% endblock %}
+
+      {% block thankyou %}
+      {% endblock %}
+
+      {% block aboutperts %}
+      {% endblock %}
+    </div>
+  </div>
+</div>
+
+{% if youtube %}
+  {% include "orientation/_includes.youtube.html" %}
+{% endif %}
+
+{% include "orientation/_includes.footer.html" %}
+
+{% include "base_google_analytics.html" %}
+
+</body>
+</html>

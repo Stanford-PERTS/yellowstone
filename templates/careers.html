@@ -1,0 +1,135 @@
+{% extends "p3-base.html" %}
+
+{% set title = "Academic Motivation Research | PERTS Careers" %}
+{% set description = "PERTS is an applied research center at Stanford University. We work with experts on academic motivation to raise student achievement on a large scale. We're focused on growth mindset, belonging mindset, student engagement, student learning and student programs." %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block meta_description %}
+{{ description }}
+{% endblock %}
+
+{% block content %}
+
+<div class="careers-page">
+
+  <div class="page-masthead page-masthead--accent">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <h1>
+            Help us empower learners to realize their potential.
+          </h1>
+        </div>
+      </div>
+    </div>
+    {% include 'components/navbar_top_inverted.html' %}
+  </div>
+
+
+  <div class="page-section page-section--careers-about">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-5">
+          <img src="/static/images/home/perts-team.jpg" width="90%">
+        </div>
+        <div class="col-sm-7">
+          <p>
+            The Project for Education Research That Scales (PERTS) envisions a
+            world in which all learners&mdash;especially those who face greater
+            barriers to academic success&mdash;engage fully and fearlessly in
+            challenging endeavors that help them achieve their goals. To
+            realize that vision, PERTS works with numerous researchers and
+            educational organizations to develop, test, and disseminate
+            scalable practices that increase learners&rsquo; resilience and success.
+          </p>
+          <p>
+            Our passionate tight-knit team includes psychological researchers,
+            data scientists, designers, educators, and software developers. Our
+            work has been funded by the U.S. Institute of Education Sciences,
+            National Science Foundation, Raikes Foundation, Joyce Foundation,
+            William and Flora Hewlett Foundation, Gates Foundation, and
+            multiple universities that benefit directly from our work.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-section page-section--job-openings">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2>No Positions Open Currently</h2>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <p>
+            While we don&rsquo;t have any positions currently open, we do plan
+            on hiring for a few roles in the months ahead. If you would like to
+            be considered for future roles, please send your resume to
+            <a href="</a> and we will
+            contact you as applicable positions open up.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-section page-section--career-perks">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2>
+            What about perks?
+          </h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <img src="/static/images/home/perks-icon-1.png" height="200px">
+          <h3>Technology</h3>
+          <p>
+            Bad tech should never get in the way of good work. Get a fresh MacBook, modern software, whatever you need.
+          </p>
+        </div>
+        <div class="col-sm-4">
+          <img src="/static/images/home/perks-icon-2.png" height="200px">
+          <h3>The Usual</h3>
+          <p>
+            Healthcare, 401k matching, and all the perks you&rsquo;d expect from Stanford. But sorry, no ping pong table (yet).
+          </p>
+        </div>
+        <div class="col-sm-4">
+          <img src="/static/images/home/perks-icon-3.png" height="200px">
+          <h3>Flexibility</h3>
+          <p>
+            A busy office isn&rsquo;t always the best place to get the job done. Work-from-home is a big part of the PERTS culture.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-section page-section--careers-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+          <p class="callout-text">
+            Eager to help us make an impact, but don&rsquo;t see the perfect role?
+          </p>
+          <a href="" class="perts-button btn-accent">
+            Contact us
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

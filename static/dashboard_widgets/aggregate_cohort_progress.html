@@ -1,0 +1,20 @@
+<!-- This widget is used for both the cohort_progress page and the
+program_progress page. In the cohort_proress page, the widget is given a list
+of only one cohort. In the program_progress page, it is given many. -->
+<td ng-show="showCohortColumn=='true'" class="name col0">
+    <a href="#/cohort/[[ cohortList[0].id ]]/classroom_progress">
+        [[ cohortList[0].name ]]
+    </a>
+</td>
+<td class="session col1">[[ activityOrdinal ]]</td>
+
+<td class="unscheduled col2">[[ unscheduled ]]</td>
+<td class="behind col3">[[ behind ]]</td>
+<td class="scheduled_completed col4">[[ scheduledCompleted ]]</td>
+<td class="total col5">[[ totalClassrooms ]]</td>
+
+<td class="study_eligible col6">[[ studyEligible ]]</td>
+<td class="completed col7">[[ completed ]] ([[ pctCompleted ]])</td>
+<td class="makeup_ineligible col8">[[ makeupIneligible ]]</td>
+<td class="makeup_eligible col9">[[ makeupEligible ]]</td>
+<td class="uncoded col10">[[ uncoded ]]</td>

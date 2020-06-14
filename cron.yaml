@@ -1,0 +1,26 @@
+###############################################################################
+##                                                                           ##
+##                    !!  EDIT ONLY IN TEMPLATE  !!                          ##
+##                                                                           ##
+##  Only edit the following if this is the cron.template.yaml file. Specific ##
+##  cron jobs can be enabled or disabled via the branch_environment.json     ##
+##  file. Then generate cron.yaml by running `python branch_environment.py`  ##
+##  at the command line.                                                     ##
+##                                                                           ##
+###############################################################################
+cron:
+- url: /cron/check_for_errors
+  description: check for errors and email us
+  schedule: every 1 minutes
+- url: /cron/backup?bucket=yellowstone-backup-monthly-1&kind=ShortLink
+  description: gcs monthly backup 1
+  schedule: 1 of jan,mar,may,jul,sep,nov 09:00
+- url: /cron/clean_gcs_bucket/yellowstone-backup-monthly-1
+  description: clean out yellowstone-backup-monthly-1
+  schedule: 1 of jan,mar,may,jul,sep,nov 08:45
+- url: /cron/backup?bucket=yellowstone-backup-monthly-2&kind=ShortLink
+  description: gcs monthly backup 2
+  schedule: 1 of feb,apr,jun,aug,oct,dec 09:00
+- url: /cron/clean_gcs_bucket/yellowstone-backup-monthly-2
+  description: clean out yellowstone-backup-monthly-2
+  schedule: 1 of feb,apr,jun,aug,oct,dec 08:45

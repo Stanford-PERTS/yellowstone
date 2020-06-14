@@ -1,0 +1,569 @@
+// ===========================================================
+// LANDING PAGE
+// ===========================================================
+
+.masthead {
+  text-align: center;
+  padding-top: 240px;
+  padding-bottom: 180px;
+  position: relative;
+  overflow-x: hidden;
+
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0; left: 0px;
+    border-top: 100px solid transparent;
+    border-left: 1540px solid $light-blue-color;
+  }
+
+  h1 {
+    font-size: 42px;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 26px;
+    color: #535969;
+
+    .secondary-link {
+      font-size: 22px;
+    }
+  }
+
+  @include mobile {
+    padding-top: 150px;
+    padding-bottom: 120px;
+
+    h1 {
+      font-size: 36px;
+    }
+
+    p {
+      font-size: 24px;
+
+      .secondary-link {
+        font-size: 20px;
+      }
+    }
+  }
+
+
+  .background-image {
+    @include opacity(0.0);
+    @include transition(0.22s ease-in-out);
+
+    &.loaded {
+      @include opacity(0.08);
+    }
+  }
+}
+
+.page-section--callout-stats {
+  background-color: $pale-blue-color;
+  padding: 90px 0;
+
+  .callout-stat {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .animated-statistic {
+    display: inline-block;
+    position: relative;
+    height: 240px;
+    width: 240px;
+    @include border-radius(150px);
+    border: 5px solid white;
+
+    .stat-number {
+      line-height: 240px;
+      font-size: 42px;
+      font-weight: 800;
+      font-size: 36px;
+    }
+
+    .statistic_fill {
+      position: absolute;
+      display: block;
+      height: 240px;
+      width: 240px;
+      top: 5px;
+      left: -15px;
+      @include transform(rotate(-90deg));
+
+      circle {
+        fill: transparent;
+        stroke: $light-blue-color;
+        stroke-width: 20;
+        stroke-dasharray: 0 189;
+      }
+
+      &.stat-fill--1 {
+        circle {
+          stroke-dasharray: 345 690;
+        }
+      }
+      &.stat-fill--2 {
+        circle {
+          stroke-dasharray: 145 690;
+        }
+      }
+      &.stat-fill--3 {
+        circle {
+          stroke-dasharray: 483 690;
+        }
+      }
+    }
+  }
+
+  p {
+    font-family: $font-sans-serif;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 300px;
+    font-size: 18px;
+    font-weight: 600;
+
+    > a {
+      font-size: 18px;
+      color: #666;
+      text-decoration: underline;
+    }
+  }
+}
+
+.page-section--case-studies {
+  padding-top: 40px;
+  padding-bottom: 40px;
+
+  & :first-child {
+    // We're specifying a padding-top above, so we don't also need an element
+    // specific margin.
+    margin-top: 0;
+  }
+
+  background: $indigo-color;
+  color: $pale-blue-color;
+
+  h2 {
+    color: inherit;
+  }
+
+  .banner {
+    .banner-image {
+      display: flex;
+      align-items: center;
+
+      margin-bottom: 12px;
+    }
+
+    .banner-text {
+      .title {
+        color: #627296;
+        font-size: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+
+      .school {
+        color: #ffffff;
+        font-size: 42px;
+        font-weight: bold;
+      }
+
+      .location {
+        color: #ffffff;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .excerpt {
+        color: #aaaaaa;
+        font-size: 18px;
+        margin-top: 12px;
+      }
+
+      .perts-button {
+        display: block;
+        margin: 20px 0;
+      }
+    }
+  }
+
+}
+
+.page-section--wedge-right {
+  height: 500px;
+  padding-top: 90px;
+
+  .graphic-right {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 500px;
+    width: 45%;
+    background-color: $indigo-color;
+
+    .background-image {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      @include background-size(cover);
+      background-position: right bottom;
+      // border-top: 20px solid $indigo-color;
+      // border-bottom: 20px solid $indigo-color;
+    }
+
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      left: 0px; top: 0px;
+      border-right: 150px solid transparent;
+      border-bottom: 500px solid white;
+    }
+  }
+
+  &.light .graphic-right {
+    background-color: $pale-blue-color;
+  }
+
+  @include mobile {
+    height: auto;
+    padding-top: 0;
+
+    .graphic-right {
+      position: relative;
+      width: 100%;
+      padding-bottom: 80%;
+      height: auto;
+
+      &:after {
+        content: none;
+      }
+    }
+
+    .container {
+      padding-top: 60px;
+      padding-bottom: 60px
+    }
+  }
+}
+
+.page-section--main-actions {
+  background-color: $light-blue-color;
+  background-image: url('/static/images/background-stripes.png');
+  padding: 120px 0;
+  color: white;
+
+  .action_image {
+    height: 150px;
+    margin-bottom: 15px;
+  }
+
+  .action_title {
+    padding-left: 55px;
+    position: relative;
+  }
+
+  .action_count {
+    position: absolute;
+    left: -15px;
+    top: 0;
+    height: 60px;
+    width: 60px;
+    line-height: 56px;
+    @include border-radius(30px);
+    border: 2px solid white;
+    font-size: 40px;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  h3 {
+    font-size: 28px;
+    color: white;
+    letter-spacing: 1px;
+  }
+
+  p {
+    font-size: 24px;
+    color: white;
+    letter-spacing: 1px;
+
+    > a {
+      color: white;
+      text-decoration: underline;
+    }
+  }
+
+  @include tablet {
+    .action_title {
+      padding-left: 0px;
+    }
+
+    .action_count {
+      display: none;
+    }
+  }
+
+  @include mobile {
+
+    .action-item {
+      margin-left: 20px;
+    }
+
+    .action_image {
+      margin-left: 25px;
+    }
+
+    .action_title {
+      padding-left: 55px;
+    }
+
+    .action_count {
+      display: block;
+    }
+
+    p {
+      margin-bottom: 45px;
+    }
+  }
+}
+
+.page-section--educators, .page-section--about-carousel {
+  height: 500px;
+  padding-top: 90px;
+
+  .testimonial-cards {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 500px;
+    width: 48.5%;
+    background-color: $indigo-color;
+    padding: 75px 60px 75px 60px;
+
+    .testimonial-card-holder {
+      position: relative;
+      height: 100%;
+      width: 100%;
+      max-width: 550px;
+      margin: 0 0 0 auto;
+    }
+
+    .testimonial-card {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      border-top: 100px solid $pale-blue-color;
+      background-color: white;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+      padding: 0px 5%;
+      @include transition(0.18s ease-in-out);
+      z-index: 1;
+      &.active {z-index: 100;}
+
+      &#card1 {
+        left: 20px;
+        top: -20px;
+        // @include transform(rotate(2deg));
+        &.active {@include transform(rotate(0deg));}
+      }
+
+      &#card2 {
+        left: 10px;
+        top: -10px;
+        // @include transform(rotate(-3deg));
+        &.active {@include transform(rotate(0deg));}
+      }
+
+      &#card3 {
+        // @include transform(rotate(2.8deg));
+        &.active {@include transform(rotate(0deg));}
+      }
+
+      .testimonial_info {
+        margin: -70px 10px 20px 0;
+        height: 110px;
+        padding-left: 130px;
+        position: relative;
+
+        h4 {
+          padding-top: 28px;
+        }
+        h5 {
+          margin-top: 25px;
+        }
+      }
+
+      .testimonial_image {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        @include border-radius(55px);
+        height: 110px;
+        width: 110px;
+        @include background-size(cover);
+        background-color: $light-blue-color;
+      }
+
+      p {
+        color: $font-color;
+        font-size: 21px;
+      }
+    }
+
+    .testimonial-bullets {
+      position: absolute;
+      bottom: -32px;
+      right: 0;
+      width: 100%;
+      text-align: center;
+
+      .testimonial-bullet {
+        display: inline-block;
+        height: 12px;
+        width: 12px;
+        margin: 0 10px;
+        background-color: white;
+        @include border-radius(10px);
+        @include opacity(0.5);
+
+        &.active {
+          @include opacity(1.0);
+        }
+      }
+
+      .active {
+        font-weight: bold;
+        font-size: 1.3em;
+        line-height: 1em;
+      }
+    }
+  }
+
+  @include laptop {
+    height: 620px;
+
+    .testimonial-cards {
+      height: 620px;
+
+      .testimonial-card-holder {
+        position: relative;
+        width: 100%;
+      }
+
+      .testimonial-card {
+        padding: 0px 45px;
+      }
+    }
+  }
+
+  @include tablet {
+    height: auto;
+    padding-top: 0;
+
+    .testimonial-cards {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      padding: 60px;
+
+      .testimonial-card-holder {
+        margin: 0 auto;
+      }
+    }
+
+    .container {
+      padding-top: 60px;
+      padding-bottom: 60px
+    }
+  }
+
+  @include mobile {
+
+    .testimonial-cards {
+      padding: 45px;
+
+      .testimonial-card {
+        padding: 0 20px;
+      }
+    }
+  }
+
+  @media(max-width: 500px) {
+    .testimonial-cards {
+      height: 540px;
+      padding-left: 20px;
+    }
+  }
+}
+
+.page-section--blog-preview {
+  padding: 90px 0;
+  background-color: $pale-blue-color;
+  text-align: center;
+
+  a.blog-preview {
+    display: block;
+    background-color: white;
+    padding: 20px 20px;
+    text-align: left;
+    margin-bottom: 45px;
+    margin-top: 15px;
+    height: 550px;
+
+    .blog_image {
+      padding-bottom: 48%;
+      background-color: $secondary-color;
+      @include background-size(cover);
+      background-position: center center;
+    }
+
+    h3 {
+      font-size: 24px;
+    }
+
+    p {
+      font-size: 20px;
+    }
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  @include mobile {
+    a.blog-preview {
+      height: auto;
+    }
+  }
+}
+
+.page-section--full-image {
+  background-color: $indigo-color;
+  padding: 210px 0 150px 0;
+  border-bottom: 1px solid white;
+  text-align: center;
+
+  .background-image {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    @include background-size(cover);
+    background-position: center center;
+  }
+
+  .callout-text {
+    color: white;
+    font-size: 42px;
+    letter-spacing: 1px;
+    @include text-shadow(rgba(black, 1) 2px 2px 0);
+  }
+}

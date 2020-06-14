@@ -1,0 +1,1108 @@
+{# Collection of tools for gods. #}
+
+{% extends "base.html" %}
+
+{% block title %}
+God
+{% endblock %}
+
+{% block header %}
+<style>
+fieldset {
+    margin-top: 20px;
+    padding: 15px;
+}
+
+fieldset input.form-control, fieldset textarea.form-control {
+    width: 60%;
+}
+
+.ng-dirty.ng-invalid {
+    border-color: red;
+}
+
+</style>
+
+<script>
+// used in some populate calls
+var userId = '{{ user.id }}';
+
+PertsApp.value('shortLinks', {{ short_links | tojson | safe }});
+
+PertsApp.controller('ShortLinkController', [
+    '$scope', '$pertsAjax', 'shortLinks',
+    function ($scope, $pertsAjax, shortLinks) {
+        'use strict';
+
+        $scope.newLink = {};
+        $scope.linkIndex = util.indexBy(shortLinks, 'key_name');
+        $scope.shortLinkPattern = /^[A-Za-z0-9_\-\.\/]+$/;
+
+        // Called when typed short link matches an existing link, or after
+        // AJAX. Updates both the dropdown and the text boxes.
+        var updateAll = function (link) {
+            $scope.selectedLink = link;
+            $scope.newLink = angular.copy(link);
+        };
+
+        // Called when a choice is made from the dropdown; updates the text
+        // boxes.
+        $scope.updateSelected = function (keyName) {
+            $scope.newLink = angular.copy($scope.linkIndex[keyName]);
+        };
+
+        // Keeps whole form in sync with user's typing in short link box.
+        $scope.checkForExisting = function () {
+            var existingLink = $scope.linkIndex[$scope.newLink.key_name];
+            if (existingLink) {
+                updateAll(existingLink);
+            } else {
+                $scope.selectedLink = undefined;
+            }
+        };
+
+        $scope.submit = function () {
+            // Updates and creates have slightly different apis (which, in
+            // retrospect, doesn't seem like such a good idea) so we need
+            // to split based on whether the link is new or not.
+            var linkExists = $scope.linkIndex[$scope.newLink.key_name],
+                promise;
+            if (linkExists) {
+                // Update api call has the id in the path.
+                promise = $pertsAjax({
+                    url: '/api/put/short_link/' + $scope.newLink.key_name,
+                    params: {
+                        long_link: $scope.newLink.long_link,
+                    }
+                });
+            } else {
+                // Create api call has the id in the request string.
+                promise = $pertsAjax({
+                    url: '/api/put/short_link',
+                    params: {
+                        key_name: $scope.newLink.key_name,
+                        long_link: $scope.newLink.long_link,
+                    }
+                });
+            }
+            promise.then(function (response) {
+                $scope.linkIndex[response.key_name] = response;
+                updateAll(response);
+            });
+        };
+
+        $scope.delete = function () {
+            $pertsAjax({
+                url: '/api/delete/short_link/' + $scope.selectedLink.key_name
+            }).then(function () {
+                delete $scope.linkIndex[$scope.selectedLink.key_name];
+            });
+        };
+    }
+]);
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<fieldset>
+    <legend>Send Batch Emails</legend>
+    <p><a href="/email_tool">Go to the Email Tool</a></p>
+</fieldset>
+
+<fieldset ng-controller="ShortLinkController">
+    <legend>Create and Edit Short Links</legend>
+    <ul>
+        <li>Short links can contain A-Z, 0-9, and the characters - _ .</li>
+        <li>Target URL must begin with http:// or https://</li>
+    </ul>
+    <form role="form" name="shortLinkForm">
+        <div class="form-group">
+            <select chosen-select
+                    data-placeholder="Select link..."
+                    select-options="linkIndex"
+                    ng-options="sl as sl.key_name for (kn, sl) in linkIndex | orderObjectBy:'key_name'"
+                    ng-model="selectedLink"
+                    ng-change="updateSelected(selectedLink.key_name)">
+            </select>
+        </div>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon">perts.net/</div>
+                <input type="text" ng-model="newLink.key_name"
+                       ng-change="checkForExisting()"
+                       class="form-control" placeholder="short link" required
+                       ng-pattern="shortLinkPattern">
+            </div>
+        </div>
+        <div class="form-group">
+            <label>
+                Target URL:
+                <br>
+                <input type="url" ng-model="newLink.long_link"
+                       class="form-control" placeholder="http(s)://" required>
+            </label>
+        </div>
+        <button ng-disabled="shortLinkForm.$invalid" ng-click="submit()">
+            Submit
+        </button>
+        <button ng-disabled="!selectedLink" ng-click="delete()">
+            Delete
+        </button>
+    </form>
+</fieldset>
+
+<fieldset>
+    <legend>Download Data CSVs</legend>
+    <p>
+       Go to the <a href="http://bigquery.cloud.google.com">BigQuery panel</a> to export user and PD CSVs.
+       The documentation can be found <a href="https://docs.google.com/document/d/1lPvVUkQ71I5qgj207CzoVDSBv0JKWTv3jtRvKEHMZV0/edit?usp=sharing">here</a>.
+    </p>
+</fieldset>
+
+<fieldset>
+    <legend>Detect Programs</legend>
+    <h4>To add a program</h4>
+    <ol>
+        <li>Create a subdirectory named with the program's abbreviation (e.g. programs/XX).</li>
+        <li>In it, create a config.py file which defines the variable `name`.</li>
+        <li>Also in it, create an __init__.py file which contains the statement `import config` (see existing examples).</li>
+        <li>Add `import XX` to programs/__init__.py.</li>
+        <li>Click the button below.</li>
+    </ol>
+    <h4>To remove a program</h4>
+    <ol>
+        <li>Delete the programs/XX directory.</li>
+        <li>Remove the statement `import XX` from programs/__init__.py.</li>
+        <li>Click the button below.</li>
+    </ol    >
+    <p>Don't click this button too fast. Eventual consistency may bite you.</p>
+    <button id="detect_programs_button">Detect</button>
+    <pre id="detect_programs_response"></pre>
+    <script type="text/javascript">
+
+$('#detect_programs_button').click(function () {
+    'use strict';
+    $.ajax('/api/detect_programs', {
+        dataType: 'json',
+        success: function (response) {
+            console.log(response);
+            var s = JSON.stringify(response, undefined, 2);
+            $('#detect_programs_response').html(s);
+        }
+    });
+});
+
+    </script>
+</fieldset>
+
+<fieldset>
+    <legend>Add email to Queue</legend>
+    <form id="email" onsubmit="return false;" role="form">
+        <div class="form-group">
+            <label for="email__to_address">to address</label>
+            <input id="email__to_address" placeholder="anybody@anything.com"
+                   class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="email__from_address">from address (must be a google admin)</label>
+            <input id="email__from_address" value="pegasus.perts@gmail.com"
+                   class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="email__reply_to">reply to (can be anyone)</label>
+            <input id="email__reply_to" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="email__subject">subject</label>
+            <input id="email__subject" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="email__body">body</label>
+            <textarea id="email__body" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="email__scheduled_date">send date</label>
+            <input id="email__scheduled_date" placeholder="YYYY-MM-DD"
+                   class="form-control">
+        </div>
+
+        <button>submit</button>
+    </form>
+    <script type="text/javascript">
+
+$('#email button').click(function () {
+    'use strict';
+    var to_address = $('#email__to_address').val();
+    var from_address = $('#email__from_address').val();
+    var reply_to = $('#email__reply_to').val();
+    var subject = $('#email__subject').val();
+    var body = $('#email__body').val();
+    var scheduled_date = $('#email__scheduled_date').val();
+    $.ajax('/api/put/email', {
+        dataType: 'json',
+        data: {
+            to_address:     to_address,
+            from_address:   from_address,
+            reply_to:       reply_to,
+            subject:        subject,
+            body:           body,
+            scheduled_date:      scheduled_date
+        },
+        success: function (response) {
+            setTimeout(function () {
+                $.ajax('/cron/send_pending_email', {
+                    success: function (response) {
+                        console.log(response);
+                    }
+                });
+            }, 2000);
+        }
+    });
+});
+    </script>
+</fieldset>
+
+<fieldset>
+    <legend>Show scheduled reminders</legend>
+    <form id="show_reminders" action='/api/show_reminders', method="get">
+        <input name="date" placeholder="YYYY-MM-DD"></input>
+        <button type="submit" value="show reminders">submit</button>
+    </form>
+</fieldset>
+
+<fieldset>
+    <legend>Delete Everything (in dev)</legend>
+    <form id="delete_everything" onsubmit="return false;">
+        <button>submit</button>
+    </form>
+    <script type="text/javascript">
+
+$('#delete_everything button').click(function () {
+    'use strict';
+    var name = $('#delete_everything').val();
+    $('#delete_everything').append('<span>Working...&nbsp;&nbsp;</span.');
+    $.ajax('/api/delete_everything', {
+        dataType: 'json',
+        data: {name: name},
+        success: function (response) {
+            $('#delete_everything').append('<span>Will refresh in 2 seconds to re-create god.</span.');
+            setTimeout(function () {
+                window.location.reload(true);  // true means don't just reload from cache
+            }, 2000);
+        }
+    });
+});
+
+    </script>
+</fieldset>
+
+<fieldset>
+    <legend>Populate</legend>
+    <p> Populate the database with example data for testing </p>
+    <pre id="commands"></pre>
+    <form id="populate" onsubmit="return false;">
+        <button>submit</button>
+        <p id="populate_development_warning" style="display:None">
+            This function not available in production.
+        </p>
+        <p id="populate_twice_warning" style="display:None">
+            This datastore already has programs defined. Clear all data before
+            populating.
+        </p>
+    </form>
+    <script type="text/javascript">
+
+// Api commands
+//
+// These will be called sequentially.  Responses will be aggregated
+// in the responses object. Bracketed text will be run as code and
+// replaced with the output of that code.
+//
+// e.g.     'command/[%5+5%]' becomes 'command/10'
+//
+// This mechanism can be used to reference ids and other responses
+// obtained from previous commands which are available in the
+// responses object.
+//
+// e.g.     'command/[%responses.teacher.id%]'
+//
+// Adding Commands
+// Adding new commands is straightforward, run the current script and
+// then run new commands recording API calls as you go.  Paste these
+// new API commands at the end of the command list.
+
+var commands = [
+    // create a few schools
+    {
+        'name': 'schoolA',
+        'description': 'Add AGN school',
+        'command':
+            '/api/put/school?name=Aspera North High School [%responses.program.abbreviation%]'
+    },
+    {
+        'name': 'schoolB',
+        'description': 'Add BGN school',
+        'command':
+            '/api/put/school?name=Bogart Film School [%responses.program.abbreviation%]'
+    },
+    // {
+    //     'name': 'schoolC',
+    //     'description': 'Add CGN school',
+    //     'command':
+    //         '/api/put/school?name=Cooperstown Academy'
+    // },
+    // {
+    //     'name': 'schoolD',
+    //     'description': 'Add DGN school',
+    //     'command':
+    //         '/api/put/school?name=Downers Grove North'
+    // },
+    // create some cohorts
+    {
+        'name': 'cohortA',
+        'description': 'Create a cohort in "AGN" running "Students\' Paths" program with random code',
+        'command':
+            '/api/put/cohort?name=Aspera North High School [%responses.program.abbreviation%]&program=[%responses.program.id%]&school=[%responses.schoolA.data.id%]'
+    },
+    {
+        'name': 'cohortB',
+        'description': 'Create a cohort in "BGN" running "Students\' Paths" program with random code',
+        'command':
+            '/api/put/cohort?name=Bogart Film School [%responses.program.abbreviation%]&program=[%responses.program.id%]&school=[%responses.schoolB.data.id%]'
+    },
+    // {
+    //     'name': 'cohortC',
+    //     'description': 'Create a cohort in "CGN" running "Students\' Paths" program with code "bronze fox"',
+    //     'command':
+    //         '/api/put/cohort?name=Cooperstown Academy&program=[%responses.program.id%]&school=[%responses.schoolC.data.id%]'
+    // },
+    // {
+    //     'name': 'cohortD',
+    //     'description': 'Create a cohort in "DGN" running "Students\' Paths" program with random code',
+    //     'command':
+    //         '/api/put/cohort?name=Downers Grove North&program=[%responses.program.id%]&school=[%responses.schoolD.data.id%]'
+    // },
+    // create school admins
+    {
+        'name': 'school_adminA',
+        'description': 'Add adminA@school.edu, password: "12345678"',
+        'command':
+            '/api/put/user?program=[%responses.program.id%]&plaintext_password=12345678&user_type=school_admin&login_email=adminA@school.edu&name=adminA@school.edu&auth_id=direct_adminA@school.edu&registration_complete=true&first_name=Amy&last_name=Ackermann'
+    },
+    {
+        'name': 'school_adminB',
+        'description': 'Add adminB@school.edu, password: "12345678"',
+        'command':
+            '/api/put/user?program=[%responses.program.id%]&plaintext_password=12345678&user_type=school_admin&login_email=adminB@school.edu&name=adminB@school.edu&auth_id=direct_adminB@school.edu&registration_complete=true&first_name=Bob&last_name=Billings'
+    },
+    // {
+    //     'name': 'school_adminC',
+    //     'description': 'Add adminC@school.edu, password: "12345678"',
+    //     'command':
+    //         '/api/put/user?program=[%responses.program.id%]&plaintext_password=12345678&user_type=school_admin&login_email=adminC@school.edu&name=adminC@school.edu&auth_id=direct_adminC@school.edu&registration_complete=true&first_name=Cecilia&last_name=Cho'
+    // },
+    // {
+    //     'name': 'school_adminD',
+    //     'description': 'Add adminD@school.edu, password: "12345678"',
+    //     'command':
+    //         '/api/put/user?program=[%responses.program.id%]&plaintext_password=12345678&user_type=school_admin&login_email=adminD@school.edu&name=adminD@school.edu&auth_id=direct_adminD@school.edu&registration_complete=true&first_name=Doug&last_name=Downs'
+    // },
+    // set the school_admins as an owner of their cohorts
+    {
+        'name': 'school_adminA_own_cohortA',
+        'description': 'adminA@school.edu owns cohortA',
+        'command':
+            '/api/set_owner/user/[%responses.school_adminA.data.id%]/cohort/[%responses.cohortA.data.id%]'
+    },
+    {
+        'name': 'school_adminB_own_cohortB',
+        'description': 'adminB@school.edu owns cohortB',
+        'command':
+            '/api/set_owner/user/[%responses.school_adminB.data.id%]/cohort/[%responses.cohortB.data.id%]'
+    },
+    // {
+    //     'name': 'school_adminC_own_cohortC',
+    //     'description': 'adminA@school.edu owns cohortC',
+    //     'command':
+    //         '/api/set_owner/user/[%responses.school_adminC.data.id%]/cohort/[%responses.cohortC.data.id%]'
+    // },
+    // {
+    //     'name': 'school_adminD_own_cohortD',
+    //     'description': 'adminA@school.edu owns cohortD',
+    //     'command':
+    //         '/api/set_owner/user/[%responses.school_adminD.data.id%]/cohort/[%responses.cohortD.data.id%]'
+    // },
+
+    // Data For Cohort A
+
+    // have the school_admin create two classrooms
+    // (student activities come back in the server resonse as a property of the
+    // classroom)
+    {
+        'name': 'englishA',
+        'description': 'Create classroom "English 101" in cohortA',
+        'command':
+            '/api/put/classroom?user=[%responses.school_adminA.data.id%]&cohort=[%responses.cohortA.data.id%]&program=[%responses.program.id%]&name=English%20101&impersonate=[%responses.school_adminA.data.id%]'
+    },
+    {
+        'name': 'mathA',
+        'description': 'Create classroom "Math 101"',
+        'command':
+            '/api/put/classroom?user=[%responses.school_adminA.data.id%]&cohort=[%responses.cohortA.data.id%]&program=[%responses.program.id%]&name=Math%20101&impersonate=[%responses.school_adminA.data.id%]'
+    },
+    // have school_adminA schedule those activities
+    {
+        'name': 'schedule_englishA_activity_1',
+        'description': 'Schedule student activities for today, [%(new Date()).toDateString("local")%]',
+        'command':
+            '/api/put/activity/[%responses.englishA.data._student_activity_list[0].id%]?scheduled_date=[%(new Date()).toDateString("local")%]&impersonate=[%responses.school_adminA.data.id%]'
+    },
+    {
+        'name': 'schedule_englishA_activity_2',
+        'description': 'Schedule activities for today, [%(new Date()).toDateString("local")%]',
+        'command':
+            '/api/put/activity/[%responses.englishA.data._student_activity_list[1].id%]?scheduled_date=[%(new Date()).toDateString("local")%]&impersonate=[%responses.school_adminA.data.id%]'
+    },
+    {
+        'name': 'schedule_mathA_activity_1',
+        'description': 'Schedule student activities for today, [%(new Date()).toDateString("local")%]',
+        'command':
+            '/api/put/activity/[%responses.mathA.data._student_activity_list[0].id%]?scheduled_date=[%(new Date()).toDateString("local")%]&impersonate=[%responses.school_adminA.data.id%]'
+    },
+    {
+        'name': 'schedule_mathA_activity_2',
+        'description': 'Schedule activities for today, [%(new Date()).toDateString("local")%]',
+        'command':
+            '/api/put/activity/[%responses.mathA.data._student_activity_list[1].id%]?scheduled_date=[%(new Date()).toDateString("local")%]&impersonate=[%responses.school_adminA.data.id%]'
+    },
+    // Create 5 students for each classroom
+    {
+        'name': 'studentA1',
+        'description': 'Create a student for English 101 (A).',
+        'command':
+        '/api/put/user?classroom=[%responses.englishA.data.id%]&birth_date=2010-01-01&first_name=Ming&last_name=one&user_type=student&certified=true'
+    },
+    {
+        'name': 'studentA2',
+        'description': '...',
+        'command':
+        '/api/put/user?classroom=[%responses.englishA.data.id%]&birth_date=2010-01-01&first_name=Lupita&last_name=two&user_type=student&certified=true'
+    },
+    {
+        'name': 'studentA3',
+        'description': '...',
+        'command':
+        '/api/put/user?classroom=[%responses.englishA.data.id%]&birth_date=2010-01-01&first_name=Alexander&last_name=three&user_type=student&certified=true'
+    },
+    {
+        'name': 'studentA4',
+        'description': '...',
+        'command':
+        '/api/put/user?classroom=[%responses.englishA.data.id%]&birth_date=2010-01-01&first_name=Nils&last_name=four&user_type=student&certified=true'
+    },
+    {
+        'name': 'studentA5',
+        'description': '...',
+        'command':
+        '/api/put/user?classroom=[%responses.englishA.data.id%]&birth_date=2010-01-01&first_name=Molly&last_name=five&user_type=student&certified=true'
+    },
+    // mathA
+    {
+        'name': 'studentA6',
+        'description': 'Create a student for Math 101 (A).',
+        'command':
+        '/api/put/user?classroom=[%responses.mathA.data.id%]&birth_date=2010-01-01&first_name=student&last_name=six&user_type=student&certified=true'
+    },
+    {
+        'name': 'studentA7',
+        'description': '...',
+        'command':
+        '/api/put/user?classroom=[%responses.mathA.data.id%]&birth_date=2010-01-01&first_name=student&last_name=seven&user_type=student&certified=true'
+    },
+    {
+        'name': 'studentA8',
+        'description': '...',
+        'command':
+        '/api/put/user?classroom=[%responses.mathA.data.id%]&birth_date=2010-01-01&first_name=student&last_name=eight&user_type=student&certified=true'
+    },
+    {
+        'name': 'studentA9',
+        'description': '...',
+        'command':
+        '/api/put/user?classroom=[%responses.mathA.data.id%]&birth_date=2010-01-01&first_name=student&last_name=nine&user_type=student&certified=true'
+    },
+    {
+        'name': 'studentA10',
+        'description': '...',
+        'command':
+        '/api/put/user?classroom=[%responses.mathA.data.id%]&birth_date=2010-01-01&first_name=student&last_name=ten&user_type=student&certified=true'
+    },
+
+
+    // Create some program data for the aggregator
+    {
+        'name': 'aggregation_data1',
+        'description': 'creating pd for the aggregator',
+        'command':
+            '/api/put/pd?program=[%responses.program.id%]&activity_ordinal=1&scope=[%responses.studentA1.data.id%]&variable=s1__progress&value=0'
+    },
+    {
+        'name': 'aggregation_data2',
+        'description': '...',
+        'command':
+            '/api/put/pd?program=[%responses.program.id%]&activity_ordinal=1&scope=[%responses.studentA2.data.id%]&variable=s1__progress&value=10'
+    },
+    {
+        'name': 'aggregation_data3',
+        'description': '...',
+        'command':
+            '/api/put/pd?program=[%responses.program.id%]&activity_ordinal=1&scope=[%responses.studentA3.data.id%]&variable=s1__progress&value=20'
+    },
+    {
+        'name': 'aggregation_data4',
+        'description': '...',
+        'command':
+            '/api/put/pd?program=[%responses.program.id%]&activity_ordinal=1&scope=[%responses.studentA4.data.id%]&variable=s1__progress&value=30'
+    },
+    {
+        'name': 'aggregation_data5',
+        'description': '...',
+        'command':
+            '/api/put/pd?program=[%responses.program.id%]&activity_ordinal=1&scope=[%responses.studentA5.data.id%]&variable=s1__progress&value=100'
+    },
+
+    // Data For Cohort B
+
+    // have the school_admin create two classrooms
+    // (student activities come back in the server resonse as a property of the
+    // classroom)
+    {
+        'name': 'englishB',
+        'description': 'Create classroom "English 201" in cohortB',
+        // 'delay': 1,
+        'command':
+            '/api/put/classroom?user=[%responses.school_adminB.data.id%]&cohort=[%responses.cohortB.data.id%]&program=[%responses.program.id%]&name=Civil Engineering (Brown 9)&impersonate=[%responses.school_adminB.data.id%]'
+    },
+    {
+        'name': 'mathB',
+        'description': 'Create classroom "Math 201" in cohortB',
+        // 'delay': 1,
+        'command':
+            '/api/put/classroom?user=[%responses.school_adminB.data.id%]&cohort=[%responses.cohortB.data.id%]&program=[%responses.program.id%]&name=Linear Algebra (Bronson 2)&impersonate=[%responses.school_adminB.data.id%]'
+    },
+    // have the school_adminB schedule those activities
+    {
+        'name': 'schedule_englishB_activity_1',
+        'description': 'Schedule student activities for today, [%(new Date()).toDateString("local")%]',
+        'command':
+            '/api/put/activity/[%responses.englishB.data._student_activity_list[0].id%]?scheduled_date=[%(new Date()).toDateString("local")%]&impersonate=[%responses.school_adminB.data.id%]'
+    },
+    {
+        'name': 'schedule_englishB_activity_2',
+        'description': 'Schedule activities for today, [%(new Date()).toDateString("local")%]',
+        'command':
+            '/api/put/activity/[%responses.englishB.data._student_activity_list[1].id%]?scheduled_date=[%(new Date()).toDateString("local")%]&impersonate=[%responses.school_adminB.data.id%]'
+    },
+    {
+        'name': 'schedule_mathB_activity_1',
+        'description': 'Schedule student activities for today, [%(new Date()).toDateString("local")%]',
+        'command':
+            '/api/put/activity/[%responses.mathB.data._student_activity_list[0].id%]?scheduled_date=[%(new Date()).toDateString("local")%]&impersonate=[%responses.school_adminB.data.id%]'
+    },
+    {
+        'name': 'schedule_mathB_activity_2',
+        'description': 'Schedule activities for today, [%(new Date()).toDateString("local")%]',
+        'command':
+            '/api/put/activity/[%responses.mathB.data._student_activity_list[1].id%]?scheduled_date=[%(new Date()).toDateString("local")%]&impersonate=[%responses.school_adminB.data.id%]'
+    },
+    // Create 5 students for each classroom
+    {
+        'name': 'studentB1',
+        'description': 'Create a student for English 101 (B).',
+        'command':
+        '/api/put/user?classroom=[%responses.englishB.data.id%]&birth_date=2010-01-01&first_name=student&last_name=one&user_type=student&certified=true'
+    },
+    {
+        'name': 'studentB2',
+        'description': '...',
+        'command':
+        '/api/put/user?classroom=[%responses.englishB.data.id%]&birth_date=2010-01-01&first_name=student&last_name=two&user_type=student&certified=true'
+    },
+    {
+        'name': 'studentB3',
+        'description': '...',
+        'command':
+        '/api/put/user?classroom=[%responses.englishB.data.id%]&birth_date=2010-01-01&first_name=student&last_name=three&user_type=student&certified=true'
+    },
+    {
+        'name': 'studentB4',
+        'description': '...',
+        'command':
+        '/api/put/user?classroom=[%responses.englishB.data.id%]&birth_date=2010-01-01&first_name=student&last_name=four&user_type=student&certified=true'
+    },
+    {
+        'name': 'studentB5',
+        'description': '...',
+        'command':
+        '/api/put/user?classroom=[%responses.englishB.data.id%]&birth_date=2010-01-01&first_name=student&last_name=five&user_type=student&certified=true'
+    },
+    {
+        'name': 'studentB6',
+        'description': 'Create a student for Math 101 (B).',
+        'command':
+        '/api/put/user?classroom=[%responses.mathB.data.id%]&birth_date=2010-01-01&first_name=student&last_name=six&user_type=student&certified=true'
+    },
+    {
+        'name': 'studentB7',
+        'description': '...',
+        'command':
+        '/api/put/user?classroom=[%responses.mathB.data.id%]&birth_date=2010-01-01&first_name=student&last_name=seven&user_type=student&certified=true'
+    },
+    {
+        'name': 'studentB8',
+        'description': '...',
+        'command':
+        '/api/put/user?classroom=[%responses.mathB.data.id%]&birth_date=2010-01-01&first_name=student&last_name=eight&user_type=student&certified=true'
+    },
+    {
+        'name': 'studentB9',
+        'description': '...',
+        'command':
+        '/api/put/user?classroom=[%responses.mathB.data.id%]&birth_date=2010-01-01&first_name=student&last_name=nine&user_type=student&certified=true'
+    },
+    {
+        'name': 'studentB10',
+        'description': '...',
+        'command':
+        '/api/put/user?classroom=[%responses.mathB.data.id%]&birth_date=2010-01-01&first_name=student&last_name=ten&user_type=student&certified=true'
+    },
+
+    // // Data For Cohort C
+
+    // // have the school_admin create two classrooms
+    // // (student activities come back in the server resonse as a property of the
+    // // classroom)
+    // {
+    //     'name': 'englishC',
+    //     'description': 'Create classroom "English 301" in cohortC',
+    //     // 'delay': 1,
+    //     'command':
+    //         '/api/put/classroom?user=[%responses.school_adminC.data.id%]&cohort=[%responses.cohortC.data.id%]&program=[%responses.program.id%]&name=Poetics (Carhart)&impersonate=[%responses.school_adminC.data.id%]'
+    // },
+    // {
+    //     'name': 'mathC',
+    //     'description': 'Create classroom "Math 101" in cohortC',
+    //     // 'delay': 1,
+    //     'command':
+    //         '/api/put/classroom?user=[%responses.school_adminC.data.id%]&cohort=[%responses.cohortC.data.id%]&program=[%responses.program.id%]&name=Rhetoric (Cicero Section 10)&impersonate=[%responses.school_adminC.data.id%]'
+    // },
+    // // have the school_adminC schedule those activities
+    // {
+    //     'name': 'schedule_englishC_activity_1',
+    //     'description': 'Schedule student activities for today, [%(new Date()).toDateString("local")%]',
+    //     'command':
+    //         '/api/put/activity/[%responses.englishC.data._student_activity_list[0].id%]?scheduled_date=[%(new Date()).toDateString("local")%]&impersonate=[%responses.school_adminC.data.id%]'
+    // },
+    // {
+    //     'name': 'schedule_englishC_activity_2',
+    //     'description': 'Schedule activities for today, [%(new Date()).toDateString("local")%]',
+    //     'command':
+    //         '/api/put/activity/[%responses.englishC.data._student_activity_list[1].id%]?scheduled_date=[%(new Date()).toDateString("local")%]&impersonate=[%responses.school_adminC.data.id%]'
+    // },
+    // {
+    //     'name': 'schedule_mathC_activity_1',
+    //     'description': 'Schedule student activities for today, [%(new Date()).toDateString("local")%]',
+    //     'command':
+    //         '/api/put/activity/[%responses.mathC.data._student_activity_list[0].id%]?scheduled_date=[%(new Date()).toDateString("local")%]&impersonate=[%responses.school_adminC.data.id%]'
+    // },
+    // {
+    //     'name': 'schedule_mathC_activity_2',
+    //     'description': 'Schedule activities for today, [%(new Date()).toDateString("local")%]',
+    //     'command':
+    //         '/api/put/activity/[%responses.mathC.data._student_activity_list[1].id%]?scheduled_date=[%(new Date()).toDateString("local")%]&impersonate=[%responses.school_adminC.data.id%]'
+    // },
+    // // Create 5 students for each classroom in the test program so we can aggregate on them
+    // // englishA:
+    // {
+    //     'name': 'studentC1',
+    //     'description': 'Create a student for the test program.',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.englishC.data.id%]&birth_date=2010-01-01&first_name=student&last_name=one&user_type=student'
+    // },
+    // {
+    //     'name': 'studentC2',
+    //     'description': '...',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.englishC.data.id%]&birth_date=2010-01-01&first_name=student&last_name=two&user_type=student'
+    // },
+    // {
+    //     'name': 'studentC3',
+    //     'description': '...',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.englishC.data.id%]&birth_date=2010-01-01&first_name=student&last_name=three&user_type=student'
+    // },
+    // {
+    //     'name': 'studentC4',
+    //     'description': '...',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.englishC.data.id%]&birth_date=2010-01-01&first_name=student&last_name=four&user_type=student'
+    // },
+    // {
+    //     'name': 'studentC5',
+    //     'description': '...',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.englishC.data.id%]&birth_date=2010-01-01&first_name=student&last_name=five&user_type=student'
+    // },
+    // // mathA
+    // {
+    //     'name': 'studentC6',
+    //     'description': 'Create a student for the test program.',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.mathC.data.id%]&birth_date=2010-01-01&first_name=student&last_name=six&user_type=student'
+    // },
+    // {
+    //     'name': 'studentC7',
+    //     'description': '...',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.mathC.data.id%]&birth_date=2010-01-01&first_name=student&last_name=seven&user_type=student'
+    // },
+    // {
+    //     'name': 'studentC8',
+    //     'description': '...',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.mathC.data.id%]&birth_date=2010-01-01&first_name=student&last_name=eight&user_type=student'
+    // },
+    // {
+    //     'name': 'studentC9',
+    //     'description': '...',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.mathC.data.id%]&birth_date=2010-01-01&first_name=student&last_name=nine&user_type=student'
+    // },
+    // {
+    //     'name': 'studentC10',
+    //     'description': '...',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.mathC.data.id%]&birth_date=2010-01-01&first_name=student&last_name=ten&user_type=student'
+    // },
+
+    // // Data For Cohort D
+
+    // // have the school_admin create two classrooms
+    // // (student activities come back in the server resonse as a property of the
+    // // classroom)
+    // {
+    //     'name': 'englishD',
+    //     'description': 'Create classroom "English 401" in cohortD',
+    //     // 'delay': 1,
+    //     'command':
+    //         '/api/put/classroom?user=[%responses.school_adminD.data.id%]&cohort=[%responses.cohortD.data.id%]&program=[%responses.program.id%]&name=Microbiology (Dowling)&impersonate=[%responses.school_adminD.data.id%]'
+    // },
+    // {
+    //     'name': 'mathD',
+    //     'description': 'Create classroom "Math 401"',
+    //     // 'delay': 1,
+    //     'command':
+    //         '/api/put/classroom?user=[%responses.school_adminD.data.id%]&cohort=[%responses.cohortD.data.id%]&program=[%responses.program.id%]&name=Macroeconomics (Draper)&impersonate=[%responses.school_adminD.data.id%]'
+    // },
+    // // have the school_adminD schedule those activities
+    // {
+    //     'name': 'schedule_englishD_activity_1',
+    //     'description': 'Schedule student activities for today, [%(new Date()).toDateString("local")%]',
+    //     'command':
+    //         '/api/put/activity/[%responses.englishD.data._student_activity_list[0].id%]?scheduled_date=[%(new Date()).toDateString("local")%]&impersonate=[%responses.school_adminD.data.id%]'
+    // },
+    // {
+    //     'name': 'schedule_englishD_activity_2',
+    //     'description': 'Schedule activities for today, [%(new Date()).toDateString("local")%]',
+    //     'command':
+    //         '/api/put/activity/[%responses.englishD.data._student_activity_list[1].id%]?scheduled_date=[%(new Date()).toDateString("local")%]&impersonate=[%responses.school_adminD.data.id%]'
+    // },
+    // {
+    //     'name': 'schedule_mathD_activity_1',
+    //     'description': 'Schedule student activities for today, [%(new Date()).toDateString("local")%]',
+    //     'command':
+    //         '/api/put/activity/[%responses.mathD.data._student_activity_list[0].id%]?scheduled_date=[%(new Date()).toDateString("local")%]&impersonate=[%responses.school_adminD.data.id%]'
+    // },
+    // {
+    //     'name': 'schedule_mathD_activity_2',
+    //     'description': 'Schedule activities for today, [%(new Date()).toDateString("local")%]',
+    //     'command':
+    //         '/api/put/activity/[%responses.mathD.data._student_activity_list[1].id%]?scheduled_date=[%(new Date()).toDateString("local")%]&impersonate=[%responses.school_adminD.data.id%]'
+    // },
+    // // Create 5 students for each classroom in the test program so we can aggregate on them
+    // // englishA:
+    // {
+    //     'name': 'studentD1',
+    //     'description': 'Create a student for the test program.',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.englishD.data.id%]&birth_date=2010-01-01&first_name=student&last_name=one&user_type=student'
+    // },
+    // {
+    //     'name': 'studentD2',
+    //     'description': '...',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.englishD.data.id%]&birth_date=2010-01-01&first_name=student&last_name=two&user_type=student'
+    // },
+    // {
+    //     'name': 'studentD3',
+    //     'description': '...',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.englishD.data.id%]&birth_date=2010-01-01&first_name=student&last_name=three&user_type=student'
+    // },
+    // {
+    //     'name': 'studentD4',
+    //     'description': '...',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.englishD.data.id%]&birth_date=2010-01-01&first_name=student&last_name=four&user_type=student'
+    // },
+    // {
+    //     'name': 'studentD5',
+    //     'description': '...',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.englishD.data.id%]&birth_date=2010-01-01&first_name=student&last_name=five&user_type=student'
+    // },
+    // // mathA
+    // {
+    //     'name': 'studentD6',
+    //     'description': 'Create a student for the test program.',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.mathD.data.id%]&birth_date=2010-01-01&first_name=student&last_name=six&user_type=student'
+    // },
+    // {
+    //     'name': 'studentD7',
+    //     'description': '...',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.mathD.data.id%]&birth_date=2010-01-01&first_name=student&last_name=seven&user_type=student'
+    // },
+    // {
+    //     'name': 'studentD8',
+    //     'description': '...',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.mathD.data.id%]&birth_date=2010-01-01&first_name=student&last_name=eight&user_type=student'
+    // },
+    // {
+    //     'name': 'studentD9',
+    //     'description': '...',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.mathD.data.id%]&birth_date=2010-01-01&first_name=student&last_name=nine&user_type=student'
+    // },
+    // {
+    //     'name': 'studentD10',
+    //     'description': '...',
+    //     'command':
+    //     '/api/put/user?classroom=[%responses.mathD.data.id%]&birth_date=2010-01-01&first_name=student&last_name=ten&user_type=student'
+    // },
+];
+
+
+$('#populate button').click(function () {
+    'use strict';
+    // Check if in development
+    if (!util.isDevelopment()) {
+        $('#populate_development_warning').show();
+        return;
+    }
+
+    var programsExist = {{ 'true' if programs_exist else 'false'}};
+    if (programsExist) {
+        $('#populate_twice_warning').show();
+        return;
+    }
+
+    var errorsOccurred = false;
+
+    // parse commands
+    var parseCommand = function (text, responses) {
+
+        // extraction pattern
+        //
+        // This regex will grab both the string to be replaced which
+        // includes brackets and the string to be executed which is
+        // within the string to be replaced and has no brackets.
+        //
+        // e.g.
+        //      'command/[%5+5%]/more'  ->  ['[%5+5%]', '5+5']
+        //
+        var pattern = /\[%([^%]*)%\]/;
+
+        // find all
+        var match;
+        while (match = pattern.exec(text)) {
+            // evaluate and replace
+            text = text.replace(match[0], eval(match[1]));
+        }
+        return text;
+    };
+
+
+    // api calls
+    var run = function (programAbbreviationList, cmds, responses, programAbbreviation) {
+        if (!programAbbreviation) {
+            programAbbreviation = programAbbreviationList.pop();
+        }
+
+        if (!responses) {
+            // This is the first call. Detect programs and choose a specific
+            // one that is currently "active" to populate. This settings
+            // should change as we change up our programs.
+            $.get('/api/detect_programs', function (response) {
+                var targetProgram;
+                forEach(response.data.current_programs, function (program) {
+                    if (program.abbreviation === programAbbreviation) {
+                        targetProgram = program;
+                    }
+                });
+                if (targetProgram) {
+                    responses = {program: targetProgram};
+                    run(programAbbreviationList, cmds, responses, programAbbreviation);
+                } else {
+                    throw new Error("Target program " + programAbbreviation + " not found.");
+                }
+            });
+            return;
+        }
+
+        // unpack
+        var next = cmds.shift();
+        var name = next.name;
+        var description = parseCommand(next.description, responses);
+        var command = parseCommand(next.command, responses);
+        // Delay lets us avoid GAE's sometimes inconsistent results;
+        // only used when creating something and then immediately
+        // getting it through a separate call.
+        var delay = next.delay || 0;
+
+        // api call
+        $.get(command, function (response) {
+            var label;
+            if (response.success) {
+                label = 'success';
+            } else {
+                label = '<span style="color:red">failed</span>';
+                errorsOccurred = true;
+            }
+
+            $('#commands').append(description + '...' + label + '\n');
+
+            // record responses
+            responses[name] = response;
+
+            // recurse
+            if (cmds.length > 0) {
+                setTimeout(function () {
+                    run(programAbbreviationList, cmds, responses, programAbbreviation);
+                }, delay * 1000);
+            } else {
+                if (errorsOccurred) {
+                    $('#commands').append('ERRORS OCCURRED\n');
+                    return;
+                } else {
+                    if (programAbbreviationList.length > 0) {
+                        run(programAbbreviationList, Array.prototype.slice.call(commands));
+                    } else {
+                        $.get('/cron/aggregate', function () {
+                            $.get('/cron/index', function () {
+                                $('#commands').append('COMPLETE\n');
+                            });
+                        });
+                    }
+                }
+            }
+        });
+    };
+
+    // initiate
+    run(['ER14F', 'NP15S'], Array.prototype.slice.call(commands))
+});
+
+
+</script>
+</fieldset>
+
+<script>
+PertsApp.controller('CorrectPdController', [
+    '$scope', '$pertsAjax', '$forEachAsync',
+    function ($scope, $pertsAjax, $forEachAsync) {
+        $scope.successfulWrites = [];
+        $scope.failedWrites = [];
+
+        var inputValid = function () {
+            var inputValid = true;
+            try {
+                $scope.pdList = JSON.parse($scope.pdsToPut);
+            } catch (e) {
+                alert("Invalid JSON input.");
+                inputValid = false;
+            }
+
+            forEach($scope.pdList, function (pd) {
+                if (!inputValid) { return; }
+                if (!pd.program || !pd.scope || !pd.variable || !pd.value) {
+                    inputValid = false;
+                    alert("Missing parameters.");
+                }
+            });
+
+            return inputValid;
+        };
+
+        $scope.start = function () {
+            if (!inputValid()) { return; }
+
+            var put = function (pd) {
+                return $pertsAjax({
+                    url: '/api/put/pd',
+                    params: {
+                        impersonate: pd.scope,
+                        program: pd.program,
+                        activity_ordinal: pd.activity_ordinal,
+                        scope: pd.scope,
+                        variable: pd.variable,
+                        value: pd.value
+                    }
+                }).then(function successCallback(responsePd) {
+                    $scope.successfulWrites.push(responsePd);
+                }, function errorCallback() {
+                    $scope.failedWrites.push(pd);
+                    console.error("error writing pd", pd, arguments);
+                });
+            }
+
+            $forEachAsync($scope.pdList, put, 'serial').then(function () {
+                alert("Finished writing corrected pd.");
+            });
+        };
+    }
+]);
+</script>
+
+<fieldset ng-controller="CorrectPdController">
+    <legend>Correct PD</legend>
+    <p>Puts each pd one by one. If there are a lot of pds, this may take
+    awhile.</p>
+
+    <p>Pds to put. JSON list of pd objects, including the fields:</p>
+    <ul>
+        <li>program</li>
+        <li>activity_ordinal (optional)</li>
+        <li>scope</li>
+        <li>variable</li>
+        <li>value</li>
+    </ul>
+    <textarea ng-model="pdsToPut"></textarea>
+
+    <br>
+    <button ng-click="start()">Start putting pd</button>
+    <br><br>
+
+    <p>Successful writes:</p>
+    <pre>[[ successfulWrites | json : '  ' ]]</pre>
+
+    <p>Failed writes:</p>
+    <pre>[[ failedWrites | json : '  ' ]]</pre>
+</fieldset>
+
+
+{% endblock %}

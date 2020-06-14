@@ -1,0 +1,772 @@
+// ===========================================================
+// Program Pages
+// ===========================================================
+
+@include keyframes(fade-down-delayed) {
+  0%,
+  20% {
+    @include opacity(0);
+    @include translateY(-15px);
+  }
+  100% {
+    @include opacity(1);
+    @include translateX(0);
+  }
+}
+
+@include keyframes(fade-in) {
+  0% {
+    @include opacity(0);
+  }
+  100% {
+    @include opacity(1);
+  }
+}
+
+.program-page {
+  .page-masthead {
+    background-color: $indigo-color;
+    padding-top: 150px;
+
+    h1 {
+      color: white;
+      letter-spacing: 1px;
+    }
+
+    .background-image {
+      // opacity: 0.15;
+      @include background-size(cover);
+    }
+
+    p {
+      color: white;
+
+      @include mobile {
+        font-size: 21px;
+      }
+    }
+
+    .play-button {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 4px solid white;
+      @include border-radius(50px);
+      cursor: pointer;
+      height: 100px;
+      margin: 45px auto 60px;
+      width: 100px;
+      position: relative;
+      @include transition(260ms ease-in-out);
+
+      &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        left: 38px;
+        top: 32px;
+        border-top: 15px solid transparent;
+        border-bottom: 15px solid transparent;
+        border-left: 25px solid white;
+        @include transition(260ms ease-in-out);
+      }
+
+      &:hover {
+        background-color: white;
+        @include transition-duration(120ms);
+
+        &:after {
+          border-left-color: $deep-blue-color;
+          @include transition-duration(120ms);
+        }
+      }
+    }
+
+    .spot-counter {
+      color: white;
+      padding: 5px 15px;
+      margin: 30px auto 0;
+      max-width: 400px;
+      text-align: center;
+
+      &__spots {
+        display: block;
+        font-size: 32px;
+        font-weight: bold;
+        padding-bottom: 5px;
+      }
+
+      &__description {
+        border-top: 1px solid white;
+        padding: 10px 0 5px;
+        display: block;
+        font-size: 14px;
+        letter-spacing: 1px;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-family: $font-sans-serif;
+
+        em {
+          font-weight: 700;
+        }
+      }
+    }
+
+    .free-for-all {
+      color: white;
+      padding: 5px 15px;
+      margin: 30px auto 0;
+      text-align: center;
+
+      &__description {
+        display: block;
+        font-size: 14px;
+        letter-spacing: 1px;
+        font-weight: 500;
+        text-transform: uppercase;
+        font-family: $font-sans-serif;
+      }
+    }
+
+    &:after {
+      border-right-color: $light-blue-color;
+    }
+
+    @include mobile {
+      padding-top: 90px;
+
+      h1 {
+        font-size: 32px;
+      }
+    }
+
+    a.perts-button {
+      margin-bottom: 15px;
+    }
+
+    a.cta-secondary {
+      color: white;
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.25px;
+    }
+  }
+
+  // Border color override for index page
+
+  &.program-index-page {
+    .page-masthead {
+      &:after {
+        border-right-color: $pale-blue-color;
+      }
+    }
+  }
+
+  .page-section h2 {
+    font-size: 32px;
+  }
+
+  #invite-confirmation {
+    display: none;
+    text-align: center;
+  }
+
+  .bordered-inset {
+    margin: 45px 16px 16px 16px;
+    padding: 30px 15px;
+    border: 2px solid $indigo-color;
+    @include border-radius(8px);
+  }
+
+  form#invite-form {
+    margin-top: 45px;
+    position: relative;
+    background-color: $pale-blue-color;
+
+    label {
+      font-size: 14px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    input {
+      width: 100%;
+      font-size: 16px;
+      height: 50px;
+      background-color: white;
+      border: 0;
+      outline: 0;
+      padding: 10px 10px;
+      @include border-radius(5px);
+    }
+
+    input[type='submit'] {
+      background-color: $accent-color;
+      color: white;
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 1px;
+      font-size: 14px;
+      margin-top: 10px;
+
+      &:hover {
+        background-color: darken($accent-color, 5);
+      }
+    }
+
+    .loader {
+      display: none;
+      padding-top: 25px;
+      padding-bottom: 7px;
+      text-align: center;
+    }
+
+    .success-message {
+      display: none;
+      font-size: 18px;
+      padding-top: 25px;
+      padding-bottom: 10px;
+      text-align: center;
+    }
+
+    &.loading {
+      input[type='submit'] {
+        display: none;
+      }
+      .loader {
+        display: block;
+        @include animation(fade-in 350ms ease-in-out);
+      }
+    }
+
+    &.completed {
+      input[type='submit'] {
+        display: none;
+      }
+      .success-message {
+        display: block;
+        @include animation(fade-in 350ms ease-in-out);
+      }
+    }
+  }
+}
+
+.page-section--testimonial {
+  background-color: $pale-blue-color;
+  padding: 90px 0;
+
+  blockquote {
+    border-left-color: $indigo-color;
+  }
+}
+
+.page-section--about-program {
+  background-color: white;
+  padding: 90px 0;
+
+  .image-wrapper {
+    text-align: center;
+  }
+
+  img {
+    margin: 0 auto;
+    max-width: 100%;
+
+    @include mobile {
+      margin-top: 60px;
+    }
+  }
+
+  h3 {
+    font-size: 26px;
+    color: white;
+    letter-spacing: 0.5px;
+    // text-indent: 1em;
+  }
+
+  p {
+    text-indent: 1em;
+  }
+
+  li,
+  p {
+    font-size: 21px;
+    margin-bottom: 15px;
+    line-height: 1.4;
+    color: $indigo-color;
+
+    a {
+      text-decoration: underline;
+
+      &:link,
+      &:visited {
+        color: white;
+      }
+
+      &:hover,
+      &:active {
+        color: $pale-blue-color;
+      }
+    }
+  }
+
+  // not sure if the above white on white a styles are used somewhere and
+  // don't want to break something, so adding this override style here
+  a.reverse {
+    &:link,
+    &:visited,
+    &:hover,
+    &active {
+      color: $light-blue-color;
+    }
+  }
+}
+
+.pullquote {
+  display: block;
+  position: relative;
+  font-size: 16px;
+  padding: 20px;
+  font-style: italic;
+  line-height: 1.25;
+
+  &:before {
+    content: '';
+    background: $light-blue-color;
+    position: absolute;
+    top: -0.2em;
+    left: -0.4em;
+    right: -0.4em;
+    bottom: -0.15em;
+    transform: skewy(-2deg);
+    z-index: -1;
+  }
+
+  .quote {
+    background: #fff;
+    box-shadow: -0.15em 0 0 white, 0.15em 0 0 white;
+    display: inline-block;
+    padding: 5px;
+    line-height: 26px;
+  }
+
+  .author {
+    margin-top: 10px;
+    text-align: right;
+    color: white;
+
+    &:before {
+      content: '~';
+    }
+  }
+}
+
+// styles for the actual "About the Program" section of Program Orientation
+.page-section--about-the-program {
+  background-color: $light-blue-color;
+  padding: 90px 0 120px;
+
+  h2 {
+    text-align: center;
+    color: white;
+    margin-bottom: 45px;
+  }
+
+  .program-graphic {
+    border-radius: 50%;
+  }
+
+  .about-the-program-item {
+    padding: 20px;
+
+    background: white;
+    border-radius: 5px;
+
+    &:not(:last-child) {
+      margin-bottom: 30px;
+    }
+  }
+}
+
+.page-section--program-carousel {
+  background-color: $light-blue-color;
+  padding: 90px 0 120px;
+
+  h2 {
+    text-align: center;
+    color: white;
+    margin-bottom: 45px;
+  }
+
+  .program-card-toggler {
+    margin: 0 auto 30px;
+    width: 500px;
+    height: 50px;
+    background-color: white;
+    overflow: hidden;
+    @include border-radius(6px);
+
+    .toggler-choice {
+      float: left;
+      height: 50px;
+      width: 33.33%;
+      text-align: center;
+      line-height: 50px;
+      background-color: white;
+      border-right: 1px solid $pale-blue-color;
+      @include transition(260ms ease-in-out);
+
+      &.active {
+        background-color: $indigo-color;
+        color: white;
+        @include transition-duration(120ms);
+      }
+
+      &:last-child {
+        border-right: 0;
+      }
+    }
+
+    @include mobile {
+      width: 100%;
+    }
+
+    @media (max-width: 430px) {
+      height: auto;
+
+      .toggler-choice {
+        width: 100%;
+        border-right: 0;
+        border-bottom: 1px solid $pale-blue-color;
+
+        &:last-child {
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+
+  .program-card-holder {
+    height: 500px;
+
+    @include laptop {
+      height: 600px;
+    }
+  }
+
+  .program-card {
+    display: none;
+    padding-left: 285px;
+    padding-top: 105px;
+    position: relative;
+
+    @include mobile {
+      padding-left: 30px;
+      padding-top: 90px;
+    }
+
+    &.active {
+      display: block;
+    }
+
+    .program-graphic {
+      height: 350px;
+      width: 350px;
+      position: absolute;
+      background-color: $indigo-color;
+      @include border-radius(175px);
+      top: 0;
+      left: 0;
+      z-index: -1;
+      overflow: hidden;
+
+      > img {
+        @include animation(fade-in 350ms ease-in-out);
+      }
+
+      &:after {
+        content: '';
+        display: block;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        border: 10px solid $indigo-color;
+        @include border-radius(400px);
+        position: absolute;
+      }
+
+      @include mobile {
+        left: -30px;
+        top: -20px;
+        height: 200px;
+        width: 200px;
+      }
+    }
+
+    .program_info {
+      background-color: white;
+      padding: 30px 30px 45px;
+      z-index: 100;
+      @include box-shadow(0 0 10px 0 rgba(0,0,0,0.3));
+      @include animation(fade-down-delayed 650ms ease-in-out);
+
+      h3 {
+        margin: 0 0 30px;
+      }
+
+      @include mobile {
+        padding: 25px 20px 20px;
+
+        p,
+        li {
+          font-size: 20px;
+        }
+      }
+
+      @media (max-width: 400px) {
+        p,
+        li {
+          font-size: 19px;
+        }
+      }
+    }
+  }
+}
+
+.page-section--cg17-learn-more.page-section--wedge-right,
+.page-section--hg17-learn-more.page-section--wedge-right {
+  background-color: $indigo-color;
+
+  h2,
+  p {
+    color: white;
+  }
+
+  a.perts-button {
+    background-color: white;
+    color: $indigo-color;
+  }
+
+  .graphic-right {
+    .background-image {
+      background-color: $light-blue-color;
+      background-position: center center;
+      @include background-size(cover);
+      border-bottom: 0;
+      border-top: 0;
+    }
+
+    &:after {
+      border-bottom-color: $indigo-color;
+    }
+  }
+}
+
+.page-section--cg17-ready,
+.page-section--hg17-ready {
+  padding: 90px 0 120px;
+
+  p {
+    color: $indigo-color;
+  }
+
+  form#invite-form {
+    label {
+      margin-top: 12px;
+
+      &.checkbox-inline {
+        input[type='checkbox'] {
+          height: 15px;
+          width: initial;
+        }
+      }
+    }
+
+    input[type='submit'].perts-button {
+      line-height: initial;
+    }
+  }
+}
+
+.page-section--hg17-support {
+  padding: 90px 0 120px;
+
+  .logos {
+    // Top margin to help visually in both horizontal and stacked/moble view.
+    p {
+      margin-top: 30px;
+    }
+
+    // Logos look better when they are all the same height.
+    img {
+      height: 74px;
+    }
+  }
+}
+
+.page-section--cg17-about-perts,
+.page-section--hg17-about-perts {
+  padding: 90px 0 120px;
+  background-color: $indigo-color;
+  background-image: url('/static/images/home/media-background.png');
+
+  h2,
+  p,
+  li {
+    color: white;
+  }
+
+  li a {
+    color: $pale-blue-color;
+    text-decoration: underline;
+  }
+}
+
+// ===========================================================
+// Programs Index
+// ===========================================================
+
+.page-section--programs-intro {
+  background-color: $light-blue-color;
+  background-image: url('/static/images/background-stripes.png');
+  padding: 90px 0 120px;
+
+  h2 {
+    color: white;
+    letter-spacing: 1px;
+    // text-align: center;
+  }
+
+  .programs-wrapper {
+    @include box-shadow(0 0 10px 0 rgba(0,0,0,0.3));
+    padding: 20px 30px 30px;
+    background-color: white;
+    margin-top: 15px;
+    @include border-radius(5px);
+
+    .spacer {
+      background-color: $light-blue-color;
+      height: 4px;
+      width: 100px;
+      margin: 20px 0 30px;
+    }
+
+    ul {
+      padding-left: 30px;
+    }
+  }
+
+  li,
+  p {
+    font-size: 21px;
+    margin-bottom: 15px;
+
+    a {
+      color: $indigo-color;
+    }
+  }
+
+  .share-button {
+    color: white;
+  }
+}
+
+.graph-inset {
+  padding-top: 30px;
+  padding-left: 60px;
+
+  @include tablet {
+    padding-right: 60px;
+  }
+
+  @include mobile {
+    padding: 20px;
+  }
+}
+
+.page-section--program-research {
+  padding: 90px 0;
+  background-color: $pale-blue-color;
+
+  .perts-button {
+    width: 350px;
+  }
+}
+
+.page-section--program-goals.page-section--wedge-left {
+  background-color: $indigo-color;
+  height: 436px;
+  padding-top: 90px;
+  padding-bottom: 0;
+
+  h2,
+  p {
+    color: white;
+  }
+
+  .graph-inset {
+    background-color: white;
+    @include box-shadow(0 0 10px 0 rgba(0,0,0,0.15));
+    padding: 20px 15px 20px 35px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+
+  .graphic-left {
+    height: 436px;
+
+    .background-image {
+      background-position: top;
+    }
+
+    &:after {
+      border-left: 100px solid transparent;
+      border-bottom: 436px solid $indigo-color;
+    }
+  }
+
+  @include mobile {
+    padding-top: 0;
+    padding-bottom: 0;
+    height: 860px;
+
+    .graphic-left {
+      padding-bottom: 65%;
+    }
+
+    .container {
+      padding-bottom: 40px;
+    }
+  }
+}
+
+.page-section--enroll-steps {
+  padding: 90px 0;
+  background-color: $pale-blue-color;
+
+  h2,
+  p {
+    color: $indigo-color;
+
+    a {
+      color: $indigo-color;
+      text-decoration: underline;
+    }
+  }
+
+  p {
+    margin-bottom: 45px;
+  }
+
+  img {
+    height: 120px;
+    margin-bottom: 20px;
+  }
+
+  h4 {
+    font-size: 21px;
+    margin-bottom: 20px;
+  }
+}

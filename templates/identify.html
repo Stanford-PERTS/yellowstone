@@ -1,0 +1,335 @@
+{# Student sign-in. #}
+
+{% extends "base.html" %}
+
+{% block title %}
+Participant Sign In
+{% endblock %}
+
+{% block css %}
+
+<!-- qualtrics-based stylesheet -->
+<link rel="stylesheet" href="/static/css/students.css">
+
+<!-- don't use any of the normal css stylesheets -->
+
+{% endblock %}
+
+{% block header %}
+
+<script src="/static/js/identify.js"></script>
+
+<!-- Custom fonts -->
+<script type="text/javascript" src="//use.typekit.net/urk1hla.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+{% endblock %}
+
+{% block content %}
+
+<div ng-controller="IdentifyController" class="full-container students-paths">
+
+    <div id="header"></div>
+
+    <div class="outer-container">
+        <div class="inner-container">
+
+<!-- Sign in form various for different types of identification.
+
+    'default':
+
+    * Classroom
+    * Nickname
+    * Full first name
+    * Middle initial
+    * Full last name
+
+    'alias':
+
+    * Classroom
+    * Alias name, e.g. "Dapper Dentist"
+
+    'dissemination':
+
+     * No class dropdown b/c it's always "All Students"
+     * First three letters of first and last names
+     * No nickname
+     * No middle initial
+ -->
+
+<!-- Sign-In Form -->
+<div ng-show="phase == 1">
+
+    <h1>Student sign-in</h1>
+
+    <div ng-show="alerts.badCodeError" class="warning-text col-xs-8">
+        We don't recognize that code. Please try again.
+    </div>
+
+    <!-- Message for invalid aliases. -->
+    <div ng-show="alerts.badNameError" class="instruction-text col-xs-8">
+        We don't recognize the name &ldquo;[[ alerts.badNameValue ]]&rdquo;.
+        Please try again.
+    </div>
+
+    <div ng-show="alerts.codeHint" class="instruction-text col-xs-8">
+        Your participation code can be obtained from
+        your teacher or introductory material.<br>The
+        code contains two words followed by a number,
+        like &ldquo;apple parade 2&rdquo;.
+    </div>
+
+    <div class="notice old_browser_only instruction-text">
+        You are using an outdated browser and may experience very long load
+        times. Please use a different browser if possible.
+    </div>
+
+    <form name="identifyForm" onsubmit="return false"
+          autocomplete="off" novalidate>
+
+
+        <div ng-hide="cohort">
+            <label>
+                <p>Enter your participation code</p>
+                <!-- cam: I found that one of the directives used here previously,
+                to-lower-case, was not compatible with ng-pattern. -->
+                <input type="text" ng-model="code" name="code"
+                       ng-pattern="codeRegex" required tabindex="1">
+            </label>
+            <button ng-click="getCohort(code)" tabindex="2"
+                    ng-disabled="identifyForm.code.$invalid">Go</button>
+        </div>
+        <!-- Angular doesn't play well with browsers who pre-fill forms when using
+         autocompleted fields; we're putting 'autocomplete="off"' to avoid
+         issues that arise when autocomplete fills out a form. [1]
+         [1]: https://github.com/angular/angular.js/issues/1460 -->
+        <div ng-show='cohort'>
+            <label ng-if="cohort.identification_type != 'dissemination'">
+                <p>Class</p>
+                <select ng-model="identifyData.classroom" name="classroom"
+                        ng-options="c.id as c.name for c in classroomList | orderBy:'name'"
+                        ng-blur="classroomBlurred = true"
+                        styled-select required tabindex="1">
+                </select>
+                <i class="icon-warning-sign"
+                   ng-show="classroomBlurred && identifyForm.classroom.$invalid">
+                    required
+                </i>
+            </label>
+            <div ng-if="cohort.identification_type == 'default'">
+                <label>
+                    <p>Nickname <small>(optional)</small></p>
+                    <input ng-model="ignored" type="text" tabindex="2">
+                </label>
+                <label>
+                    <p>Full first name</p>
+                    <input ng-model="identifyData.first_name" type="text"
+                           name="first_name" required name-characters-only
+                           ng-blur="firstNameBlurred = true" tabindex="3">
+                    <i class="icon-warning-sign"
+                       ng-show="firstNameBlurred && identifyForm.first_name.$invalid">
+                        required
+                    </i>
+                </label>
+                <label>
+                    <p>Middle initial</p>
+                    <input ng-model="identifyData.middle_initial" type="text"
+                           name="middle_initial" maxlength="1" tabindex="4"
+                           ng-disabled="hasNoMiddleName"
+                           ng-pattern="middleInitialRegex"
+                           ng-blur="middleInitialBlurred = true">
+                    <i class="icon-warning-sign"
+                       ng-show="middleInitialBlurred && (identifyForm.middle_initial.$invalid || !identifyData.middle_initial) && !hasNoMiddleName">
+                        required
+                    </i>
+                </label>
+                <label>
+                    <input type="checkbox" ng-model="$parent.hasNoMiddleName"
+                           ng-change="identifyData.middle_initial = ''"
+                           tabindex="5">
+                    I don't have a middle name
+                </label>
+                <label>
+                    <p>Last name</p>
+                    <input ng-model="identifyData.last_name" type="text"
+                           name="last_name" required name-characters-only
+                           ng-blur="lastNameBlurred = true" tabindex="6">
+                    <i class="icon-warning-sign"
+                       ng-show="lastNameBlurred && identifyForm.last_name.$invalid">
+                        required
+                    </i>
+                </label>
+            </div>
+            <div ng-if="cohort.identification_type == 'alias'">
+                <label>
+                    <p>Alias name</p>
+                    <input type="text" name="alias" ng-model="$parent.alias"
+                           required ng-blur="aliasBlurred = true" tabindex="2">
+                    <i class="icon-warning-sign"
+                       ng-show="aliasBlurred && identifyForm.alias.$invalid">
+                        required
+                    </i>
+                </label>
+            </div>
+            <div ng-if="cohort.identification_type == 'dissemination'">
+                <label>
+                    <p>First three letters of your <strong>first</strong> name
+                    <br><small>(if your name is fewer than three letters, just
+                    enter your name)</small></p>
+                    <input ng-model="identifyData.first_name" type="text"
+                           name="first_name" required name-characters-only
+                           ng-maxlength="3" ng-blur="firstNameBlurred = true"
+                           tabindex="1">
+                    <i class="icon-warning-sign"
+                       ng-show="firstNameBlurred && identifyForm.first_name.$invalid">
+                        required, three letters maximum
+                    </i>
+                </label>
+                <label>
+                    <p>First three letters of your <strong>last</strong> name
+                    <br><small>(if your name is fewer than three letters, just
+                    enter your name)</small></p>
+                    <input ng-model="identifyData.last_name" type="text"
+                           name="last_name" required name-characters-only
+                           ng-maxlength="3" ng-blur="lastNameBlurred = true"
+                           tabindex="2">
+                    <i class="icon-warning-sign"
+                       ng-show="lastNameBlurred && identifyForm.last_name.$invalid">
+                        required, three letters maximum
+                    </i>
+                </label>
+            </div>
+            <button class="block-button" tabindex="10"
+                    ng-click="identify()"
+                    ng-disabled="!phaseValid(1)">
+                Submit
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Phase 2 - Display Partial Matches -->
+<div ng-show="phase == 2">
+    <h3>Are you any of these people?</h3>
+    <form name="partialMatchForm" onsubmit="return false"
+          novalidate>
+        <form class="partial-matches" novalidate>
+            <div class="partial-match" ng-repeat="m in partialMatches">
+                <label class="radio-label">
+                    <input type="radio" ng-value="m.id" required
+                           name="$parent.partialMatchChoice"
+                           ng-model="$parent.partialMatchChoice">
+                    [[ m.first_name]]
+                    <span ng-show="m.middle_initial">[[ m.middle_initial ]].</span>
+                    [[ m.last_name ]]
+                </label>
+            </div>
+        </form>
+        <button ng-click="choosePartialMatch()"
+                ng-disabled="partialMatchForm.$invalid">
+                Submit
+        </button>
+        <!-- why is there a pointless-looking element here? -->
+        <!-- http://stackoverflow.com/questions/15778739/angularjs-required-radio-buttons-needs-two-click-events-to-be-valid#answer-18016477 -->
+        <span style="display:none">[[partialMatchChoice]]</span>
+    </form>
+</div>
+
+<!-- New User Double Check Form -->
+<div ng-show="phase == 3">
+    <p><b>We don't recognize that name.</b></p>
+    <div class="instruction-text">
+        Double check your name and click "Create New User" to start.
+    </div>
+    <form name="confirmNewUserForm" novalidate>
+        <div ng-if="cohort.identification_type == 'default'"
+            <label>
+                <p>Nickname <small>(optional)</small></p>
+                <input ng-model="ignored" type="text">
+            </label>
+            <label>
+                <p>Full first name</p>
+                <input ng-model="identifyData.first_name" type="text"
+                       name="first_name" required name-characters-only
+                       ng-blur="confirmFirstNameBlurred = true">
+                <i class="icon-warning-sign" ng-show="confirmFirstNameBlurred && confirmNewUserForm.first_name.$invalid">
+                    required
+                </i>
+            </label>
+            <label>
+                <p>Middle initial</p>
+                <input ng-model="identifyData.middle_initial"
+                       type="text" name="middle_initial" maxlength="1"
+                       ng-disabled="hasNoMiddleName"
+                       ng-pattern="middleInitialRegex"
+                       ng-blur="confirmMiddleInitialBlurred = true">
+                <i class="icon-warning-sign" ng-show="confirmMiddleInitialBlurred && (confirmNewUserForm.middle_initial.$invalid || !identifyData.middle_initial) && !hasNoMiddleName">
+                    required
+                </i>
+            </label>
+            <label>
+                <input type="checkbox" ng-model="hasNoMiddleName"
+                       ng-change="identifyData.middle_initial = ''">
+                I don't have a middle name
+            </label>
+            <label>
+                <p>Last name</p>
+                <input ng-model="identifyData.last_name" type="text"
+                       name="last_name" required name-characters-only
+                       ng-blur="confirmLastNameBlurred = true">
+                <i class="icon-warning-sign" ng-show="confirmLastNameBlurred && confirmNewUserForm.last_name.$invalid">
+                    required
+                </i>
+            </label>
+        </div>
+        <div ng-if="cohort.identification_type == 'dissemination'">
+            <label>
+                <p>First three letters of your <strong>first</strong> name
+                <br><small>(if your name is fewer than three letters, just
+                enter your name)</small></p>
+                <input ng-model="identifyData.first_name" type="text"
+                       name="first_name" required name-characters-only
+                       ng-maxlength="3" ng-blur="confirmFirstNameBlurred = true">
+                <i class="icon-warning-sign"
+                   ng-show="confirmFirstNameBlurred && confirmNewUserForm.first_name.$invalid">
+                    required, three letters maximum
+                </i>
+            </label>
+            <label>
+                <p>First three letters of your <strong>last</strong> name
+                <br><small>(if your name is fewer than three letters, just
+                enter your name)</small></p>
+                <input ng-model="identifyData.last_name" type="text"
+                       name="last_name" required name-characters-only
+                       ng-maxlength="3" ng-blur="confirmLastNameBlurred = true">
+                <i class="icon-warning-sign"
+                   ng-show="confirmLastNameBlurred && confirmNewUserForm.last_name.$invalid">
+                    required, three letters maximum
+                </i>
+            </label>
+        </div>
+        <button ng-click="confirmNewUser()" ng-disabled="!phaseValid(3)">
+            Create New User
+        </button>
+    </form>
+</div>
+
+        </div>
+    </div>
+    <div id="footer">
+        <div class="foot-text">
+          &copy; 2015 Stanford University. All Rights Reserved.
+          | <a href="/transition_mindsets/help">
+            Test Your Device</a>
+        </div>
+    </div>
+
+<!--
+<pre>[[ classroomList | json:'  ' ]]</pre>
+<pre>[[ cohort | json:'  ' ]]</pre>
+<pre>[[ identifyData | json:'  ' ]]</pre>
+ -->
+
+</div> <!-- IdentifyController -->
+
+{% endblock %}

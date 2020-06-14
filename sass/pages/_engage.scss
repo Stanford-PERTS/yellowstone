@@ -1,0 +1,282 @@
+// Engagement Project specific styles
+
+.program-page.engage {
+  font-family: 'proxima-nova', sans-serif;
+
+  .page-section {
+    overflow-x: visible;
+  }
+
+  .page-section.engage-content {
+    padding: 20px 0;
+  }
+
+  .page-masthead {
+    // tighten up spacing
+    .play-button {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    // tighten up spacing
+    .spot-counter {
+      margin-top: 0;
+    }
+
+    // tighten up spacing
+    a.perts-button {
+      margin-top: 10px;
+    }
+
+    p {
+      font-size: 24px;
+    }
+  }
+
+  p, li, .blue-dot {
+    font-family: 'proxima-nova', sans-serif;
+    font-size: 22px;
+
+    > a {
+      font-size: inherit;
+    }
+  }
+
+  p, .blue-dot {
+    margin-bottom: 22px;
+  }
+
+  blockquote {
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: 38px;
+  }
+
+  h2 {
+    font-size: 34px;
+  }
+
+  h3 {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+
+  #learning-conditions h3,
+  &.engage-faq h3 {
+    color: #3faeeb;
+    margin-bottom: 20px;
+  }
+
+  h4 {
+    font-size: 26px;
+    margin-bottom: 24px;
+  }
+
+  h5 {
+    color: lighten(#283044, 25%);
+    font-size: 22px;
+    margin-bottom: 18px;
+  }
+
+  h6 {
+    font-size: 20px;
+    font-weight: bold;
+  }
+
+  .blue-dot {
+    width: 120px;
+    background-color: rgb(108, 171, 229);
+    height: 120px;
+    border-radius: 60px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 45px;
+    font-weight: bold;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .practice-title {
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  img.icon {
+    width: 120px;
+  }
+
+  img.learning-condition-graphic {
+    margin: 25px 0;
+    max-height: 300px;
+  }
+
+  li > ul {
+    margin-top: 0;
+  }
+
+  li.extra-spacing {
+    // extra spacing for when we're using bullets points in cases where we're
+    // using bullets in a non-traditional manner
+    margin-bottom: 1em;
+  }
+
+  // Engagement Report > Toggler
+  .program-card-toggler {
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 16px;
+
+    .toggler-choice {
+      flex-grow: 1;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      // required for mobile widths
+      text-align: center;
+
+      height: 50px;
+
+      border-top: 1px solid #283044;
+      border-bottom: 1px solid #283044;
+
+      &:not(:last-child) {
+        border-right: 1px solid #283044;
+      }
+
+      &:first-child {
+        border-left: 1px solid #283044;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+      }
+
+      &:last-child {
+        border-right: 1px solid #283044;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
+
+      &.active {
+        background: #283044;
+        color: #ffffff;
+      }
+    }
+  }
+
+  .program-card-holder {
+    margin-top: 20px;
+
+    // hacky: on desktop widths, this helps the content lower not bounce up
+    // and down as the active program card changes, but on narrower screens,
+    // there isn't a nice way to determine the height required, so this no
+    // longer works. this means that on mobile devices, the lower content is
+    // going to bounce up and down.
+    min-height: 350px;
+
+    h5 {
+      font-size: 24px;
+    }
+
+    .program-card {
+      display: none;
+    }
+
+    .program-card.active {
+      display: block;
+
+      padding: 10px;
+      border: 1px solid #283044;
+    }
+  }
+
+  // Engagement Project > Navigation Styles
+  // http://www.codingeverything.com/2014/02/BootstrapDocsSideBar.html
+  .group {
+    padding-top: 4px;
+  }
+  .group .subgroup {
+    padding-top: 4px;
+  }
+
+  #sidebar.affix {
+    top: 12px;
+    width: 257px;
+  }
+
+  /* sidebar */
+  .bs-docs-sidebar {
+    padding-left: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .bs-docs-sidebar hr {
+    margin: 7px 0;
+  }
+
+  .bs-docs-sidebar ul {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  /* all links */
+  .bs-docs-sidebar .nav > li > a {
+    color: #495061;
+    border-left: 2px solid transparent;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'proxima-nova', sans-serif;
+  }
+
+  /* nested links */
+  .bs-docs-sidebar .nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 13px;
+    font-family: 'proxima-nova', sans-serif;
+  }
+
+  .bs-docs-sidebar .nav .nav .nav > li > a {
+    padding-left: 44px;
+  }
+
+  /* active & hover links */
+  .bs-docs-sidebar .nav > .active > a,
+  .bs-docs-sidebar .nav > li > a:hover,
+  .bs-docs-sidebar .nav > li > a:focus {
+    color: #3faeeb;
+    text-decoration: none;
+    background-color: transparent;
+    border-left-color: #3faeeb;
+  }
+  /* all active links */
+  .bs-docs-sidebar .nav > .active > a,
+  .bs-docs-sidebar .nav > .active:hover > a,
+  .bs-docs-sidebar .nav > .active:focus > a {
+    font-weight: 700;
+  }
+  /* nested active links */
+  .bs-docs-sidebar .nav .nav > .active > a,
+  .bs-docs-sidebar .nav .nav > .active:hover > a,
+  .bs-docs-sidebar .nav .nav > .active:focus > a {
+    font-weight: 500;
+  }
+
+  /* hide inactive nested list */
+  .bs-docs-sidebar .nav ul.nav {
+    // display until I can figure out why position: fixed is not working
+    display: none;
+  }
+  /* show active nested list */
+  .bs-docs-sidebar .nav > .active > ul.nav {
+    display: block;
+  }
+}

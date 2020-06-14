@@ -1,0 +1,115 @@
+{# Links to helpful documents #}
+
+{% extends "base.html" %}
+
+{% block header %}
+
+<script type="text/javascript">
+
+PertsApp.controller('DocumentsController', [
+    '$scope', '$pertsAjax',
+    function ($scope, $pertsAjax) {
+        'use strict';
+        $scope.includeAliasInstructions = false;
+
+        $pertsAjax({url: '/api/get/program'}).then(function (programs) {
+            $scope.programList = programs;
+
+            var programIds = forEach(programs, function (p) { return p.id; });
+
+            forEach($scope.programList, function (p) {
+                var seasonCode = p.abbreviation.substr(-1, 1);
+                if (seasonCode === 'F') {
+                    p.season = "Fall";
+                } else if (seasonCode === 'S') {
+                    p.season = "Spring";
+                }
+            });
+            $pertsAjax({
+                url: '/api/get/cohort',
+                params: {assc_program_list_json: programIds}
+            }).then(function (cohorts) {
+                $scope.cohortIndex = util.listBy(cohorts, 'assc_program_list');
+
+                // If any cohorts use aliases, include alias instructions.
+                $scope.includeAliasInstructions = cohorts.any(function (c) {
+                    return c.identification_type === 'alias';
+                });
+            });
+        });
+    }
+]);
+
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<div ng-controller="DocumentsController">
+    <div ng-repeat="program in programList">
+
+        <h2>[[ program.name ]] <span ng-show="program.season">([[ program.season ]])</span></h2>
+
+        <ul>
+            <li>
+                <a target="_blank"
+                   href="/p/[[program.abbreviation]]/parent_information_letter">
+                    Parent Information Letter (English)
+                </a>
+            </li>
+            <li ng-show="includeAliasInstructions">
+                <a target="_blank"
+                   href="https://app.box.com/shared/static/hhv7zyspj98ua5vl5iiwz0dhayqobhyr.xlsx">
+                    Student Aliases Sheet
+                </a>
+            </li>
+        </ul>
+
+        <div ng-repeat="c in cohortIndex[program.id]">
+            <p><strong>[[ c.name ]]</strong></p>
+            <!-- <pre>[[ c | json:'  ']]</pre> -->
+            <ul>
+
+                <li ng-hide="c.identification_type == 'alias'">
+                    <a target="_blank"
+                       href="/p/[[program.abbreviation]]/session_instructions?cohort=[[c.id]]">
+                        Session instructions
+                    </a>
+                </li>
+                <li ng-show="c.identification_type == 'alias'">
+                    <a target="_blank"
+                       href="/p/[[program.abbreviation]]/session_instructions_alias?cohort=[[c.id]]">
+                        Session instructions
+                    </a>
+                </li>
+
+                <li ng-hide="program.public_registration || c.identification_type == 'alias'">
+                    <a target="_blank"
+                       href="/p/[[program.abbreviation]]/coordinator_instructions?cohort=[[c.id]]">
+                        Coordinator instructions
+                    </a>
+                </li>
+                <li ng-show="!program.public_registration && c.identification_type == 'alias'">
+                    <a target="_blank"
+                       href="/p/[[program.abbreviation]]/coordinator_instructions_alias?cohort=[[c.id]]">
+                        Coordinator instructions
+                    </a>
+                </li>
+
+                <!-- For spring 2015 (NP15S), we don't need this. -->
+<!--                 <li ng-hide="program.public_registration">
+                    <a target="_blank"
+                       href="/p/[[program.abbreviation]]/data_submission_instructions?cohort=[[c.id]]">
+                        Data submission instructions
+                    </a>
+                </li>
+ -->
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

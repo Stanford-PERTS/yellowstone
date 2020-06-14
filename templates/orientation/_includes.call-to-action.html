@@ -1,0 +1,61 @@
+<div class="call-to-action">
+  <div class="container">
+    <div class="row">
+
+      {% if enrollment_is_unlimited %}
+      <div class="col-md-12 space-bottom">
+        <!-- Get Started button will appear in the banner/masthead. -->
+      </div>
+      {% else %}
+      <div class="col-md-2 space-bottom">
+        <div class="spot-counter">
+          <div class="spot-count">
+            {{ participation_enrolled }} / {{ participation_slots }}
+          </div>
+          <div class="spot-text">
+            Spots Filled
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 text-center space-bottom">
+        <div class="spot-status">
+          {% if participation_full %}
+          <div>All spots have been filled for <span class="spot-status-cohort">{{ program_cohort }}</span></div>
+          <div>We are no longer accepting new schools</div>
+          {% elif participation_is_open == false %}
+            <div>Click <span class="spot-status-cohort">Get Updates</span> to sign up</div>
+            <div>for future program launches</div>
+          {% else %}
+            <div>Ready to get started?</div>
+            <div>Click <span class="spot-status-cohort">Get Started</span> to request your invite</div>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col space-bottom">
+            <a class="btn btn-lg btn-block btn-getstarted" href="#get-started">
+              {% if participation_is_open and participation_full != true %}
+                Get Started
+              {% else %}
+                Get Updates
+              {% endif %}
+            </a>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col text-center">
+            <a href="{{ neptune_protocol }}://{{ neptune_domain }}/login">
+              Already registered? Sign in
+            </a>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>

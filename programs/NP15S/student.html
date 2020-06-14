@@ -1,0 +1,371 @@
+{% extends "templates/base_programs.html" %}
+
+{% block css %}
+
+<!-- don't use any of the normal css stylesheets -->
+<!-- use a version of Matt Kandler's qualtrics-based stylesheet -->
+<link rel="stylesheet" href="/static/css/students.css">
+
+{% endblock %}
+
+{% block program_header %}
+
+<script>
+
+/* defined in programs.js: */
+/*global setupProgramController*/
+
+PertsApp.controller('ProgramController', [
+    '$scope', '$pertsAjax', '$forEachAsync', '$q', '$emptyPromise', '$timeout', '$window',
+    function ($scope, $pertsAjax, $forEachAsync, $q, $emptyPromise, $timeout, $window) {
+        'use strict';
+
+        // load all the generic program code from programs.js
+        setupProgramController($scope, $pertsAjax, $forEachAsync, $q, $emptyPromise, $timeout, $window);
+
+        ////// Function node defintions
+
+        // WARNING: Do not write AJAX calls into these functions. Doing so will
+        // break automated testing. See programs.js -> $scope.stratify().
+        // WARNING: If you call $scope.stratify(), you must return what it returns
+        // (a promise object);
+
+        // No function nodes needed here beyond those defined in programs.js
+    }
+]);
+
+</script>
+
+{% endblock %}
+
+{% block program_content %}
+
+<div class="full-container students-paths">
+    <div id="header"></div>
+    <div class="outer-container">
+        <div class="inner-container with-nav">
+
+
+<div id="module_start" show-module="start">
+    <div show-segment="consent">
+        <div show-page class="container clearfix"
+             hide-previous-button="start/consent/1">
+            <div class="two-third">
+                <div class="callout-text">To learn more about the study before you get started, read the section below.</div>
+                <!-- iframe div for ipad height control
+                http://stackoverflow.com/questions/6139564/iframe-size-on-ipad -->
+                <div class="iframe_container">
+                    <iframe src="/programs/NP15S/static/minor_consent.html"></iframe>
+                </div>
+                <p>
+                    If you understand the study and you are willing to
+                    participate, please click the "Next" button below. If you
+                    do not want to participate, complete this
+                    <span class='pseudolink' ng-click="goToAlternate()">
+                        alternate assignment</span>. 
+                    It involves writing an essay about the ethics of research with human subjects. 
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="module_demo_end" show-module="demo_end">
+    <div show-segment="demo_end">
+        <div show-page class="container clearfix">
+            <div class="two-third">
+                <p>
+                    This demo is over!
+                    <br><br>
+                    If you are a student or teacher participating in this program,
+                    you are seeing this message because of an error. Please contact
+                    us at  to report the problem and provide:
+                </p>
+                <ul>
+                    <li>Your browser, e.g., Firefox, Chrome, Internet Explorer...</li>
+                    <li>The name or email you use to sign into PERTS</li>
+                    <li>Your school name</li>
+                </ul>
+                <p>
+                    <br><br>
+                    Thank you!
+                    <br>
+                    The PERTS Team
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="module_menu" show-module="menu">
+    <div show-segment="menu">
+        <div show-page class="container clearfix"
+             ng-controller="ActivityMenuController"
+             hide-previous-button="menu/menu/1"
+             hide-next-button="menu/menu/1">
+            <div ng-show="displayMenu">
+                <p>Session Menu</p>
+                <span class="align-right quiet"
+                      ng-click="toggleActivityOverride()">choose other</span>
+                <ul class="menu">
+                    <li ng-repeat="module in menuItems">
+                        <button ng-click="module.goToNextHash()"
+                                ng-disabled="!module.available">
+                            Begin [[ module.name ]]
+                        </button>
+                        <span class="module_menu_message"
+                              ng-bind-html="module.menuMessage">
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div ng-show="lockOutMessage">
+                <p ng-bind-html="lockOutMessage"></p>
+            </div>
+            <div ng-show="queryUserBeforeSkipping">
+                <p>Have you already done Session 1?</p>
+                <label>
+                    <input type="radio" name="userDidSession1"
+                           ng-model="userDidSession1" ng-value="true">
+                    Yes
+                </label>
+                <label>
+                    <input type="radio" name="userDidSession1"
+                           ng-model="userDidSession1" ng-value="false">
+                    No
+                </label>
+                <button ng-click="processSkipper()"
+                        ng-disabled="userDidSession1 == undefined">ok</button>
+            </div>
+            <div ng-hide="queryUserBeforeSkipping || lockOutMessage || displayMenu"
+                 style="text-align: center; margin-top: 100px">
+                <img src="/static/images/loading.gif">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="module_alternate_menu" show-module="alternate_menu">
+    <div show-segment="alternate_menu">
+        <div show-page class="container clearfix">
+            <p>Alternate Session Menu</p>
+            <ul class="menu">
+                <li ng-repeat="m in staticOutline | filter:{type:'alternate'}">
+                    <button ng-click="outline[m.id].goToNextHash()">
+                        [[ m.name ]]
+                    </button>
+                    <span class="module_menu_message">
+                        Click the button to the left to begin.
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div id="module_session_1" show-module="session_1"></div>
+
+<div id="module_session_1_alternate" show-module="session_1_alternate">
+    <div show-segment="alternate">
+        <div show-page class="container clearfix">
+        <div class="two-third">
+            <h2>Alternative Activity</h2>
+            <p><i>
+                If you would rather participate in the research study, please
+                click
+                <span class='pseudolink'
+                      ng-click="alternateToActivity(1)">Here</span>.
+            </i></p>
+            <p>
+                Your assignment is to read the following article and write an essay responding to the prompts on the next page.
+            </p>
+            <p>
+                Click the link below and read the article on ethical research.  Once you are finished reading the article, please click 'Next.'
+            </p>
+            <center><p style="font-size:150%">
+                <a href="http://www.nytimes.com/1982/09/12/magazine/research-through-deception.html?pagewanted=print" target="_blank">Article Link</a>
+            </p></center>
+        </div>
+        <div class="one-third last">
+            </div>
+        </div>
+        <div show-page class="container clearfix">
+            <div class="two-third">
+                <p>Thank you for reading the article.</p>
+                <p>
+                    Please write a 400-600 word essay based on the questions below:
+                </p>
+                <ul>
+                    <li>What led to the debate discussed in the article?</li>
+                    <li>What are the arguments for using deception in research?</li>
+                    <li>What are the criticisms of using deception in research?</li>
+                    <li>What is your opinion about whether or not it is ethical to use deception in research?</li>
+                </ul>
+                <p>
+                    <i>Do not worry about spelling or grammar. We just want to know what you think.</i>
+                </p>
+                <p>
+                    <textarea placeholder="type your response here..." name="pd.or_alternate_1" ng-model="pd.or_alternate_1" style="width:500px;height:850px"></textarea>
+                </p>
+            </div>
+            <div class="one-third last"></div>
+        </div>
+        <div show-page class="container clearfix">
+            <div class="two-third">
+                <h2>All Done!</h2>
+                <p>
+                    Thank you for submitting the assignment!  You may now close this window.
+                </p>
+            </div>
+            <div class="one-third last"></div>
+        </div>
+    </div>
+</div>
+
+<div id="module_session_2" show-module="session_2"></div>
+
+<div id="module_session_2_alternate" show-module="session_2_alternate">
+    <div show-segment="alternate">
+        <div show-page class="container clearfix">
+            <div class="two-third">
+                <h2>Alternative Activity</h2>
+                <p><i>
+                    If you would rather participate in the research study,
+                    please click
+                    <span class='pseudolink'
+                          ng-click="alternateToActivity(2)">Here</span>.
+                </i></p>
+                <p>
+                    Your assignment is to read the following article and write an
+                    essay responding to the prompts on the next page.
+                </p>
+                <p>
+                    Click the link below and read the article on ethical research.
+                    Once you are finished reading the article, please click 'Next.'
+                </p>
+                <center><p style="font-size:150%">
+                    <a href="http://alumni.stanford.edu/get/page/magazine/article/?article_id=40741" target="_blank">Article Link</a>
+                </p></center>
+            </div>
+            <div class="one-third last"></div>
+        </div>
+        <div show-page class="container clearfix">
+            <div class="two-third">
+                <p>Thank you for reading the article.</p>
+                <p>
+                    Please write a 400-600 word essay based on the questions below:
+                </p>
+                <ul>
+                    <li>Why was this study now considered to be so unethical?</li>
+                    <li>What is your opinion about whether or not Zimbardo should have done this study?</li>
+                    <li>How did you feel about how the fake guards treated the fake prisoners? Did this surprise you?</li>
+                    <li>Why do you think this study had such powerful effects on how people behaved?</li>
+                </ul>
+                <p>
+                    <i>Do not worry about spelling or grammar. We just want to
+                    know what you think.</i>
+                </p>
+                <p>
+                    <textarea placeholder="type your response here..." name="pd.or_alternate_2" ng-model="pd.or_alternate_2" style="width:500px;height:850px"></textarea>
+                </p>
+            </div>
+            <div class="one-third last"></div>
+        </div>
+        <div show-page class="container clearfix">
+            <div class="two-third">
+                <h2>All Done!</h2>
+                <p>
+                    Thank you for submitting the assignment!  You may now close
+                    this window.
+                </p>
+            </div>
+            <div class="one-third last"></div>
+        </div>
+    </div>
+</div>
+
+<div id="module_session_3" show-module="session_3"></div>
+
+<div id="module_session_3_alternate" show-module="session_3_alternate">
+    <div show-segment="alternate">
+        <div show-page class="container clearfix">
+            <div class="two-third">
+                <h2>Alternative Activity</h2>
+                <p><i>
+                    If you would rather participate in the research study,
+                    please click
+                    <span class='pseudolink'
+                          ng-click="alternateToActivity(3)">Here</span>.
+                </i></p>
+                <p>
+                    Your assignment is to read the following article and write an
+                    essay responding to the prompts on the next page.
+                </p>
+                <p>
+                    Click the link below and read the article on ethical research.
+                    Once you are finished reading the article, please click 'Next.'
+                </p>
+                <center><p style="font-size:150%">
+                    <a href="http://en.wikipedia.org/wiki/Asch_conformity_experiments" target="_blank">Article Link</a>
+                </p></center>
+            </div>
+            <div class="one-third last"></div>
+        </div>
+        <div show-page class="container clearfix">
+            <div class="two-third">
+                <p>Thank you for reading the article.</p>
+                <p>
+                    Please write a 400-600 word essay based on the questions below:
+                </p>
+                <ul>
+                    <li>Would you have agreed with the group about which line was correct? Why or why not?</li>
+                    <li>What's an example from your own life where you or others have followed the group, even against personal judgment?</li>
+                </ul>
+                <p>
+                    <i>Do not worry about spelling or grammar. We just want to
+                    know what you think.</i>
+                </p>
+                <p>
+                    <textarea placeholder="type your response here..." name="pd.or_alternate_3" ng-model="pd.or_alternate_3" style="width:500px;height:850px"></textarea>
+                </p>
+            </div>
+            <div class="one-third last"></div>
+        </div>
+        <div show-page class="container clearfix">
+            <div class="two-third">
+                <h2>All Done!</h2>
+                <p>
+                    Thank you for submitting the assignment!  You may now close
+                    this window.
+                </p>
+            </div>
+            <div class="one-third last"></div>
+        </div>
+    </div>
+</div>
+
+
+
+            <div id="program_navigation" ng-show="activePage">
+                <button class="nav_link previous button"
+                      ng-click="previousButton()"
+                      ng-show="showPreviousButton()">
+                    Previous
+                </button>
+                <button class="nav_link next button"
+                      ng-click="nextButton()"
+                      ng-show="showNextButton()">
+                    Next
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div id="footer">
+        <div class="foot-text">&copy; 2014 Stanford University. All Rights Reserved.</div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{
+    "_description": "",
+    "master": {
+        "app.yaml": {
+            "_description": "",
+            "PROJECT_ID": "",
+            "APP_ENGINE_VERSION": "",
+            "NEPTUNE_DOMAIN": "",
+            "TRITON_DOMAIN": ""
+        },
+        "cron.yaml": {
+            "_description": "",
+
+            "/cron/check_for_errors": true,
+
+            "_update_2017-02-16": "",
+
+            "/cron/aggregate": false,
+            "/cron/index": false,
+            "/cron/send_reminders": false,
+
+            "_update_2019-02-14": ""
+        }
+    },
+    "acceptance": {
+        "app.yaml": {
+            "_description": "",
+            "PROJECT_ID": "",
+            "APP_ENGINE_VERSION": "",
+            "NEPTUNE_DOMAIN": "",
+            "TRITON_DOMAIN": ""
+        },
+        "cron.yaml": {
+            "_description": "",
+            "_all": false
+        }
+    },
+    "dev": {
+        "app.yaml": {
+            "_description": "",
+            "PROJECT_ID": "",
+            "APP_ENGINE_VERSION": "",
+            "NEPTUNE_DOMAIN": "",
+            "TRITON_DOMAIN": ""
+        },
+        "cron.yaml": {
+            "_description": "",
+            "_all": false
+        }
+    }
+}

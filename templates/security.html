@@ -1,0 +1,320 @@
+{% extends "p3-base.html" %}
+
+{% block title %}
+Information Security | PERTS
+{% endblock %}
+
+{% block meta_description %}
+Our goal at PERTS is to be transparent about data security and privacy
+practices, including how we use cloud services.
+{% endblock %}
+
+{% block content %}
+
+<style>
+ul.security-statement-links {
+  list-style-type: none;
+}
+
+.security-statement-links li {
+  padding: 10px 0;
+}
+
+.security-statement-links .icon-wrapper {
+  width: 80px;
+  margin-right: 10px;
+  text-align: center;
+}
+
+.security-statement-links .icon-wrapper img {
+  width: 75px;
+}
+
+.security-statement-links .icon-wrapper a {
+  text-decoration: none;
+}
+</style>
+
+<div class="about-page">
+  <div class="page-masthead">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h1>Information Security at PERTS</h1>
+          <p>
+            PERTS has strong information security policies and a proactive
+            security culture. This page summarizes how PERTS secures student
+            data and PERTS policies regarding potential data breaches. Our
+            privacy policies can be found at
+            <a href="/terms">perts.net/terms</a>.
+          </p>
+          <!--
+          <p>
+            PERTS uses several cloud services to maximize impact with minimal
+            cost. Data security matters, and our goal at PERTS is to be
+            transparent about how we store and protect your information.
+          </p>
+          -->
+        </div>
+      </div>
+    </div>
+    {% include 'components/navbar_top.html' %}
+  </div>
+
+  <div class="page-section page-section--mission">
+    <div class="container">
+      <div class="row" id="how-does-perts-secure-data">
+        <div class="col-lg-8 col-lg-offset-1 col-sm-8">
+          <h3>
+            How does PERTS secure data?
+          </h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-1 col-sm-8">
+          <ul>
+            <li>
+              PERTS
+              <a href="#cloud-services"
+                >chooses cloud services with best-in-class security practices</a
+              >.
+            </li>
+            <li>
+              PERTS double-encrypts data in transit and data at rest using
+              industry-standard AES-256 file containers on top of
+              already-existing protections (full-disk encryption, TLS
+              connections).
+            </li>
+            <li>
+              PERTS staff prevent attacks from online threats by using dedicated
+              devices with
+              <a href="https://support.apple.com/en-us/HT201940">anti-virus</a>
+              and
+              <a href="https://support.apple.com/en-us/HT202491"
+                >malware protection</a
+              >.
+            </li>
+            <li>
+              PERTS staff prevent attacks from in-person threats by using
+              dedicated devices with
+              <a
+                href="https://support.apple.com/guide/mac-help/encrypt-mac-data-with-filevault-mh11785/mac"
+                >full-disk encryption</a
+              >
+              and password-locked accounts.
+            </li>
+            <li>
+              PERTS trains staff to be aware of typical social engineering
+              attacks, such as phishing, and forward suspicious communications
+              to the Director of Technology before interacting or responding.
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row" id="cloud-services">
+        <div class="col-lg-8 col-lg-offset-1 col-sm-8">
+          <h3>
+            Third-Party Security Statements
+          </h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-5 col-lg-offset-1 col-sm-6">
+          <p>
+            These services operate our web servers and store
+            potentially private information about teachers and students who
+            use our programs. Each service protects data in transit with TLS,
+            encrypts stored data, and segregates our data from all other
+            service customers. Only a handful of PERTS staff have password-protected
+            access to these accounts, which we never share. Please refer to each
+            service's security statement for more details.
+          </p>
+        </div>
+        <div class="col-lg-5 col-sm-6">
+          <ul class="security-statement-links">
+            <li>
+              <a href="//cloud.google.com/security">
+              <span class="icon-wrapper"><img
+                  src="/static/images/home/google_cloud_logo.png"
+                  alt="Google Cloud logo"
+              ></span>Google Cloud Statement
+              </a>
+            </li>
+            <li>
+              <a href="//www.qualtrics.com/security-statement">
+              <span class="icon-wrapper"><img
+                  src="/static/images/home/qualtrics_logo.png"
+                  alt="Quatlrics logo"
+              ></span>Qualtrics Statement
+              </a>
+            </li>
+            <li>
+              <a href="//www.box.com/security">
+              <span class="icon-wrapper"><img
+                src="/static/images/home/box_logo.png"
+                style="vertical-align: text-bottom;"
+                alt="Box.com logo"
+              ></span>Box Statement
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row" id="what-constitutes-a-data-breach">
+        <div class="col-lg-8 col-lg-offset-1 col-sm-8">
+          <h3>
+            What constitutes a data breach?
+          </h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-1 col-sm-8">
+          <p>
+            We consider an event a data breach if it involves the possibility
+            that our <a href="/privacy">privacy policy</a> was violated, like
+            the exposure of personal information to unauthorized parties.
+          </p>
+          <p>
+            The PERTS privacy policy defines personal information the same way
+            as the Family Educational Rights and Privacy Act (FERPA), as “any
+            information that, alone or in combination, is linked or linkable to
+            a specific student that would allow a reasonable person in the
+            school community, who does not have personal knowledge of the
+            relevant circumstances, to identify the student with reasonable
+            certainty.”
+          </p>
+        </div>
+      </div>
+      <div class="row" id="how-are-breach-responsibilities-divided">
+        <div class="col-lg-8 col-lg-offset-1 col-sm-8">
+          <h3>
+            How are breach responsibilities divided?
+          </h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-1 col-sm-8">
+          <p>
+            All PERTS team members are responsible for being alert to signs
+            that a data breach has occurred. The Director of Technology is
+            responsible for leading the response to suspected and actual data
+            breaches. The Director of Programs is responsible for external
+            communication required as a result of any data breach. Legal
+            consultation is provided by PERTS fiscal sponsor, Stanford
+            University.
+          </p>
+        </div>
+      </div>
+      <div class="row" id="how-are-suspected-data-breaches-escalated">
+        <div class="col-lg-8 col-lg-offset-1 col-sm-8">
+          <h3>
+            How are suspected data breaches escalated?
+          </h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-1 col-sm-8">
+          <p>
+            Any suspicions of a data breach are reported to the
+            Director of Technology.
+          </p>
+        </div>
+      </div>
+      <div class="row" id="how-does-perts-detect-data-breaches">
+        <div class="col-lg-8 col-lg-offset-1 col-sm-8">
+          <h3>
+            How does PERTS detect data breaches?
+          </h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-1 col-sm-8">
+          <ul>
+            <li>
+              PERTS manually verifies Authorized Organizational Representatives
+              (see the corresponding section in the
+              <a href="/privacy">privacy policy</a>) before
+              allowing them to access personal information from their
+              organization. All instances of access are recorded and audited.
+            </li>
+            <li>
+              PERTS periodically audits all access to data-containing accounts
+              and account credentials.
+            </li>
+            <li>
+              PERTS monitors notices from third-party services we use about any
+              applicable security issues.
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row" id="what-are-the-typical-steps-to-respond-to-a-data-breach">
+        <div class="col-lg-8 col-lg-offset-1 col-sm-8">
+          <h3>
+            What are the typical steps to respond to a data breach?
+          </h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-1 col-sm-8">
+          <ul>
+            <li>
+              Choose appropriate staff members in each department to identify,
+              contain, and recover from the breach.
+            </li>
+            <li>
+              Identify what type of breach has occurred and reference prepared
+              protocols.
+            </li>
+            <li>
+              Secure all potentially-affected data by changing passwords and
+              encryption keys and/or closing accounts.
+            </li>
+            <li>
+              Back up any digital evidence related to the breach.
+            </li>
+            <li>
+              Fully wipe any affected devices.
+            </li>
+            <li>
+              Identify the source of the breach.
+            </li>
+            <li>
+              Alert legal counsel.
+            </li>
+            <li>
+              Notify data owners about the breach.
+            </li>
+            <li>
+              Conduct a post-mortem and act on any take-aways.
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-1 col-sm-8">
+          <h3>
+            Privacy Policy
+          </h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 col-lg-offset-1 col-sm-8">
+          <p>
+            Our privacy policy covers all data stored or processed by cloud
+            services across all PERTS programs.
+          </p>
+          <ul>
+            <li>
+              <a href="/privacy">
+                Privacy Policy
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

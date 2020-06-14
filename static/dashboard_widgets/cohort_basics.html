@@ -1,0 +1,50 @@
+<h4>Details of [[cohort.name]]</h4>
+
+<form role="form">
+    <div class="form-group">
+        <label for="cohortBasics_name">Name</label>
+        <input type="text" id="cohortBasics_name" ng-model="cohort.name"
+               class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="cohortBasics_code">Code</label>
+        <input type="text" id="cohortBasics_code" ng-model="cohort.code"
+               disabled="disabled" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="cohortBasics_identType">
+            Students at this school sign in with
+        </label>
+        <select styled-select ng-model="cohort.identification_type"
+                id="cohortBasics_identType">
+            <option value="default">First and last name with middle intial</option>
+            <option value="alias">Whitelisted aliases</option>
+            <option value="dissemination">Three letters each of first and last name</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="cohortBasics_city">City</label>
+        <input type="text" id="cohortBasics_city" ng-model="school.city"
+               class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="cohortBasics_state">State</label>
+        <input type="text" id="cohortBasics_state" ng-model="school.state"
+               class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="cohortBasics_country">Country</label>
+        <input type="text" id="cohortBasics_country" ng-model="school.country"
+               class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="cohortBasics_district">District</label>
+        <input type="text" id="cohortBasics_district" ng-model="school.district"
+               class="form-control">
+    </div>
+
+    <button ng-click="deleteCohort(cohort)">
+        <i class="glyphicon glyphicon-trash"></i>
+        delete school
+    </button>
+</form>

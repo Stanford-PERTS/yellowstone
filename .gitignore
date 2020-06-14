@@ -1,0 +1,39 @@
+# GCloud App Engine SDK
+# See the --storage_path flag for dev_appserver.py
+.gae_sdk
+
+sdk_pid.txt
+
+node_modules
+
+*.pyc
+*.python-version
+*.sublime*
+.DS_Store
+
+.sass-cache
+.sass-cache/*
+**/.sass-cache/*
+**/.sass-cache
+
+# Explicitly ignoring CSS because we want to include main.css, chosen.css, and
+# the PNG files because they aren't generated with the SASS build process.
+static/css/app-old.css
+static/css/app-orientation.css
+static/css/app-orientation.css.map
+static/css/app.css
+static/css/app.css.map
+static/css/orientation.css
+static/css/orientation.css.map
+
+*.log
+
+.svn
+
+# created by gitsome
+parser_table.py
+
+system_notes.md
+chris_notes.md
+*.sublime-project
+*.sublime-workspace

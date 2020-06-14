@@ -1,0 +1,90 @@
+{# A simple form teachers must fill out after creating an account. #}
+
+{% extends "base.html" %}
+
+{% block title %}
+Registration Survey
+{% endblock %}
+
+{% block header %}
+<script src="/static/js/dashboard.js"></script>
+<script>
+
+var programId = "{{program_id}}";
+var programAbbr = "{{program.abbreviation}}";
+
+PertsApp.controller('SurveyController', [
+    '$scope', '$getStore', '$window',
+    function ($scope, $getStore, $window) {
+        'use strict';
+        // Check on the validity of the form. We're not inside the directive of
+        // this widget, so the quickest way to check is to hack into its scope.
+        $scope.submitDisabled = function () {
+            // @todo: Ugly hack. Fix someday.
+            // var asscForm = $('form[name="cohortAssociatorForm"]');
+            var form = $('form[name="userBasicsForm"]');
+            var childScope = angular.element(form).scope();
+            if (childScope) {
+                // return childScope.cohortAssociatorForm.$invalid;
+                return childScope.userBasicsForm.$invalid;
+            } else {
+                return true;
+            }
+        };
+        $scope.submit = function () {
+            var user = $getStore.get($window.userId);
+            user.registration_complete = true;
+            $getStore.synchronize().then(function () {
+                $window.location.href = '/d';
+            });
+        };
+    }
+]);
+</script>
+
+<style>
+#content .info {
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+#content .info i {
+    font-size: 1.5em;
+}
+
+.alert {
+    margin-top: 25px;
+}
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div ng-controller="SurveyController">
+
+    {% if registration_email_sent %}
+    <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span>
+        </button>
+        Welcome! We've sent you an email at
+        <strong>{{ user.login_email }}</strong>
+        to confirm your registration.
+    </div>
+    {% endif %}
+    
+    <h2>Please tell us about yourself</h2>
+    <div class="row">
+        <div user-basics user-id="{{user.id}}" class="col-xs-10 col-sm-6"></div>
+    </div>
+
+    <br><br>
+    <button ng-click="submit()" ng-disabled="submitDisabled()">
+        Continue
+    </button>
+
+    
+</div>
+
+{% endblock %}

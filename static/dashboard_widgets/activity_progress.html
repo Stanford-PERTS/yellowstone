@@ -1,0 +1,46 @@
+<td class="select col0" rowspan="[[ sessions.length ]]"
+    ng-show="showProgress=='true' && activity.activity_ordinal == 1">
+    <input type="checkbox" ng-model="isSelected">
+</td>
+<td class="name col1" rowspan="[[ sessions.length ]]"
+    ng-show="activity.activity_ordinal == 1">
+    <a href="#/classroom/[[ classroom.id ]]/roster">
+        [[ classroom.name ]]
+    </a>
+</td>
+<td class="session col2">[[ activity.activity_ordinal ]]</td>
+<td class="date col3" tooltip="[[ datepickrTooltip ]]">
+    <input class="datepickr">
+</td>
+<!-- this showProgress variable is here b/c we use this widget in multiple
+locations, only some of which need the rull range of data it can display -->
+<td class="status col4" ng-show="showProgress=='true'">
+    <select styled-select ng-model="activity.status" 
+    		class="activity_status [[ interpretedStatus(activity) ]]"
+            ng-options="opt.value as opt.text for opt in statusOptions">
+    </select>
+</td>
+<td class="study_ineligible [[studyIneligibleClass]] col5" ng-show="showProgress=='true'"
+    tooltip="[[studyIneligibleTooltip]]">
+    [[ studyIneligible ]]
+</td>
+<td class="study_eligible [[studyEligibleClass]] col6" ng-show="showProgress=='true'"
+    tooltip="[[studyEligibleTooltip]]">
+    [[ studyEligible ]]
+</td>
+<td class="completed [[completedClass]] col7" ng-show="showProgress=='true'"
+    tooltip="[[completedTooltip]]">
+    [[ completed ]] ([[ pctCompleted ]])
+</td>
+<td class="makeup_ineligible [[makeupIneligibleClass]] col8" ng-show="showProgress=='true'"
+    tooltip="[[makeupIneligibleTooltip]]">
+    [[ makeupIneligible ]]
+</td>
+<td class="makeup_eligible [[makeupEligibleClass]] col9" ng-show="showProgress=='true'"
+    tooltip="[[makeupEligibleTooltip]]">
+    [[ makeupEligible ]]
+</td>
+<td class="uncoded [[uncodedClass]] col10" ng-show="showProgress=='true'"
+    tooltip="[[uncodedTooltip]]">
+    [[ uncoded ]]
+</td>

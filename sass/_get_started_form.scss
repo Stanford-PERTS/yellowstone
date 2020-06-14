@@ -1,0 +1,81 @@
+@import 'spacing';
+
+form.get-started {
+  margin: $padding-base;
+  padding: $padding-base;
+
+  border: 2px solid darken($pale-blue-color, 20%);
+  border-radius: 5px;
+
+  background: $pale-blue-color;
+
+  button,
+  label {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .radio label, .checkbox label {
+    text-transform: initial;
+    font-weight: normal;
+    margin-bottom: 0;
+  }
+
+  .option-detail {
+    margin-top: 28px;
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      padding-top: 10px;
+    }
+
+    input.form-control {
+      margin-left: 20px;
+      flex-grow: 1;
+      width: initial;
+    }
+  }
+
+  .form-loading,
+  .form-completed,
+  .form-student-message {
+    display: none;
+    height: 36px;
+  }
+
+  &.loading {
+    .form-submit {
+      display: none;
+    }
+
+    .form-loading {
+      display: block;
+      text-align: center;
+    }
+  }
+
+  &.completed {
+    .form-submit {
+      display: none;
+    }
+
+    .form-completed {
+      display: block;
+      text-align: center;
+    }
+  }
+
+  &.student {
+    .form-submit {
+      display: none;
+    }
+
+    .form-student-message {
+      display: block;
+      text-align: center;
+    }
+  }
+}

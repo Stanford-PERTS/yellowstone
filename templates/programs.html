@@ -1,0 +1,115 @@
+{% extends "p3-base.html" %}
+
+{% set title = "Academic Mindset Programs | PERTS" %}
+{% set description = "Our mindset programs are designed to raise academic achievement by changing how
+students think about school. Let's unmask students' true potential." %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block meta_description %}
+{{ description }}
+{% endblock %}
+
+{% block content %}
+
+<div class="program-page program-index-page">
+
+  <div class="page-masthead">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-md-6">
+          <h1>Programs</h1>
+          <p>
+            PERTS creates evidence-based programs for educators in K&ndash;12
+            and higher education settings.
+          </p>
+        </div>
+        <div class="col-xs-12 col-sm-3 col-md-5"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-section page-section--programs-intro" id="about">
+    <div class="container">
+      <div class="row">
+
+        {% if college_programs | length > 0 %}
+        <div class="col-sm-6">
+        <div class="programs-wrapper">
+          <h3>Higher Education Programs</h3>
+          <div class="spacer"></div>
+          <ul>
+            {% for p in college_programs %}
+              <li><a href="/orientation/{{p.abbr}}">{{ p.name }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        </div>
+        {% endif %}
+
+        {% if highschool_programs | length > 0 %}
+        <div class="col-sm-6">
+        <div class="programs-wrapper">
+        <h3>K-12 Programs</h3>
+        <div class="spacer"></div>
+        <ul>
+          {% for p in highschool_programs %}
+            <li><a href="/orientation/{{p.abbr}}">{{ p.name }}</a></li>
+          {% endfor %}
+        </ul>
+        </div>
+        </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+
+  <div class="page-section page-section--program-goals page-section--wedge-left">
+    <div class="graphic-left">
+      <div class="background-image" image-loader
+           image="/static/home/img/perts_img/fotolia_53248379.jpg"></div>
+      {# other image options: #}
+      {# * https://us.fotolia.com/id/27324820 #}
+      {# * https://us.fotolia.com/id/69147844 #}
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-6">
+          <blockquote>
+            <p>
+              The results were amazing, and well above my expectations&hellip;
+              Two forty-five minute sessions is all it takes to make a
+              significant change in your students&rsquo; motivation and
+              classroom performance.
+            </p>
+            <p>- Community College Educator</p>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-section page-section--program-research">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+          <h2 id="ready-to-start">About PERTS Programs</h2>
+          <p>
+            Our programs help educators foster equitable academic engagement and success. Some
+            programs target students directly using brief online readings and
+            activities. Other programs use research-based measures to provide educators with research-based
+            recommendations relevant to their unique context.
+          </p>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'components/navbar_top_inverted.html' %}
+
+</div>
+{% endblock %}

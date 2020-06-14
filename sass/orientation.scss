@@ -1,0 +1,50 @@
+@import 'colors';
+
+.cb17 .container {
+  padding-bottom: 30px;
+}
+
+.cb17 form#invite-form {
+  input {
+    height: auto;
+    margin-top: 1px;
+  }
+
+  label.checkbox-inline {
+    input {
+      width: initial;
+    }
+  }
+}
+
+.cb17 .form_inner {
+  margin-bottom: 10px;
+}
+
+.cb17 .subgroup .perts-button {
+  margin: 0;
+}
+
+@media (max-width: 991px) {
+  .cb17 {
+    .perts-button {
+      display: none;
+    }
+  }
+}
+
+.background-image.cb17 {
+  background-image: url(/static/images/programs/cg17-cover.jpg);
+  opacity: 1;
+}
+
+#introduction {
+  margin-top: 14px;
+}
+
+.about-the-program-item {
+  margin-bottom: 14px;
+
+  border: 3px solid $light-blue-color;
+  border-radius: 10px;
+}

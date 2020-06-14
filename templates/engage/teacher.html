@@ -1,0 +1,379 @@
+{% extends "engage/_template.engage.html" %}
+
+{% set title = "Engagement Project: Guide for Teachers" %}
+{% set page_description = title %}
+{% set youtube = null %}
+{% set wisita = null %}
+{% set program_label = "ep19" %}
+{% set login_url = triton_protocol ~ "://" ~ triton_domain ~ "/login?program=" ~ program_label %}
+{% set platform = "triton" %}
+{% set domain = triton_protocol + "://" + triton_domain %}
+
+{% set ga_event_role = "teacher" %}
+{% set registration_open = true %}
+
+{% block masthead %}
+
+<div class="row justify-content-center">
+  {% if registration_open %}
+  <div class="col-4 col-sm-3">
+    <a href="#start-team" class="action-wrapper">
+      <img src="/static/images/engage/team.png" alt="diagram of team relationships" />
+      <div>Start Team</div>
+    </a>
+  </div>
+  {% endif %}
+  <div class="col-4 col-sm-3">
+    <a
+      href="#contact-perts"
+      class="action-wrapper"
+      data-description-option="mailingList"
+    >
+      <img src="/static/images/engage/mail.png" alt="letter in envelope" />
+      <div>Join Mailing List</div>
+    </a>
+  </div>
+  <div class="col-4 col-sm-3">
+    <a
+      href="#contact-perts"
+      class="action-wrapper"
+      data-description-option="askQuestion"
+    >
+      <img src="/static/images/engage/speech_bubbles.png" alt="speech bubbles" />
+      <div>Ask a Question</div>
+    </a>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    {% if registration_open %}
+      <a href="{{ login_url }}">
+        Already registered? Sign in
+      </a>
+    {% else %}
+      The Engagement Project opens on August 12<sup>th</sup>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="engage">
+  <div class="container mindfor-affix-stop">
+    <div class="row">
+      <!--Main Content -->
+      <div class="col-md-9">
+
+        <section id="benefits-for-teachers" class="group">
+            <h2>The benefits for teachers</h2>
+              <p>
+               The Engagement Project is designed to help teachers create a more
+               engaging and more equitable classroom climate. The process
+               consists of multiple cycles of inquiry and action.
+            </p>
+            <p>
+              Teachers use brief students surveys to develop insights into the
+              quality and equity of students’ learning experiences. Teachers
+              receive customized reports that recommend evidence-based
+              strategies relevant to their students. These steps are repeated
+              to improve classroom climate and motivation.
+          </p>
+          <p>
+              The Engagement Project allows <u>teachers</u> to:
+          </p>
+              <ul>
+                <li>
+                  Use brief surveys to collect data on their
+                  students’ experience in class
+                </li>
+                <li>
+                  Gain access to an online library of evidence-based
+                  strategies developed by educators for boosting engagement
+                  and motivation
+                </li>
+                <li>
+                  Receive reports showing change over time so that they
+                  can see if new strategies they try are having an impact
+                </li>
+                <li>
+                 Work collaboratively with their colleagues to boost learning
+                by leveraging their collective wisdom
+                </li>
+              </ul>
+          </section>
+
+        <section id="how-does-it-work" class="group">
+          <h2>How does it work?</h2>
+
+          <div class="row">
+            <div class="col-12">
+              <div class="bordered-inset">
+                <h3>3+ Cycles of Inquiry and Action</h3>
+                <p>Each cycle involves:</p>
+                <ul>
+                  <li>A 10-minute student survey (with setup)</li>
+                  <li>A 45-minute collaborative meeting</li>
+                  <li>30 minutes of individual learning and reflection</li>
+                </ul>
+                <div class="flowchart-wrapper">
+                  <img
+                    src="/static/images/engage/process_flowchart.png"
+                    alt="diagram of the Engagement Project process"
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+
+         <p>To learn more about the program details, see the
+              <a href="/engage/faq">Frequently Asked Questions</a>.
+            </p>
+        </section>
+
+        <section id="what-do-the-surveys-measure" class="group">
+          <h2>What do the surveys measure?</h2>
+
+          <div class="row">
+            <div class="col-sm-8">
+              <p>
+                Students regularly complete surveys&mdash;and teachers
+                quickly receive reports&mdash;that provide insight into how
+                students perceive three learning conditions that foster
+                engagement.
+              </p>
+              <div class="row condition-detail-row">
+                <div class="col-3">
+                  <img
+                    src="/static/images/engage/conditions-teacher-caring.png"
+                    alt="teacher showing caring for students"
+                  />
+                </div>
+                <div class="col-9">
+                  Teacher Caring (3 questions)<br />
+                  <em>&ldquo;I feel like my teacher cares what I think.&rdquo;</em>
+                </div>
+              </div>
+              <div class="row condition-detail-row">
+                <div class="col-3">
+                  <img
+                    src="/static/images/engage/conditions-feedback-for-growth.png"
+                    alt="teacher giving feedback to a student"
+                  />
+                </div>
+                <div class="col-9">
+                  Feedback for Growth (3 questions)<br />
+                  <em>&ldquo;This week, I got specific suggestions about how
+                  to improve my skills.&rdquo;</em>
+                </div>
+              </div>
+              <div class="row condition-detail-row">
+                <div class="col-3">
+                  <img
+                    src="/static/images/engage/conditions-meaningful-work.png"
+                    alt="student experiencing motivatino while reading"
+                  />
+                </div>
+                <div class="col-9">
+                  Meaningful Work (3 questions)<br />
+                  <em>&ldquo;This week in class, I learned skills that matter
+                  for my life.&rdquo;</em>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <figure>
+                <figcaption>Example chart from a teacher report</figcaption>
+                <img
+                  src="/static/images/engage/double_run_chart.png"
+                  alt="two line charts showing improvements over time"
+                />
+              </figure>
+            </div>
+          </div>
+          <p>
+            Read more about these essential learning conditions at
+            <!-- /conditions is a short link in production, and may 404 in
+                 other environments -->
+            <a href="/conditions">perts.net/conditions</a>.
+          </p>
+        </section>
+
+        <section id="what-is-the-time-commitment" class="group">
+          <h2>What is the time commitment?</h2>
+
+          <div class="row">
+            <div class="col-sm-3">
+              <figure>
+                <img src="/static/images/engage/clock.png" alt="clock" width="150">
+              </figure>
+            </div>
+            <div class="col-sm-9">
+              <p>
+                <strong>40 minutes of class time</strong><br />
+                10 minutes of introduction<br />
+                3 cycles &times; 10 minute surveys &equals; 30 minutes of
+                class time
+              </p>
+              <p>
+                <strong>3 hours of staff meeting time</strong><br />
+                45-minute Launch Meeting<br />
+                3 cycles &times; 45 minute Cycle Meetings
+              </p>
+              <p>
+                <strong>3 hours of individual learning and reflection</strong><br />
+                45 minutes of initial preparation<br />
+                3 cycles &times; 45 minutes of individual learning and reflection
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="what-is-the-cost" class="group">
+          <h2>What is the cost?</h2>
+          <p>
+            Use of the Engagement Project software is free thanks to generous
+            sponsorship from the Raikes Foundation and Overdeck Foundation.
+            However, you can
+            <a href="#contact-perts">contact us</a> if you’re interested in
+            premium training, support, or reporting.
+          </p>
+        </section>
+
+        <section id="who-can-participate" class="group">
+          <h2>Who can participate?</h2>
+          <p>
+            <strong>Eligible Grades</strong>: 6<sup>th</sup> - 12<sup>th</sup> grade
+          </p>
+          <p>
+            <strong>Eligible Subjects</strong>: Math, English, Science, Social Studies,
+            Foreign Languages
+          </p>
+          <p>
+            <strong>Eligible Locations</strong>: Schools in the United States
+          </p>
+        </section>
+
+        <section id="how-can-i-get-involved" class="group">
+          <h2>How can I get involved?</h2>
+          <p>
+            The Engagement Project is more effective and fulfilling when it&rsquo;s
+            collaborative. Ideally, teachers work on an &ldquo;engagement team&rdquo; of
+            3-8 teachers. Teachers can play one of two roles on an engagement
+            team:
+          </p>
+          <ul>
+            <li>
+              <strong>Team Captain</strong> - The team captain creates a new
+              team and invites their colleagues to join them. The captain
+              acts as the main organizer for the team. If you’re going to
+              participate by yourself, you’re going to be the team captain by
+              default.
+            </li>
+            <li>
+              <strong>Team Member</strong> - Team members join a team after
+              receiving an invitation from a team captain. They fully
+              participate in all of the activities, but they do not have the
+              same administrative responsibilities as the team captain. Lucky
+              them!
+            </li>
+          </ul>
+        </section>
+
+        <section id="teacher-stories">
+          <a class="teacher-stories-banner" href="/engage/stories-biddix">
+            <p class="header">Teacher Stories</p>
+            <p>
+              Learn how teachers across the country have used the Engagement
+              Project to create more engaging, supportive, and meaningful
+              classrooms for all of their students.
+            </p>
+            <span class="button inline">
+              Read Teacher Stories
+            </span>
+          </a>
+        </section>
+
+        <section id="get-started" class="group">
+          <h2>Get Started</h2>
+
+          {% if registration_open %}
+          <div id="start-team" class="subgroup">
+            <h3>Start a team now</h3>
+            <p>
+              Enter your email to receive an invitation to Copilot, our
+              online platform where you can explore the process in detail
+              and, if you decide, start to participate.
+            </p>
+            {% set platform = platform %}
+            {% set domain = domain %}
+            {% set program_label = program_label %}
+            {% set ga_event_role = ga_event_role %}
+            {% include "orientation/_includes.form.invite.html" %}
+            <p class="faq-p">
+              If you have more questions, please visit our <a href="/engage/faq">FAQ</a>.
+            </p>
+          </div>
+          {% endif %}
+
+          <div id="contact-perts" class="subgroup">
+            <h3>Contact PERTS: Join the mailing list or get more information</h3>
+            <p>
+              We can keep you posted with Engagement Project updates
+              and registration deadlines for participating in Fall 2019.
+            </p>
+            <p>
+              If you&rsquo;d like to learn more about participating in the
+              Engagement Project, we encourage you to read the
+              <a href="/engage/faq">FAQ</a> or use the form
+              below to ask a question or set up an informational call.
+            </p>
+
+            {% set ga_event_role = ga_event_role %}
+            {% include "engage/_includes.form.ep-updates.html" %}
+          </div>
+        </section>
+
+        {% include 'engage/_includes.acknowledgements.html' %}
+
+      </div>
+
+      {% include 'engage/navbar-teacher.html' %}
+
+    </div>
+  </div>
+
+</div>
+
+<script type="text/javascript">
+
+jQuery(document).ready(function ($) {
+  $('body').scrollspy({
+    target: '.bs-docs-sidebar',
+    offset: 110,
+  });
+
+  // AFFIX SCRIPT
+  var affixEnabled = false;
+
+  function affixUpdate() {
+    var width = $(window).width();
+    if (!affixEnabled && width > 992) {
+      $("#sidebar").mindforAffix();
+      affixEnabled = true;
+    } else if (affixEnabled && width <= 992) {
+      var affix = $("#sidebar").mindforAffix();
+      if (affix) {
+        affix.remove();
+      }
+      affixEnabled = false;
+    }
+  }
+  $(window).resize(affixUpdate);
+  affixUpdate();
+});
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,351 @@
+{# PERTS : Template : Program Orientation Page #}
+
+{# DO NOT CHANGE #}
+{% extends "orientation/_template.orientation.html" %}
+
+{# TODO: Update the following program information: #}
+{% set program_name = "Message Improvement Tool" %}
+{% set program_label = "mset19" %}
+{% set program_description = "Understand how messages impact students." %}
+{# Hide the role dropdown on invite form #}
+{% set invite_hide_role = true %}
+
+{# TODO: Set program participation settings: #}
+{% set participation_is_open = true %}
+{% set participation_enrolled = 0 %}
+{% set participation_slots = 1 %}
+{% set enrollment_is_unlimited = true %}
+
+{# TODO: Set program YouTube video's ID or false if not using one: #}
+{# Example: if the YouTube video's location is #}
+{# https://www.youtube.com/watch?v=YYJLMmWZiMQ #}
+{# then {% set youtube = "YYJLMmWZiMQ" %} #}
+{% set youtube = false %}
+
+{% set login_url = triton_protocol ~ "://" ~ triton_domain ~ "/login?program=" ~ program_label %}
+{% set platform = "triton" %}
+{% set domain = triton_protocol + "://" + triton_domain %}
+{% block content %}
+
+<style>
+  .research-box {
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 30px;
+  }
+
+  .img-fluid.img-icon-styles {
+    max-width: 160px;
+  }
+
+  @media only screen and (max-width: 767px) {
+    /* Add spacing for mobile widths between text and image. */
+    .img-fluid.img-icon-styles {
+      margin-top: 12px;
+    }
+  }
+</style>
+
+<div class="section">
+  <h2>What is the Message Improvement Tool?</h2>
+
+  <p>
+    The Message Improvement Tool (Message IT) is a free tool for educators. It
+    helps educators understand how messages (e.g., in syllabi, emails, lectures,
+    posters) impact students of different groups. It is being developed through
+    the
+    <a href="https://studentexperienceproject.org">Student Experience Project</a>.
+    It is still in beta, and we welcome your feedback!
+  </p>
+
+  <div class="text-center" style="max-width: 500px; margin: 10px auto">
+    <a href="https://studentexperienceproject.org">
+      <img
+        src="/static/images/logos/logo-ses.png"
+        alt="Student Experience Project"
+        style="width: 100%"
+      />
+    </a>
+  </div>
+</div>
+
+<div class="section color2">
+  <h2>How do educators’ messages affect learning and equity?</h2>
+
+  <p>
+    Even without meaning to, educators can make statements that discourage,
+    demotivate, or alienate students. This makes students less likely to learn,
+    persist, and succeed. Communication errors that harm student outcomes are
+    particularly common and harmful when messages are transmitted across
+    demographic divides to members of marginalized groups, including students of
+    color and students who are financially stressed.
+  </p>
+
+  <p>
+    This common problem can be addressed when educators are intentional and
+    systematic about the messages they send.
+  </p>
+
+  <div class="row d-flex align-items-center research-box">
+    <div class="col-md-10">
+      When instructors convey the importance of student learning and
+      development (as opposed to intrinsic ability), students of color report
+      being more motivated and demographic gaps in semester grades are cut by
+      half (Canning et al., 2019). 
+    </div>
+
+    <div class="col-md-2 text-center">
+      <img
+        class="img-fluid img-icon-styles"
+        src="/static/images/programs/mset19-icon-writer.png"
+        alt=""
+      />
+    </div>
+  </div>
+
+  <div class="row d-flex flex-row-reverse align-items-center research-box">
+    <div class="col-md-10">
+      When subtle messages in the physical space of a computer science course
+      (e.g., posters, decor) conveyed to female students that they would not be
+      stereotyped based on gender, they showed more interest in pursuing
+      computer science as a major. (Chernayan et al., 2009).
+    </div>
+
+    <div class="col-md-2 text-center">
+      <img
+        class="img-fluid img-icon-styles"
+        src="/static/images/programs/mset19-icon-computer.png"
+        alt=""
+      />
+    </div>
+  </div>
+
+  <div class="row d-flex align-items-center research-box">
+    <div class="col-md-10">
+      When a college communicated to first-generation college students how their
+      nontraditional backgrounds could be a source of both challenge and
+      strength, first-generation college students became more likely to seek out
+      college resources and earned higher GPAs (Stephens et al., 2014).
+    </div>
+
+    <div class="col-md-2 text-center">
+      <img
+        class="img-fluid img-icon-styles"
+        src="/static/images/programs/mset19-icon-world.png"
+        alt=""
+      />
+    </div>
+  </div>
+
+  <div class="row d-flex flex-row-reverse align-items-center research-box">
+    <div class="col-md-10">
+      When colleges send out academic probation notifications that are attuned
+      to students’ experiences and anticipated feelings, students report feeling
+      less shame and greater likelihood of partaking in positive behaviours like
+      seeking support from an advisor or tutoring (Brady, et al., 2019).
+    </div>
+
+    <div class="col-md-2 text-center">
+      <img
+        class="img-fluid img-icon-styles"
+        src="/static/images/programs/mset19-icon-mail.png"
+        alt=""
+      />
+    </div>
+  </div>
+</div>
+
+<div class="section color3">
+  <div class="row">
+    <div class="col-md-10">
+      <h2 id="how-it-works">How It Works</h2>
+      <p>
+        Message IT helps educators understand how their students interpret
+        messages in various artifacts (e.g., in syllabi, emails, letters,
+        handouts, recordings, posters) so that educators can revise those
+        artifacts in ways that enhance motivation, learning, and equity.
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 text-center">
+      <p>
+        <img
+          style="height: 120px;"
+          src="/static/images/home/program-icon-signup-dark.png"
+          alt="paper document with checkmark"
+        />
+      </p>
+      <h3>1. Select an artifact</h3>
+      <p>
+        Decide what artifact you want to assess and improve. An artifact could
+        be a syllabus, email, lecture slides, video, poster, web page, or an
+        administrative letter—pretty much anything that a student might
+        encounter.
+      </p>
+    </div>
+
+    <div class="col-md-6 text-center">
+      <p>
+        <img
+          style="height: 120px;"
+          src="/static/images/home/program-icon-register-dark.png"
+          alt="open laptop"
+        />
+      </p>
+      <h3>2. Configure Message IT</h3>
+      <p>
+        Sign into Message IT and follow the prompts to set up an “artifact.” You
+        have the option to embed the artifact into the feedback survey or
+        provide the artifact directly to students, e.g., by handing them a
+        physical copy of a syllabus.
+      </p>
+    </div>
+
+    <div class="col-md-6 text-center">
+      <p>
+        <img
+          style="height: 120px;"
+          src="/static/images/home/program-icon-participate-dark-2.png"
+          alt="outline of three people in a group"
+        />
+      </p>
+      <h3>3. Survey students</h3>
+      <p>
+        You’ll get a unique link that can be shared with students so they can
+        complete a 5-minute, research-based survey.
+      </p>
+    </div>
+
+    <div class="col-md-6 text-center">
+      <p>
+        <img
+          style="height: 120px;"
+          src="/static/images/home/program-icon-track-dark.png"
+          alt="charted data with magnifying glass"
+        />
+      </p>
+      <h3>4. Review your report</h3>
+      <p>
+        Review a report that analyzes students’ reactions to your artifact and
+        provides recommendations for improving your messages.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-10">
+      <h2>Advanced options:</h2>
+      <ul>
+        <li>
+          <strong>Iterative improvement.</strong> If you want to refine your
+          artifact and run a new analysis (to see if you improved it), you can
+          create a new “artifact” with the new version and repeat the process.
+        </li>
+        <li>
+          <strong>A-B Testing.</strong> If you want to analyze multiple versions
+          of an artifact, you can use the “collection” feature to compare your
+          artifacts side by side and over time; contact  for
+          support using this feature.
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="section color1">
+  <div class="row">
+    <div class="col-md-8">
+      <h2>About Message IT</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <h3 id="about-simple">Who can use Message IT?</h3>
+      <p>
+        Message IT is primarily designed for use by college instructors and
+        administrators. However, it might be appropriate to other contexts as
+        well, like high school. If you need support making implementation
+        decisions, reach out to us at
+        <a href="</a> or set up a
+        consultation at
+        <a href="https://perts.net/officehours">perts.net/officehours</a>.
+      </p>
+    </div>
+    <div class="col-md-4 offset-md-0 col-6 offset-3">
+      <p>
+        <img
+          class="img-fluid rounded"
+          src="/static/images/programs/cg17-3.png"
+          alt="multi-story building with flag"
+        />
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <h3 id="about-evidence-based">Cost</h3>
+      <p>
+        Message IT is free thanks to support from the Raikes Foundation.
+      </p>
+    </div>
+    <div class="col-md-4 order-md-first offset-md-0 col-6 offset-3">
+      <p>
+        <img
+          class="img-fluid rounded"
+          src="/static/images/programs/mset19-raikes.jpg"
+          alt="Raikes Foundation logo"
+        />
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h3 id="about-free">Time</h3>
+      <p>
+        It takes less than 15 minutes from registration (by sending yourself a
+        link below) to get through your personalized setup and start collecting
+        feedback from students. You’ll receive a report the Monday after
+        students complete a survey.
+      </p>
+    </div>
+    <div class="col-md-4 offset-md-0 col-6 offset-3">
+      <p>
+        <img
+          class="img-fluid rounded"
+          src="/static/images/programs/mset19-clock.jpg"
+          alt="stopwatch showing 15 minutes elapsed"
+        />
+      </p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+  {# No sidebar #}
+{% endblock %}
+
+{% block aboutperts %}
+
+<div id="about-perts" class="section color5">
+  <h2>About PERTS</h2>
+  <p>
+    PERTS is an applied research center based out of Stanford University. We
+    believe that evidence-based strategies should benefit all students, not just
+    the privileged few. To make research accessible to all, we empower educators
+    everywhere to implement evidence-based strategies cost-effectively. We are
+    so excited to bring you {{ program_name }} and to make the latest research
+    on social belonging strategies actionable to every college in the United
+    States.
+  </p>
+</div>
+
+{% endblock %}
+
+{% block moreinfo %}
+  {# no content here #}
+{% endblock %}

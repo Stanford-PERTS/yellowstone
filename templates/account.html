@@ -1,0 +1,22 @@
+{# User account management #}
+
+{% extends "base.html" %}
+
+{% block header %}
+
+<link rel="stylesheet" href="/static/css/dashboard.css">
+
+<script src="/static/js/dashboard.js"></script>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div user-basics user-id="{{ user.id }}" class="col-sm-5"></div>
+    <div class="col-sm-1"></div>
+    <div change-password user-id="{{ user.id }}" class="col-sm-5"></div>
+</div>
+
+    
+{% endblock %}

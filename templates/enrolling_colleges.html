@@ -1,0 +1,144 @@
+{% extends "p3-base.html" %}
+
+{% set title = "Enrolling Colleges | PERTS" %}
+{% set description = "PERTS is an applied research center at Stanford University. We work with experts on academic motivation to raise student achievement on a large scale. We're focused on growth mindset, belonging mindset, student engagement, student learning and student programs." %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block meta_description %}
+{{ description }}
+{% endblock %}
+
+{% block content %}
+
+<div class="orientation-page">
+
+  <div class="page-masthead page-masthead--dark">
+    <div class="background-image"
+         image-loader
+         image="/static/images/home/enroll-background.jpg"></div>
+    <div class="span-shadow"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h1>Enrolling Colleges</h1>
+        </div>
+      </div>
+    </div>
+    {% include 'components/navbar_top_inverted.html' %}
+  </div>
+
+  <div class="page-section page-section--enrolling-page">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-9 col-lg-8">
+
+          <h2>Higher Retention &amp; Equity Through Evidence-Based Practices</h2>
+          <p>
+            Colleges can boost retention—particularly for students from historically underserved groups—by addressing students’ fears about whether they belong in college or have what it takes to succeed. Left unaddressed, these fears can become self-fulfilling prophecies that feed a destructive cycle of reduced motivation and performance. However, multiple randomized controlled studies (<a href="http://web.stanford.edu/~paunesku/articles/yeager_2016-pnas.pdf" target="_blank">read the report</a>) with thousands of students show that administrators can act to avert this destructive cycle and clear a path for their students to become fearless, resilient learners. 
+          </p>
+          <br>
+          <p>
+            In the next stage of this work, PERTS and CTC aim to help hundreds of colleges increase equity and retention by quelling the fears that so often obstruct it. Sign up below to see how your college can get involved.
+          </p>
+
+          <a href="#form" class="action-button">
+            Contact us to learn more&nbsp;&nbsp;<i class="fa fa-long-arrow-right"></i>
+          </a>
+
+          <h2 id="form">Inquire About Enrolling Your College</h2>
+          <p>We are excited to hear from you! Please fill out the form below to learn how your school can get involved.</p>
+
+          <form name="insightly_web_to_lead" action="https://dlf6qebo.insight.ly/WebToLead/Create" method="post">
+            <input type="hidden" name="formId" value="9zsIqn4YDxUVALfLBGezSg=="/>
+
+            <p>
+              Please fill in the following information.
+            </p>
+
+            <div class="form-group">
+              <label for="insightly_firstName">First Name: </label>
+              <input class="form-control" id="insightly_FirstName" name="FirstName" type="text"/>
+            </div>
+            <div class="form-group">
+              <label for="insightly_lastName">Last Name: </label>
+              <input class="form-control" id="insightly_LastName" name="LastName" type="text"/>
+            </div>
+            <div class="form-group">
+              <label for="insightly_organization">College/University: </label>
+              <input class="form-control" id="insightly_Organization" name="OrganizationName" type="text"/>
+            </div>
+            <div class="form-group">
+              <label for="insightly_title">Title: </label>
+              <input class="form-control" id="insightly_Title" name="Title" type="text"/>
+            </div>
+            <div class="form-group">
+              <label for="email">Email: </label>
+              <input class="form-control" id="insightly_Email" name="email" type="text"/>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone: </label>
+              <input class="form-control" id="insightly_Phone" name="phone" type="text"/>
+            </div>
+
+            <br><br>
+
+            <p>
+              Approximately what size is your college or university?
+            </p>
+
+            <select class="form-control" name="Industry">
+              <option>Select an option</option>
+              <option>Very Small (under 500 total associate or undergraduate students)</option>
+              <option>Small (500-999 total associate or undergraduate students)</option>
+              <option>Medium (1,000- 2,499 total associate or undergraduate students)</option>
+              <option>Large (2,500- 4,999 total associate or undergraduate students)</option>
+              <option>Very Large (more than 5,000 total associate or undergraduate students)</option>
+            </select>
+
+            <br><br>
+
+            <p>
+              Please check all of the boxes that you are interested in:
+            </p>
+
+            <label class="checkbox-inline">
+              <input type="checkbox" name="website" value="updates.com"> Getting updates on further research and results.
+            </label>
+            <br>
+            <label class="checkbox-inline">
+              <input type="checkbox" name="Description" value="interviews"> Participating in interviews and/or focus groups.
+            </label>
+            <br>
+            <label class="checkbox-inline">
+              <input type="checkbox" name="AddressStreet" value="100 interventions"> Learning more about interventions on your campus(es).
+            </label>
+
+            <br><br>
+
+            <input type="hidden" id="insightly_ResponsibleUser" name="ResponsibleUser" value="927431"/>
+            <input type="hidden" id="insightly_LeadSource" name="LeadSource" value="174881"/>
+            <input type="submit" value="Submit" class="perts-button"/>
+          </form>
+
+        </div>
+
+        <div class="col-sm-3 col-lg-offset-1">
+          <div class="contact-box">
+            <p>
+              If you are interested in contacting us for any other reason, please see our general inquiry contact form.
+            </p>
+            <a class="perts-button outlined" href="/contact">Contact us</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+{% endblock %}

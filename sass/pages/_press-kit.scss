@@ -1,0 +1,65 @@
+// ===========================================================
+// PRESS KIT PAGE
+// ===========================================================
+
+.page-section--press-kit {
+  padding-top: 30px;
+  padding-bottom: 180px;
+
+  h2 {
+    margin-top: 75px;
+    font-size: 28px;
+    color: #3d4456;
+  }
+
+  p, li {
+    color: $font-color;
+  }
+
+  h3.founder-name {
+    margin-top: 45px;
+    font-family: $font-serif;
+    font-size: 28px;
+    font-weight: 500;
+  }
+
+  .founder-image {
+    background-color: $indigo-color;
+    padding-bottom: 60%;
+    margin-bottom: 30px;
+    background-position: left top;
+    @include background-size(cover);
+  }
+
+  h4 {
+    margin-top: 16px;
+  }
+
+  h4, a.bio-link {
+    font-size: 16px;
+    font-weight: 800;
+    font-style: $font-sans-serif;
+    text-transform: uppercase;
+  }
+
+  a.bio-link {
+    color: $light-blue-color;
+  }
+
+  .social-links {
+    margin-top: 15px;
+    margin-bottom: 45px;
+    a {
+      display: inline-block;
+      margin-right: 6px;
+      height: 36px;
+      width: 36px;
+      @include border-radius(18px);
+      background-color: $light-blue-color;
+      color: white;
+      text-decoration: none;
+      line-height: 36px;
+      text-align: center;
+    }
+  }
+}

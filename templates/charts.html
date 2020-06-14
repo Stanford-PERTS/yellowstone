@@ -1,0 +1,34 @@
+{# Kandler Charts #}
+
+{% extends "base.html" %}
+
+{% block title %}
+Chart Demo
+{% endblock %}
+
+{% block css %}
+
+<link rel="stylesheet" href="">
+
+<!-- don't use any of the normal css stylesheets -->
+
+{% endblock %}
+
+{% block header %}
+
+<script src=""></script>
+
+{% endblock %}
+
+{# Skip all the content at the top of the page: logo, nav menu, header, etc. #}
+{% block top_bar %}{% endblock %}
+
+{% block content %}
+
+<!-- HTML goes here -->
+Foo
+
+{% endblock %}
+
+{# Skip the footer. #}
+{% block footer %}{% endblock %}

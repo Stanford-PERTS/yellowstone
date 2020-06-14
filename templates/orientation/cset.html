@@ -1,0 +1,139 @@
+{# PERTS : Template : Program Orientation Page #}
+
+{# DO NOT CHANGE #}
+{% extends "orientation/_template.orientation.html" %}
+
+{# TODO: Update the following program information: #}
+{% set program_name = "College - Student Experience Tracker" %}
+{% set program_label = "cset19" %}
+{% set program_description = "" %}
+
+{# Hide the role dropdown on invite form #}
+{% set invite_hide_role = true %}
+
+{# TODO: Set program participation settings: #}
+{% set participation_is_open = true %}
+{% set participation_enrolled = 0 %}
+{% set participation_slots = 1 %}
+{% set enrollment_is_unlimited = true %}
+
+{# TODO: Set program YouTube video's ID or false if not using one: #}
+{# Example: if the YouTube video's location is #}
+{# https://www.youtube.com/watch?v=YYJLMmWZiMQ #}
+{# then {% set youtube = "YYJLMmWZiMQ" %} #}
+{% set youtube = false %}
+
+{% set login_url = triton_protocol ~ "://" ~ triton_domain ~ "/login?program=" ~ program_label %}
+{% set platform = "triton" %}
+{% set domain = triton_protocol + "://" + triton_domain %}
+
+{% block content %}
+
+<div class="section">
+  <h2>What is C-SET?</h2>
+
+  <p>
+    C-SET is a free tool that helps educators understand the student experience
+    so they can create an equitable and excellent learning environment—an
+    environment that supports all students to meaningfully engage in their own
+    learning and growth. C-SET is being developed as part of the
+    <a href="https://studentexperienceproject.org">Student Experience Project</a>.
+    C-SET is still in beta, and we welcome your feedback on how to improve it!
+  </p>
+
+  <div class="text-center" style="max-width: 500px; margin: 10px auto">
+    <a href="https://studentexperienceproject.org">
+      <img
+        src="/static/images/logos/logo-ses.png"
+        alt="Student Experience Project"
+        style="width: 100%"
+      />
+    </a>
+  </div>
+</div>
+
+<div class="section color2">
+  <h2>Equity &amp; Student Experience</h2>
+
+  <p>
+    Students&rsquo; experiences in college powerfully shape their desire and
+    their ability to learn and thrive. For example, when students
+    experience a positive relationship with an instructor, they are more
+    motivated to learn from that instructor and more likely to seek out
+    additional support and resources they may need. Because of structural
+    inequities and implicit and explicit biases, students of color and low
+    income students are less likely than their white and affluent peers to be
+    afforded positive learning experiences. Often, this disparity holds true
+    even within the same classroom. This <strong>experience gap</strong> is an
+    important contributor to the broader <strong>opportunity gap</strong>.
+  </p>
+</div>
+
+<div class="section color1">
+  <h2>How does C-SET enhance opportunity and equity? </h2>
+
+  <p>
+    C-SET strives to provide college instructors and administrators with the
+    tools they need to understand and improve their students&rsquo; learning
+    experiences. When educators use C-SET they use a brief, research-based
+    survey to understand multiple important dimensions of their students&rsquo;
+    learning experiences. Once educators can recognize the experience gaps in
+    their own classroom or unit, they are better equipped to take action to
+    address it. Educators repeat the process through multiple cycles of inquiry
+    and action in order to create a better learning environment for all of their
+    students.
+  </p>
+</div>
+
+<div class="section color3">
+  <h2>Who can use C-SET?</h2>
+  <p>
+    C-SET is designed for instructors, instructional coaches, department chairs,
+    and college leaders. It can be used by an individual educator or by a team
+    of educators within a college or university unit. If you need support making
+    implementation decisions, reach out to the PERTS team at
+    <a href="</a>.
+  </p>
+
+  <h2>Eligibility</h2>
+  <p>
+    C-SET can be used by any US college or university.
+  </p>
+
+  <h2>Cost</h2>
+  <p>
+    C-SET is free thanks to support from the Raikes Foundation.
+  </p>
+
+  <h2>Time</h2>
+  <p>
+    It only takes 15-30 minutes from registration (sending yourself a link
+    below) to get through your personalized setup and start surveying students.
+  </p>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+{# No sidebar #}
+{% endblock %}
+
+{% block aboutperts %}
+<div id="about-perts" class="section color5">
+  <h2>About PERTS</h2>
+  <p>
+    PERTS is an applied research center based out of Stanford University. We
+    believe that evidence-based strategies should benefit all students, not just
+    the privileged few. To make research accessible to all, we empower educators
+    everywhere to implement evidence-based strategies cost-effectively. We are
+    so excited to bring you {{ program_name }} and to make the latest research
+    on social belonging strategies actionable to every college in the United
+    States.
+  </p>
+</div>
+{% endblock %}
+
+{% block aboutctc %}
+{% endblock %}
+
+{% block moreinfo %}
+{% endblock %}

@@ -1,0 +1,111 @@
+{# PERTS : Template : Program Orientation Page #}
+{# Survey of Student Experiences (SSE) #}
+
+{# DO NOT CHANGE #}
+{% extends "orientation/_template.orientation.nosidenav.html" %}
+
+{# Program information: #}
+{% set program_name = "Survey of Student Experiences" %}
+{% set program_label = "sse" %}
+{% set program_cohort = "Spring 2018" %}
+{% set program_description = "
+  A free, evidence-based survey that helps colleges identify new opportunities to improve students&rsquo; experiences.
+" %}
+
+{# Program participation settings: #}
+{% set enrollment_is_unlimited = true %}
+{% set unlimited_enrollment_message = "Open to selected schools" %}
+{% set participation_is_open = false %}
+{% set participation_enrolled = 0 %}
+{% set participation_slots = 50 %}
+
+{# Set program YouTube video's ID or false if not using one:                  #}
+{#       Example: if the YouTube video's location is                          #}
+{#         https://www.youtube.com/watch?v=YYJLMmWZiMQ                        #}
+{#         then {% set youtube = "YYJLMmWZiMQ" %}                             #}
+{% set youtube = false %}
+
+{% block content %}
+
+<!-- THE GOAL -->
+<div class="section">
+  <h2 id="goal">The Goal: Support Students, Improve Outcomes</h2>
+  <p>Well-designed learning environments can help students make sense of challenges in ways that bolster academic performance and foster well-being. Research shows that:</p>
+  <ul>
+    <li>Students&rsquo; experiences of their learning environments can critically affect their academic outcomes</li>
+    <li>Learning environments attuned to students&rsquo; experiences can help more students persist through challenges</li>
+  </ul>
+</div>
+
+<!-- UNDERSTAND -->
+<div class="section color3">
+  <h2 id="understand">Understand Students&rsquo; Experiences</h2>
+  <p>The Survey of Student Experiences (SSE) is a free, easy-to-use tool that helps colleges and universities better understand how their undergraduate students experience their campus learning environments and strategically adopt evidence-based resources to help more students succeed, particularly those from backgrounds traditionally disadvantaged in higher education.</p>
+
+  <h3 id="how">The Survey of Student Experiences helps institutions</h3>
+  <ul>
+    <li>Better understand their students&rsquo; experiences, focusing on pivotal moments and beliefs that can affect well-being, levels of engagement, and academic outcomes</li>
+    <li>Identify areas in which their students may benefit from additional support</li>
+    <li>Select the most relevant evidence-based resources to help motivate and support their students</li>
+  </ul>
+</div>
+
+<!-- THE PROCESS -->
+<div class="section">
+  <h2 id="process">The Process</h2>
+  <p>In order to implement the Survey of Student Experiences, your institution will need to do the following:</p>
+  <p class="text-center"><img class="img-fluid" src="/static/images/orientation-sse-process.png" alt=""></p>
+</div>
+
+<!-- SUPPORTING DOCUMENTS -->
+<div class="section color3">
+  <h2 id="documents">Supporting Documents</h2>
+
+  <div class="row">
+    <div class="col-md-6">
+      <p>Here you can find additional information to learn about how to bring the Survey of Student Experiences to your campus. This section includes promotional materials and documents to guide the process of disseminating the survey on your campus.</p>
+      <p>These materials provide a helpful introduction to the program. You can use these documents to familiarize yourself with the survey or to share with your colleagues. The brochure is great for a brief introduction to the survey, while the Information Packet goes in-depth about the survey and how to get your college signed up. We’ve also compiled the answers to your most frequently asked questions here.</p>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><a href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/sse/brochure.pdf">Brochure</a></li>
+          <li class="list-group-item"><a href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/sse/information_packet.pdf">Information Packet</a></li>
+          <li class="list-group-item"><a href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/sse/FAQ.pdf">FAQ</a></li>
+          <li class="list-group-item"><a href="{{ neptune_protocol }}://{{ neptune_domain }}/facilitator_instructions/sse">Disseminating the Survey</a></li>
+          <li class="list-group-item"><a href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/sse/sampling_method.pdf">Determining your Sampling Method</a></li>
+          <li class="list-group-item"><a href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/sse/local_statistics_instructions.pdf">Providing Local Academic Standing Statistics</a></li>
+          <li class="list-group-item"><a href="/terms-of-use">Terms of Use</a></li>
+          <li class="list-group-item"><a href="/privacy">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GET STARTED -->
+<div class="section color1">
+  {% if participation_is_open %}
+    <h2 id="get-started">Get Started</h2>
+    <p>Above, you will find all of the information and supporting materials necessary to implement the Survey of Student Experiences. Please email us at <a href="</a> if you have questions.</p>
+    <p>Please note that, at this time, the Survey of Student Experiences is only being offered to schools in the USU/APLU Network.</p>
+    <p>
+      Survey of Student Experiences is a joint partnership between
+      <a href="http://collegetransitioncollaborative.org/">College Transition
+      Collaborative</a> and PERTS.
+    </p>
+  {% endif %}
+</div>
+{% endblock %}
+
+{% block aboutperts %}
+<div id="about-perts" class="section color5">
+  <h2>About PERTS</h2>
+  <p>
+    PERTS is an applied research center based out of Stanford University. We
+    believe that evidence-based strategies should benefit all students, not just
+    the privileged few. To make research accessible to all, we empower educators
+    everywhere to implement evidence-based strategies cost-effectively.
+  </p>
+</div>
+{% endblock %}

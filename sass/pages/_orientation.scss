@@ -1,0 +1,132 @@
+// Orientation page styling
+
+.orientation-page {
+
+  .page-header {
+    padding-top: 120px;
+    background-color: $deep-blue-color;
+    border-bottom-color: $dark-blue-color;
+    height: auto;
+
+    h1 {
+    	font-size: 40px;
+    }
+  }
+
+  .container.container--main {
+    padding-top: 30px;
+  }
+
+  a.orientation-document {
+    font-size: 18px;
+
+    &:hover {
+    	text-decoration: none;
+    }
+  }
+
+  a.action-button.mobile-only {
+    display: none;
+  }
+
+  @include mobile {
+
+  	.page-header {
+    	padding-top: 60px;
+
+    	h1 {
+    		font-size: 34px;
+    	}
+  	}
+
+  	a.action-button.mobile-only {
+      display: block;
+      padding-left: 15px;
+      padding-right: 15px;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+
+body .mobile-footer {
+  background-color: $accent-color;
+
+  a {
+    color: white;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 800;
+    height: 60px;
+    letter-spacing: 0.5px;
+    line-height: 60px;  // same has height of whole footer: v. centers text
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 100%;
+    -moz-transition: ease-in-out 0.08s;
+    -o-transition: ease-in-out 0.08s;
+    -webkit-transition: ease-in-out 0.08s;
+    transition: ease-in-out 0.08s;
+  }
+}
+
+@include tablet {
+  .cg17, .hg17 {
+    #get-started-page-button {
+      // This button on the cg17/hg17 orientation pages is redudant with the
+      // mobile footer, which activates at tablet sizes. See _navbar.scss.
+      display: none;
+    }
+
+    .spot-counter__description {
+      // Allow a little breathing room where the button was.
+      margin-bottom: 20px;
+    }
+  }
+}
+
+// ===========================================================
+// ORIENTATION PAGE
+// ===========================================================
+
+.page-section--enrolling-page {
+  padding-top: 90px;
+  padding-bottom: 120px;
+
+  h2 {
+    font-size: 32px;
+  }
+
+  .contact-box {
+    border: 1px solid $indigo-color;
+    padding: 20px 15px 10px 15px;
+
+    p {
+      font-size: 20px;
+    }
+
+    a.perts-button {
+      width: 100%;
+      min-width: 0;
+      padding: 0;
+    }
+
+    @include mobile {
+      margin-top: 150px;
+    }
+  }
+
+  label.checkbox-inline {
+    font-size: 18px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+
+    input {
+      position: relative;
+      top: 0;
+      margin-right: 5px;
+    }
+  }
+}

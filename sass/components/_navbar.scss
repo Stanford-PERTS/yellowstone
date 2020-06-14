@@ -1,0 +1,210 @@
+// Navigation bar on top of page
+
+nav.navbar {
+  position: fixed;
+  border: 0;
+  top: -80px; left: 0px;
+  width: 100%;
+  text-align: center;
+  height: 80px;
+  padding: 25px 30px 0 30px;
+  background-color: white;
+  overflow: hidden;
+  @include box-shadow(0 0 3px 0 rgba(0,0,0,0.12));
+  @include border-radius(0);
+  @include transition(0.24s ease-in-out);
+
+  &.active {
+    top: 0;
+  }
+
+  .nav-toggler {
+    display: none;
+  }
+
+  .nav-left, .nav-right {
+
+    a {
+      display: inline-block;
+      text-transform: uppercase;
+      color: $indigo-color;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      font-size: 13px;
+      text-decoration: none;
+      padding: 6px 0;
+      @include opacity(0.85);
+
+      &:last-child {
+        padding-right: 0;
+      }
+
+      &.logo-link {
+        padding: 0;
+        margin-top: -5px;
+        @include opacity(1.0);
+      }
+
+      &:hover {
+        @include opacity(1.0);
+      }
+    }
+  }
+
+  .nav-left {
+    float: left;
+    text-align: left;
+    a {
+      margin-right: 12px;
+    }
+
+    width: 18%;
+  }
+
+  .nav-right {
+    float: right;
+    text-align: right;
+    a {
+      margin-left: 32px;
+      display: inline-block;
+      position: relative;
+
+      &.active:after {
+        content: '';
+        position: absolute;
+        display: block;
+        bottom: -3px;
+        left: 0px;
+        width: 100%;
+        height: 3px;
+        background-color: $light-blue-color;
+      }
+
+      &.highlighted {
+        opacity: 1;
+        margin-left: 16px;
+        padding-left: 8px;
+        padding-right: 8px;
+        border: 1px solid $accent-color;
+        background-color: $accent-color;
+        color: white;
+        @include border-radius(5px);
+
+        &.active:after {
+          content: none;
+        }
+
+        &:hover {
+          border: 1px solid darken($accent-color, 3);
+          background-color: darken($accent-color, 3);
+        }
+
+        @include tablet {
+          display: none;
+        }
+      }
+    }
+
+    width: 82%;
+  }
+}
+
+nav.navbar--top {
+  @extend nav.navbar;
+  position: absolute;
+  top: 0; left: 0px;
+  background-color: transparent;
+  @include box-shadow(0 0 3px 0 rgba(0,0,0,0));
+
+  // Invert color on specific pages
+  &.inverted {
+    a {
+      color: white;
+
+      &.active:after {
+        background-color: white;
+      }
+    }
+  }
+}
+
+@include tablet {
+  nav.navbar {
+    top: 0;
+    height: 60px;
+    padding: 0;
+    overflow: visible;
+
+    .row, .col-sm-12 {
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav-left {
+      padding: 15px 15px 0 15px;
+      width: 100%;
+    }
+
+    .nav-toggler {
+      float: right;
+      display: inline;
+      font-size: 24px;
+    }
+
+    .nav-right {
+      position: absolute;
+      top: 60px;
+      width: 100%;
+      text-align: center;
+
+      a {
+        display: block;
+        overflow: hidden;
+        height: 0px;
+        margin: 0;
+        color: white;
+        background-color: $light-blue-color;
+        padding: 0px 0;
+        @include opacity(1.0);
+        @include transition(0.22s ease-in-out);
+
+        &:nth-child(even) {
+          background-color: darken($light-blue-color, 3);
+        }
+
+        &.active:after {
+          display: none;
+        }
+      }
+    }
+
+    &.open {
+      .nav-right {
+        a {
+          height: 40px;
+          padding: 10px 0;
+        }
+      }
+    }
+  }
+
+  nav.navbar--top {
+    display: none;
+  }
+
+  body .mobile-footer {
+    position: fixed;
+    display: block;
+    bottom: 0;
+    height: 60px;
+    padding: 0;
+    overflow: visible;
+    width: 100%;
+    background-color: white;
+  }
+}
+
+.mobile-footer {
+  display: none;
+  background-color: white;
+}

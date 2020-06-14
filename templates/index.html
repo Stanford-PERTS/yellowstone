@@ -1,0 +1,481 @@
+{% extends "p3-base.html" %}
+
+{% set title = "Raising Academic Achievement | PERTS" %}
+{% set description = "PERTS is an applied research center at Stanford University. We work with experts on academic motivation to raise student achievement on a large scale. We're focused on growth mindset, belonging mindset, student engagement, student learning and student programs." %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block meta_description %}
+{{ description }}
+{% endblock %}
+
+{% block content %}
+
+<div class="masthead">
+  <div class="masthead_centered">
+    <!-- Focus group says the stanford image doesn't work. Removing pending a
+         better choice of pic.
+    <div class="background-image"
+       image-loader
+       image="/static/images/home/stanford_campus_big.jpg"></div>
+    -->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-10 col-sm-offset-1">
+          <h1>Evidence-based Education for Everyone</h1>
+        </div>
+        <div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+          <p>
+            <b>PERTS</b> empowers educators to improve student outcomes by
+            applying research-based practices.
+          </p>
+          <div>
+            <a class="perts-button" href="/orientation/elevate">
+              Featured: Copilot-Elevate
+            </a>
+          </div>
+          <div>
+            <p>
+              <a href="/programs" class="secondary-link">
+                Explore Open Programs
+              </a>
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% include 'components/navbar_top.html' %}
+
+</div>
+
+<div class="page-section page-section--callout-stats">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="callout-stat">
+          <div class="animated-statistic">
+            <div class="statistic_fill stat-fill--1">
+              <svg width="260" height="260">
+                <circle r="110" cx="130" cy="130" />
+              </svg>
+            </div>
+            <div class="stat-number smaller">
+              1,000,000
+            </div>
+          </div>
+          <p>
+            <b>Students</b> reached with evidence-based practices
+          </p>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="callout-stat">
+          <div class="animated-statistic">
+            <div class="statistic_fill stat-fill--2">
+              <svg width="260" height="260">
+                <circle r="110" cx="130" cy="130" />
+              </svg>
+            </div>
+            <div class="stat-number">
+              52,000
+            </div>
+          </div>
+          <p>
+            <b>Educators</b> and <b>parents</b> subscribed to our Mindset Kit
+          </p>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="callout-stat">
+          <div class="animated-statistic">
+            <div class="statistic_fill stat-fill--3">
+              <svg width="260" height="260">
+                <circle r="110" cx="130" cy="130" />
+              </svg>
+            </div>
+            <div class="stat-number">
+              7%
+            </div>
+          </div>
+          <p>
+            <b>Increase</b> in off-track 9th graders <a href="http://web.stanford.edu/~paunesku/articles/yeager_2016-national-pilot.pdf" target="_blank">passing courses</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-section page-section--case-studies">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="container">
+
+          <div class="row banner" id="banner0">
+            <div class="col-12 col-md-5 col-lg-6 banner-image">
+              <img src="/static/images/case-studies-banner-01.jpg" class="img-responsive" alt="" />
+            </div>
+
+            <div class="col-12 col-md-7 col-lg-6 banner-text">
+              <div class="title">Case Study</div>
+              <div class="school">National Louis University</div>
+              <div class="location">Chicago, Ill.</div>
+              <div class="excerpt">
+                Three years ago, National Louis University launched its
+                Pathways program to help more Chicago-area high school
+                graduates earn college degrees. In addition to providing
+                supports such as financial assistance, academic advising and
+                peer mentoring, NLU works hard to help its students develop a
+                growth mindset about their ability to persist and succeed in
+                college.
+              </div>
+
+              <div class="row">
+                <div class="col-12 col-md-6">
+                  <a
+                    class="perts-button btn-invert"
+                    href="/static/casestudies/casestudy-national-louis-university.pdf"
+                    target="_blank"
+                  >Read Case Study</a>
+                </div>
+                <div class="col-12 col-md-6">
+                  <a
+                    class="perts-button btn-invert next"
+                  >Next Case Study <i class="fa fa-chevron-right"></i></a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="row banner" id="banner1">
+            <div class="col-12 col-md-6 banner-image">
+              <img src="/static/images/case-studies-banner-02.jpg" class="img-responsive" alt="" />
+            </div>
+
+            <div class="col-12 col-md-6 banner-text">
+              <div class="title">Case Study</div>
+              <div class="school">Concord University</div>
+              <div class="location">Athens, West Virginia</div>
+              <div class="excerpt">
+                Low retention and graduation rates are a big challenge at
+                Concord University, in part because many West Virginia students
+                don&rsquo;t feel comfortable in college. To change that,
+                Concord is working to increase their students&rsquo; sense of
+                belonging on campus.
+              </div>
+
+              <div class="row">
+                <div class="col-12 col-md-6">
+                  <a
+                    class="perts-button btn-invert"
+                    href="/static/casestudies/casestudy-concord-university.pdf"
+                    target="_blank"
+                  >Read Case Study</a>
+                </div>
+                <div class="col-12 col-md-6">
+                  <a
+                    class="perts-button btn-invert next"
+                  >Next Case Study <i class="fa fa-chevron-right"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row banner" id="banner2">
+            <div class="col-12 col-md-6 banner-image">
+              <img src="/static/images/case-studies-banner-03.jpg" class="img-responsive" alt="" />
+            </div>
+
+            <div class="col-12 col-md-6 banner-text">
+              <div class="title">Case Study</div>
+              <div class="school">California State University, Fullerton</div>
+              <div class="location">Fullerton, California</div>
+              <div class="excerpt">
+                Eager to improve graduation rates and close equity gaps at
+                California State University, Fullerton, two leaders of student
+                success initiatives have rolled out the Growth Mindset for
+                College Students program with encouraging early results.
+              </div>
+
+              <div class="row">
+                <div class="col-12 col-md-6">
+                  <a
+                    class="perts-button btn-invert"
+                    href="/static/casestudies/casestudy-csu-fullerton.pdf"
+                    target="_blank"
+                  >Read Case Study</a>
+                </div>
+                <div class="col-12 col-md-6">
+                  <a
+                    class="perts-button btn-invert next"
+                  >Next Case Study <i class="fa fa-chevron-right"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+var totalNumberOfBanners = 3;
+
+var visibleBannerIndex = 0;
+var visibleBannerId = '#banner' + visibleBannerIndex;
+
+function next() {
+  visibleBannerIndex = (visibleBannerIndex + 1) % totalNumberOfBanners;
+  visibleBannerId = '#banner' + visibleBannerIndex;
+}
+
+function showVisibleBanner() {
+  $('.banner').hide();
+  $(visibleBannerId).show();
+}
+
+$(document).ready(function() {
+  showVisibleBanner();
+});
+
+$('a.next').click(function() {
+  next();
+  showVisibleBanner();
+});
+</script>
+
+<div class="page-section page-section--wedge-right">
+  <div class="graphic-right">
+    <div class="background-image"
+       image-loader
+       image="/static/images/home/child_chalks.jpg"></div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-5">
+        <h2>Focus on Equity.</h2>
+        <p>
+          We aim to create a world where every learner is given the opportunity
+          and the stimulation to thrive. To do so, we empower educators to apply
+          insights from the learning and developmental sciences.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-section page-section--main-actions">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-4 action-item">
+        <img class="action_image" src="/static/images/home/action-icon-1.png"
+             height="130px" alt="">
+        <div class="action_title">
+          <span class="action_count">1</span>
+          <h3>
+            Translate<br>Research
+          </h3>
+        </div>
+        <p>
+          Into concrete practices, using tools like the <a href="https://www.mindsetkit.org" target="_blank">Mindset Kit</a>.
+        </p>
+      </div>
+      <div class="col-sm-4 action-item">
+        <img class="action_image" src="/static/images/home/action-icon-2.png"
+             height="130px" alt="">
+        <div class="action_title">
+          <span class="action_count">2</span>
+          <h3>
+            Enable<br>Improvement
+          </h3>
+        </div>
+        <p>
+          Through rapid validation of our tools and processes.
+        </p>
+      </div>
+      <div class="col-sm-4 action-item">
+        <img class="action_image" src="/static/images/home/action-icon-3.png"
+             height="130px" alt="">
+        <div class="action_title">
+          <span class="action_count">3</span>
+          <h3>
+            Drive<br>Adoption
+          </h3>
+        </div>
+        <p>
+          By working closely with implementation partners.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-section page-section--educators">
+  <div class="testimonial-cards">
+    <div class="testimonial-card-holder">
+      <!--
+      <div class="testimonial-card" id="card1"
+           ng-class="{active: currentCard === 1}">
+        <div class="testimonial_info">
+          <div class="testimonial_image" image-loader image="/static/images/home/teacher-peter.jpg"></div>
+          <h4>Peter Heineman</h4>
+          <h5>_____ School</h5>
+        </div>
+        <p>
+          &ldquo;My relationship with PERTS has been the most important
+          professional experience I’ve had in years. The collaboration with
+          other educators and mentoring with PERTS staff greatly enhanced my
+          professional development workshops.&rdquo;
+        </p>
+      </div>
+      -->
+      <div class="testimonial-card" id="card1"
+           ng-click="incrementCard()"
+           ng-class="{active: currentCard === 3}">
+        <div class="testimonial_info">
+          <div class="testimonial_image" image-loader image="/static/images/home/teacher-ronald.jpg"></div>
+          <h4>Ronald Sloan</h4>
+          <h5>Ivy Tech Community College, IN</h5>
+        </div>
+        <p>
+          &ldquo;PERTS has been an inspiring partner over the years. They
+          genuinely share our passion to serve students and bring to that
+          effort the most relevant social science in a way that is practical to
+          apply.&rdquo;
+        </p>
+      </div>
+      <div class="testimonial-card" id="card2"
+           ng-click="incrementCard()"
+           ng-class="{active: currentCard === 2}">
+        <div class="testimonial_info">
+          <div class="testimonial_image" image-loader image="/static/images/home/teacher-debbie.jpg"></div>
+          <h4>Debbie Chanan</h4>
+          <h5>Posnack School, FL</h5>
+        </div>
+        <p>
+          &ldquo;The further we went as a team into the sessions, the deeper
+          and more relevant the conversations. The videos and resources provided
+          by PERTS enhanced the concept and understanding of what a growth
+          mindset really is.&rdquo;
+        </p>
+      </div>
+      <div class="testimonial-card" id="card3"
+           ng-click="incrementCard()"
+           ng-class="{active: currentCard === 1}">
+        <div class="testimonial_info">
+          <div class="testimonial_image" image-loader image="/static/images/home/teacher-mariel.jpg"></div>
+          <h4>Mariel Triggs</h4>
+          <h5>Lick-Wilmerding High School, CA</h5>
+        </div>
+        <p>
+          &ldquo;My favorite evidence to witness is when [my students] light up
+          after grappling with a problem a long time and get hungry for even
+          harder problems!&rdquo;
+        </p>
+      </div>
+      <div class="testimonial-bullets">
+        <div class="testimonial-bullet" ng-class="{active: currentCard === 1}" ng-click="currentCard=1"></div>
+        <div class="testimonial-bullet" ng-class="{active: currentCard === 2}" ng-click="currentCard=2"></div>
+        <div class="testimonial-bullet" ng-class="{active: currentCard === 3}" ng-click="currentCard=3"></div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5 col-md-offset-7">
+        <h2>
+          Educator-driven.
+        </h2>
+        <p>
+          Teachers are at the core of most learning experiences. We work directly
+          with teachers across the nation to ensure that our goals match their
+          goals and that they are given the tools they need to best help their
+          students.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-section page-section--blog-preview">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <h2>Learn More:</h2>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Repeats for each blog post -->
+      <div class="col-sm-4">
+        <a class="blog-preview" target="_blank"
+           href="https://medium.com/learning-mindset/can-a-shift-in-mindset-reduce-suspensions-30ef50912015">
+          <div class="blog_image"
+               image-loader
+               image="/static/images/blogs/blog-post-1.jpg"></div>
+          <h3>Can a shift in mindset reduce suspensions?</h3>
+          <p>
+            New research conducted by PERTS in collaboration with Jason Okonofua and Greg Walton at Stanford University found that a brief intervention designed to increase teacher empathy: Halved the number of suspensions students received over the year from 9.6% to 4.8%, and Increased perceived respect from teachers for students who had previously been suspended…
+          </p>
+        </a>
+      </div>
+      <div class="col-sm-4">
+        <a class="blog-preview" target="_blank"
+           href="https://medium.com/learning-mindset/is-it-enough-for-teachers-to-have-a-growth-mindset-9093103d0f24">
+          <div class="blog_image"
+               image-loader
+               image="/static/images/blogs/blog-post-2.jpg"></div>
+          <h3>Is it enough for teachers to have a growth mindset?</h3>
+          <p>
+            New research suggests that what teachers actually do in the classroom is more important than their beliefs when it comes to helping students develop a growth mindset. A growth mindset, the belief that intelligence can be significantly developed, is often contrasted with a fixed mindset, the belief that intelligence is a fixed trait…
+          </p>
+        </a>
+      </div>
+      <div class="col-sm-4">
+        <a class="blog-preview" target="_blank"
+           href="https://medium.com/learning-mindset/growth-mindset-in-action-8636268b4ca5">
+          <div class="blog_image"
+               image-loader
+               image="https://d262ilb51hltx0.cloudfront.net/fit/t/1600/480/1*o0KEwBPPr-FsJFvNcXtmIQ.jpeg"></div>
+          <h3>Growth Mindset in Action</h3>
+          <p>
+            If you work in education, there is a pretty good chance you have heard the term &ldquo;growth mindset.&rdquo; Popularized by Dr. Carol Dweck in her 2006 book, &lsquo;Mindset,&rsquo; growth mindset initiatives have since spread to classrooms, schools, and districts across the country. A growth mindset is simply the belief that intelligence can be developed. A growth mindset is often contrasted with a fixed mindset, or the belief that…
+          </p>
+        </a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <a class="perts-button" href="https://medium.com/@pertslab"
+           target="_blank">
+          Visit our Blog
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page-section page-section--full-image">
+  <div class="background-image"
+       image-loader
+       image="/static/images/home/sprouts_image.jpg"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+        <p class="callout-text">
+          Empowering learners through research-based practices.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

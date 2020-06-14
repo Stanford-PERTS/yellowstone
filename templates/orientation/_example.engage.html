@@ -1,0 +1,206 @@
+{# PERTS : Template : Program Orientation Page #}
+
+{# DO NOT CHANGE #}
+{% extends "orientation/_template.orientation.html" %}
+
+{# TODO: Update the following program information: #}
+{% set program_name = "The Engagement Project" %}
+{% set program_label = "ep" %}
+{% set program_cohort = "Fall 2017" %}
+{% set program_description = "
+  A free, evidence-based professional development program that helps teachers increase student engagement and success.
+" %}
+
+{# TODO: Set program participation settings: #}
+{% set enrollment_is_unlimited = true %}
+{% set unlimited_enrollment_message = "Free for all schools" %}
+{% set participation_is_open = true %}
+{% set participation_enrolled = 0 %}
+{% set participation_slots = 1 %}
+
+{# TODO: Set program YouTube video's ID or false if not using one:            #}
+{#       Example: if the YouTube video's location is                          #}
+{#         https://www.youtube.com/watch?v=YYJLMmWZiMQ                        #}
+{#         then {% set youtube = "YYJLMmWZiMQ" %}                             #}
+{% set youtube = false %}
+
+{% block content %}
+
+<!-- THE PROBLEM -->
+<div class="section">
+  <h2 id="the-problem">The Problem: Student Disengagement</h2>
+  <p class="text-center"><img class="img-fluid" src="https://www.perts.net/static/images/engage/disengaged-students.png" alt=""></p>
+
+  <div class="row">
+    <div class="col-md-4 text-center">
+      <p><img class="icon" src="https://www.perts.net/static/images/engage/percentage-60.png" alt=""></p>
+      <p>Over 60% of middle and high school students report being disengaged in school.</p>
+    </div>
+
+    <div class="col-md-4 text-center">
+      <p><img class="icon" src="https://www.perts.net/static/images/engage/percentage-47.png" alt=""></p>
+      <p>Over 60% of middle and high school students report being disengaged in school.</p>
+    </div>
+
+    <div class="col-md-4 text-center">
+      <p><img class="icon" src="https://www.perts.net/static/images/engage/magnifying-glass.png" alt=""></p>
+      <p>Over 60% of middle and high school students report being disengaged in school.</p>
+    </div>
+  </div>
+</div>
+
+<!-- THE SOLUTION -->
+<div class="section color3">
+  <h2 id="the-solution">The Solution: The Engagement Project</h2>
+  <p>The Engagement Project helps teachers:</p>
+
+  <div class="row">
+    <div class="col-md-4 text-center">
+      <p><img class="icon" src="https://www.perts.net/static/images/engage/scan-survey-light.png" alt=""></p>
+      <p>Use fast student surveys to identify the causes of student disengagement</p>
+    </div>
+
+    <div class="col-md-4 text-center">
+      <p><img class="icon" src="https://www.perts.net/static/images/engage/lightbulb.png" alt=""></p>
+      <p>Learn evidence-based strategies for increasing student engagement</p>
+    </div>
+
+    <div class="col-md-4 text-center">
+      <p><img class="icon" src="https://www.perts.net/static/images/engage/improving-chart.png" alt=""></p>
+      <p>Track progress in order to find the most effective strategies for engaging their students</p>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT THE PROGRAM -->
+<div class="section color4">
+  <h2 id="about-the-program">About the Program</h2>
+
+  <h3 id="evidence-based">Evidence-based</h3>
+  <p>When teachers participate in The Engagement Project, they get access to cutting-edge resources and recommendations from leading behavioral scientists, including Carol Dweck, Camille Farrington, Dave Paunesku, Jason Okonofua, Greg Walton, and David Yeager. Best of all, teachers don’t have to take anyone else’s word for what works — they use a simple, but powerful, system to track what works for their students. Participating teachers get ongoing, confidential feedback so that they can iteratively test out and adapt evidence-based strategies to find the ones that work best for their students.</p>
+
+  <h3 id="praise-from-teachers">Praise from Teachers</h3>
+  <blockquote>I liked that [students] could provide feedback and I could get a really candid picture of how they’re feeling. I think a goal moving forward in education is giving kids a stake in what they’re doing because then you get into relevance and belonging.</blockquote>
+  <blockquote>It was really easy for me to get data from my students. The survey was really short. I could easily see it blended into the weekly quizzes which we do on Chromebooks. Whenever I can see information on my students in real time [it’s helpful].</blockquote>
+
+  <h3 id="teacher-driven">Teacher-Driven</h3>
+  <p>The Engagement Project is driven by teams of teachers called Engagement Teams. Usually, an Engagement Team is comprised of 2–8 teachers. These teachers collaborate over the course of an Engagement Project Cycle, usually a 2–3 month period. During that time, they identify concrete, evidence-based ideas they can integrate into their own practice, undertake a systematic process for improving student engagement, and engage in productive, structured learning with colleagues.</p>
+</div>
+
+<!-- THE PROCESS -->
+<div class="section">
+  <h2 id="the-process">The Process: What participation looks like</h2>
+  <p>A group of teachers (usually 2–8 teachers) forms an Engagement Team. They commit to work together for at least one Engagement Project Cycle (usually 2–3 months). During the Cycle, they use <a href="https://copilot.perts.net/">Copilot</a>, our anonymous survey platform, to track specific <a href="https://www.perts.net/conditions">learning conditions</a> that are affecting students’ engagement, like "Teacher Caring" and "Meaningful Work". Teachers get <a href="https://www.perts.net/engage/report">automated custom weekly reports</a> describing students’ perceptions of the conditions in their classes. Then they work together to learn and test out different strategies for improving those conditions.</p>
+  <p><img class="img-fluid" src="https://www.perts.net/static/images/engage/engage-flowchart.png" alt=""></p>
+</div>
+
+<!-- GET STARTED -->
+<div class="section color3">
+  <h2 id="get-started">Get Started</h2>
+  <p>Below, you can find all of the guides and documents you'll need to participate in the Engagement Project. Email <a href="</a> if you have questions.</p>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title" id="engage-supporters">Engage Supporters</h5>
+      <p class="card-text">Use these promotional materials to get teachers, parents, and administrators excited about the Engagement Project and to recruit teachers to come to the Launch Meeting described below.</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><a href="#">Recruitment Flyer</a></li>
+      <li class="list-group-item"><a href="#">Participation Logistics</a></li>
+      <li class="list-group-item"><a href="#">Example Report</a></li>
+      <li class="list-group-item"><a href="#">Principal Letter</a></li>
+      <li class="list-group-item"><a href="#">Parent Letter</a></li>
+      <li class="list-group-item"><a href="#">Parent Letter (Spanish)</a></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title" id="launch-meeting">Launch Meeting</h5>
+      <p class="card-text">Teachers explore the purpose, logistics, and research of the Engagement Project. They reflect on their Engagement Project goals, organize their team, and plan out the schedule for their Engagement Project Cycle.</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><a href="#">Launch Meeting Guide</a></li>
+      <li class="list-group-item"><a href="#">Team Member Sign-Up Sheet</a></li>
+      <li class="list-group-item"><a href="#">Introduction to the Engagement Project</a></li>
+      <li class="list-group-item"><a href="#">Participation Logistics</a></li>
+      <li class="list-group-item"><a href="#">Guide to Learning Conditions</a></li>
+      <li class="list-group-item"><a href="#">Introduction to Copilot</a></li>
+      <li class="list-group-item"><a href="#">Team Schedule</a></li>
+    </ul>
+  </div>
+
+  <h3>Improvement Cycle (4+ times)</h3>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title" id="survey">Survey</h5>
+      <p class="card-text">Teachers use a short student survey to identify causes of student disengagement in their classes and track how their efforts to engage students change over time. Teachers receive confidential survey reports containing results for each of their participating classes and aggregated results for the team.</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><a href="#">Survey Instructions</a></li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title" id="team-meeting">Team Meeting</h5>
+      <p class="card-text">Teachers meet to reflect on their survey results and to discuss evidence-based strategies to improve learning conditions in their classrooms. They share their experiences using and adapting the teaching strategies. In their final meeting, teachers review their progress, celebrate successes, and make plans for their next Engagement Project cycle.</p>
+    </div>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item"><a href="#">Team Meeting Guide</a></li>
+      <li class="list-group-item"><a href="#">Team Schedule</a></li>
+      <li class="list-group-item"><a href="#">Guide to Learning Condition Strategies</a></li>
+      <li class="list-group-item"><a href="#">Optional:</a></li>
+      <li class="list-group-item"><a href="#">Learning Conditions Quick Reference</a></li>
+      <li class="list-group-item"><a href="#">Learning Conditions Guide</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+  <h2 id="faq">Frequently Asked Questions (FAQ)</h2>
+  <p>For more information about the Engagement Project, including answers to frequently asked questions, please visit the FAQ page.</p>
+</div>
+
+<!-- SUGGESTIONS WELCOME -->
+<div class="section">
+  <h2 id="suggestions">Suggestions welcome!</h2>
+  <p>The Engagement Project is still under construction. Email  to ask questions or make suggestions.</p>
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+<nav class="navbar sticky-top">
+  <nav id="sidebar-menu" class="nav nav-pills flex-column">
+    <a class="nav-link" href="#the-problem">The Problem</a>
+    <a class="nav-link" href="#the-solution">The Solution</a>
+    <a class="nav-link" href="#about-the-program">About the Program</a>
+    <a class="nav-link" href="#the-process">The Process</a>
+    <nav class="nav nav-pills flex-column">
+      <a class="nav-link ml-3 my-1" href="#get-started">Get Started</a>
+      <a class="nav-link ml-3 my-1" href="#engage-supporters">Engage Supporters</a>
+      <a class="nav-link ml-3 my-1" href="#launch-meeting">Launch Meeting</a>
+      <a class="nav-link ml-3 my-1" href="#survey">Survey</a>
+      <a class="nav-link ml-3 my-1" href="#team-meeting">Team Meeting</a>
+    </nav>
+    <a class="nav-link" href="#faq">FAQ</a>
+    <a class="nav-link" href="#suggestions">Suggestions Welcome</a>
+    <a class="nav-link" href="/conditions">Learning Conditions</a>
+  </nav>
+</nav>
+{% endblock %}
+
+{% block form %}
+{# Do not display invite/updates form. #}
+{% endblock %}
+
+{% block aboutctc %}
+{# Do not display About CTC section #}
+{% endblock %}
+
+{% block moreinfo %}
+{# Do not display For More Information section #}
+{% endblock %}

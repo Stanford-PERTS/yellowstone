@@ -1,0 +1,47 @@
+{% block youtube_player %}
+{% if youtube %}
+<div class="modal fade video-modal" tabindex="-1" role="dialog" id="videoModal">
+  <div class="modal-dialog" onclick="yt_players['videoPlayer'].pauseVideo();" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+
+        <div class="embed-responsive embed-responsive-16by9">
+          <iframe id="videoPlayer" class="ytplayer"
+                  class="embed-responsive-item"
+                  src="https://www.youtube.com/embed/{{ youtube }}?enablejsapi=1&wmode=transparent&amp;rel=0&amp;showinfo=0"
+                  allowfullscreen="true">
+          </iframe>
+        </div>
+      </div>
+      <button type="button" class="close" data-dismiss="modal"
+              aria-label="Close">
+        <div aria-hidden="true">&times;</div>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+var yt_int,
+  yt_players = {},
+  initYT = function() {
+    $('.ytplayer').each(function() {
+      yt_players[this.id] = new YT.Player(this.id);
+    });
+  };
+$.getScript('//www.youtube.com/player_api', function() {
+  yt_int = setInterval(function() {
+    if (typeof YT === 'object') {
+      initYT();
+      clearInterval(yt_int);
+    }
+  }, 500);
+});
+$('body').on('click', function(e) {
+  if (yt_players['videoPlayer']) {
+    yt_players['videoPlayer'].pauseVideo();
+  }
+});
+</script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,162 @@
+@import 'buttons';
+@import 'colors';
+@import 'get_started_form';
+@import 'sidebar';
+
+body {
+  position: relative;
+}
+
+figure {
+  margin: 15px;
+  max-width: 300px;
+
+  figcaption {
+    font-style: italic;
+    font-size: 14px;
+    padding-bottom: 20px;
+  }
+}
+
+.banner.masthead {
+  background-image: none;
+  background-color: $deep-blue-color;
+}
+
+/* These pages are text-heavy and use less colored backgrounds compared to */
+/* rest of perts.net. Tighten up the whitespace a little. */
+.content-main .engage section {
+  padding: 40px 0; /* normally 48px */
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// Banner / Masthead
+.masthead {
+  font-size: 20px;
+  text-shadow: 0 2px 2px black;
+
+  .container {
+    padding: 0;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    color: white;
+    font-size: 1.25rem;
+  }
+
+  .wistia_embed {
+    display:inline-block;
+    height:253px;
+    position:relative;
+    width:450px;
+    margin-bottom:20px;
+
+   @media (max-width: 520px) {
+      height:169px;
+      width:300px;
+    } 
+  }
+
+  a {
+    color: white;
+  }
+
+  .btn {
+    letter-spacing: 0.5px;
+    text-shadow: none;
+    text-transform: uppercase;
+    max-width: 400px;
+    padding: 10px 0;
+    margin: 15px auto;
+  }
+}
+
+.content-main {
+  padding-top: 20px;
+
+  h2 {
+    color: #3faeeb;
+
+    /* headings in their own row already have plenty of margin-bottom */
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+  h3 {
+    margin: 20px 0;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  img {
+    width: 100% !important;
+  }
+
+  p, li {
+    font-size: 18px;
+  }
+
+  .color1, .color5 {
+    h2 {
+      color: white;
+    }
+  }
+}
+
+a {
+  &.action-wrapper {
+    display: block;
+    margin-bottom: 20px;
+
+    img {
+      width: 100%;
+      max-width: 130px;
+      margin-bottom: 10px;
+
+      @media (max-width: 520px) {
+        max-width: 100px;
+      } 
+    }
+  }
+}
+
+.bordered-inset {
+  margin: 45px 16px 16px 16px;
+  padding: 30px 15px;
+  border: 2px solid $indigo-color;
+  border-radius: 8px;
+}
+
+.circular-cycle-diagram {
+  max-width: 175px;
+  margin: 0 auto;
+}
+
+.flowchart-wrapper {
+  padding: 20px 20px 0 20px;
+}
+
+.condition-detail-row {
+  font-size: 16px;
+  min-height: 70px;
+  padding: 10px 0;
+
+  img {
+    width: 100px;
+  }
+}
+
+.do-next-option {
+  text-align: center;
+
+  img {
+    width: 120px;
+  }
+}

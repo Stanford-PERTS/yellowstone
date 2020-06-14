@@ -1,0 +1,384 @@
+{# DO NOT CHANGE #}
+{% extends "engage/_template.engage.html" %}
+
+{# TODO: Update the following program information: #}
+{% set title = "The Engagement Project" %}
+{% set program_label = "ep19" %}
+{% set description = "
+   Build a classroom climate that fosters equitable academic engagement
+" %}
+{% set registration_open = true %}
+
+{# TODO: Set program YouTube video's ID or false if not using one:            #}
+{#       Example: if the YouTube video's location is                          #}
+{#         https://www.youtube.com/watch?v=YYJLMmWZiMQ                        #}
+{#         then {% set youtube = "YYJLMmWZiMQ" %}                             #}
+{% set youtube = null %}
+{% set wistia = null %}
+
+{% set login_url = triton_protocol ~ "://" ~ triton_domain ~ "/login?program=" ~ program_label %}
+
+{% block masthead %}
+
+  <div class="row">
+    {% if youtube or wistia %}
+    <div class="col-lg-6 ml-lg-auto mr-lg-auto">
+
+      <!-- Play Button -->
+      {% if youtube %}
+      <div class="play-button" data-toggle="modal" data-target="#videoModal">
+      </div>
+      {% endif %}
+
+      {% if wistia %}
+      <script src="https://fast.wistia.com/embed/medias/{{wistia}}.jsonp" async></script>
+      <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+      <span
+        class="wistia_embed wistia_async_{{wistia}} popover=true popoverAnimateThumbnail=true"
+      >&nbsp;</span>
+      {% endif %}
+
+    </div>
+    {% endif %}
+
+    <div class="col-lg-6 ml-lg-auto mr-lg-auto">
+      <div class="row">
+        <div class="col-12">
+          <h2>I am a&hellip;</h2>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-4">
+          <a href="/engage/teacher" class="action-wrapper">
+            <img src="/static/images/engage/teacher.png" alt="teacher" />
+            <div>Teacher</div>
+          </a>
+        </div>
+        <div class="col-4">
+          <a href="/engage/administrator" class="action-wrapper">
+            <img src="/static/images/engage/school.png" alt="school leader" />
+            <div>School Leader</div>
+          </a>
+        </div>
+        <div class="col-4">
+          <a href="https://perts.me" class="action-wrapper">
+            <img src="/static/images/engage/student.png" alt="student" />
+            <div>Student</div>
+          </a>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          {% if registration_open %}
+            <a href="{{ login_url }}">
+              Already registered? Sign in
+            </a>
+          {% else %}
+            The Engagement Project opens on August 12<sup>th</sup>
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block content %}
+
+<!-- ENGAGEMENT PROJECT FEATURES -->
+<section>
+  <div class="row">
+    <div class="col-md-8">
+      <h2 id="features">Key Features</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-8">
+      <h3 id="about-collect">Collect Rapid, Actionable Insights</h3>
+      <ul>
+        <li>
+          Students respond to targeted questions about classroom
+          <a href="#learning-conditions">conditions</a>
+          that affect student engagement.
+        </li>
+        <li>
+          Each survey is only 5-10 minutes.
+        </li>
+        <li>
+          Teachers receive survey results in customized reports, like <a
+          href="/engage/report">this example</a>.
+        </li>
+        <li>
+          Results are paired with relevant, evidence-based recommendations.
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <p><img class="img-fluid rounded" src="/static/images/home/engage_example_report_graph.jpg" alt="example line graph"></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h3 id="about-iterate">Iterate & Adapt</h3>
+      <ul>
+        <li>
+          Since every class is different and every teacher is different,
+          evidence-based recommendations are just the starting point.
+        </li>
+        <li>
+          Teachers use cycles of inquiry and action to refine recommendations
+          and find what works for them and their students.
+        </li>
+        <li>
+          Teachers gain access to the Learning Conditions Resource Bank: a
+          library of practices designed to improve learning conditions.
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-4 order-md-first">
+      <div class="circular-cycle-diagram">
+        <img
+          class="img-fluid rounded"
+          src="/static/images/home/engage_cycle_diagram.png"
+          alt="diagram of arrows forming a circle"
+        >
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-8">
+      <h3 id="about-collaborate">Collaborate with Colleagues</h3>
+      <ul>
+        <li>
+          Teachers work on a team with colleagues to swap insights about what
+          works best in their local context.
+        </li>
+        <li>
+          Guidelines for constructive meetings help teachers stay focused on
+          supporting each other’s improvement.
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <p><img class="img-fluid rounded" src="/static/images/home/engage_teacher_meeting.jpg" alt="teachers in a meeting"></p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ENGAGEMENT AND LEARNING CONDITIONS -->
+<section class="color1">
+  <div class="row">
+    <div class="col-md-8">
+      <h2 id="learning-conditions">Engagement and Learning Conditions</h2>
+      <p>
+       Many factors influence students’ motivation and ability to engage, and
+       some of those factors are outside teachers’ control. For example,
+       students might have trouble focusing if they come to school hungry or
+       if they don’t get enough sleep. But research is clear that teachers do
+       have control over certain learning conditions that affect student
+       engagement.
+      </p>
+      <p>
+        The Engagement Project focuses on three
+        <!-- /conditions is a short link in production, and may 404 in other
+             environments -->
+        <a href="/conditions">learning conditions</a> that affect student
+        engagement, are easy to assess with brief surveys, and have clear,
+        evidence-based strategies for improving them:
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <img src="/static/images/engage/conditions-teacher-caring.png" alt="teacher showing caring for students" width="125" />
+    </div>
+    <div class="col-md-6">
+      <p>
+        <strong>Teacher Caring.</strong>
+          Students engage more deeply in their work when they feel like their
+          teacher likes them and cares about them as a person.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <img src="/static/images/engage/conditions-feedback-for-growth.png" alt="teacher giving feedback" width="125" />
+    </div>
+    <div class="col-md-6">
+      <p>
+        <strong>Feedback for Growth.</strong>
+        Students learn more effectively when their teacher recognizes and
+        encourages their progress, and offers supportive feedback to help them
+        improve.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <img src="/static/images/engage/conditions-meaningful-work.png" alt="student experiencing motivation while reading" width="125" />
+    </div>
+    <div class="col-md-6">
+      <p>
+        <strong>Meaningful Work.</strong>
+          Students are more motivated to learn when they can see how their
+          classroom experiences relate to their lives outside of school.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- TEACHER STORIES -->
+<section class="teacher-stories color4">
+  <div class="row">
+    <div class="col-6">
+      <img src="/static/images/engage-bright-spots-illustration.png" alt="" />
+    </div>
+    <div class="col-6 content">
+      <div class="row">
+        <div class="col-12">
+          <h2 id="teacher-stories">Educator Stories</h2>
+          <p>
+            Learn how educators across the country have used the Engagement
+            Project to create more engaging, supportive, and meaningful
+            classrooms for all of their students.
+          </p>
+          <a class="perts-button btn-invert" href="/engage/stories-biddix">
+            Read Teacher Stories
+          </a>
+          <a
+            class="perts-button btn-secondary"
+            href="/engage/stories-fremont"
+          >
+            Read Team and Admin Stories
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- WHY FOCUS ON ENGAGEMENT -->
+<section>
+  <div class="row">
+    <div class="col-md-7">
+      <h2 id="why">Why Focus on Engagement?</h2>
+      <p>
+        Academically engaged students are more likely to learn and succeed.
+        Of course, it’s not just about grades or test scores&mdash;engaged
+        students are better positioned for a productive, healthy, and
+        intellectually stimulating life.
+      </p>
+      <p>
+        Unfortunately, motivating students to engage can be challenging. Stanford University&rsquo;s
+          <a href = "#about-perts">PERTS</a>
+        designed the Engagement Project to help teachers leverage the science
+        of motivation and each other’s expertise to foster students’
+        internal drive to learn.
+      </p>
+    </div>
+    <div class="col-md-5 order-md-first">
+      <img
+        class="img-fluid rounded"
+        src="/static/images/engage/classroom_with_raised_hands.jpg"
+        alt="teacher and students with raised hands"
+      >
+    </div>
+  </div>
+</section>
+
+
+<section id="get-started" class="get-started text-center">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>Select Your Role to Learn More</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <a href="/engage/teacher" class="action-wrapper">
+        <img src="/static/images/engage/teacher.png" alt="teacher" width="200" />
+        <div>Teacher</div>
+      </a>
+    </div>
+    <div class="col-md-6">
+      <a href="/engage/administrator" class="action-wrapper">
+        <img src="/static/images/engage/school.png" alt="school building" width="200" />
+        <div>School Leader</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}
+
+
+{% block aboutperts %}
+<section id="about-perts" class="color5">
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+      <h2>About PERTS</h2>
+      <p>The Project for Education Research that Scales (PERTS) is an applied
+        research center at Stanford University. We help educators apply insights
+        from the learning and developmental sciences so that every learner gets
+        the support and stimulation they need to thrive.
+      </p>
+      <p>PERTS works with developmental scientists and educators across the
+        nation to build tools and services that help schools foster student
+        engagement and success. Through our work with schools, teachers, and other
+        educational organizations, millions of students around the world have
+        benefited from evidence-based practices.
+      </p>
+      <h3>Key Advisors</h3>
+      <p>
+        <a href="https://www.gsb.stanford.edu/faculty-research/faculty/susan-colby">Susan Colby</a>, Founder &amp; CEO, Imagine Worldwide
+      </p>
+      <p>
+        <a href="https://profiles.stanford.edu/carol-dweck?tab=bio">
+        Carol Dweck</a>, Professor, Stanford University
+      </p>
+      <p>
+        <a href="https://consortium.uchicago.edu/about/staff/camille-farrington">Camille Farrington</a>, Managing Director, UChicago Consortium for School Research
+      </p>
+      <p>
+        <a href="https://www.billionsinstitute.com/team/">Becky Margiotta</a>, Principal, Billions Institute
+      </p>
+      <p>
+        <a href="http://www.jokonofua.com/">Jason Okonofua</a>, Assistant Professor, UC Berkeley
+      </p>
+      <p>
+        <a href="http://gregorywalton-stanford.weebly.com/">Greg Walton</a>, Associate Professor, Stanford University
+      </p>
+      <h3>Key Funders</h3>
+      <p><a href="http://www.raikesfoundation.org/">The Raikes Foundation</a></p>
+      <p><a href="http://overdeck.org/">The Overdeck Family Foundation</a></p>
+      <h3>Other PERTS Projects</h3>
+      <p><a href="https://www.mindsetkit.org/">The Mindset Kit</a></p>
+      <p><a href="https://www.perts.net/orientation/hg">Growth Mindset for 9th Graders</a></p>
+    </div>
+    <div class="col-lg-2"></div>
+  </div>
+</section>
+{% endblock %}
+
+{% block aboutctc %}
+{# Do not display About CTC section #}
+{% endblock %}
+
+{% block moreinfo %}
+{# do not display #}
+{% endblock %}
+
+{% block modals %}
+<a class="btn btn-mobile" href="#get-started">Get Started</a>
+{% endblock %}

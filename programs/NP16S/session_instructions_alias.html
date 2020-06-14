@@ -1,0 +1,728 @@
+{% extends "templates/base.html" %}
+
+{# This template is handled by page_handlers.ProgramStaticHandler. #}
+
+{% block title %}
+PERTS Session Instructions
+{% endblock %}
+
+{% block header %}
+
+<style>
+
+body {
+    color: #333; /* dark-gray */
+}
+
+h3 {
+    font-size: 18px;
+}
+
+strong {
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+p, #content ul, #content ol {
+    font-size: 1em;
+    font-family: helvetica, arial, freesans, clean, sans-serif;
+    line-height: 1.2em;
+}
+
+blockquote {
+    border: 1px solid #777; /* very-light-gray */
+    margin-top: 10px;
+    font-size: 1.1em;
+}
+
+.list-of-contents {
+    list-style: none;
+}
+
+.list-of-contents li {
+    width: 600px;
+    border-bottom: 1px dotted black;
+}
+
+.list-of-contents li .page-number {
+    float: right;
+}
+
+section#content a {
+    color: blue;
+    text-decoration: underline;
+}
+
+#content img.print-only {
+    margin-bottom: 10mm;
+}
+
+/* http://stackoverflow.com/questions/10732690/offsetting-an-html-anchor-to-adjust-for-fixed-header */
+a.anchor {
+    display: block;
+    position: relative;
+    top: -150px;
+    visibility: hidden;
+}
+
+p.title {
+    font-size: 2em;
+    margin-bottom: 0;
+    line-height: 1.4em;
+}
+
+p.letter-greeting {
+    /*font-style: italic;*/
+}
+
+p.letter-body {
+    text-indent: 1.5em;
+}
+
+p.letter-closing {
+    /*margin-left: 60%;*/
+}
+
+.cohort_code {
+    font-size: 1.25em;
+    font-weight: bold;
+    color: #CB0000;
+    padding: 10px 10px 10px 10px;
+    border: 1px #CB0000 solid;
+
+}
+
+span.blank-line {
+    width: 75%;
+    border-bottom:1px solid black;
+    display: inline-block;
+}
+
+#make_up_table {
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#make_up_table th {
+    color: black;
+    background-color: #ddd !important; /* very-light-gray */
+    border: 1px solid black;
+    padding: 5px;
+}
+
+#make_up_table tr {
+    background-color: transparent;
+}
+
+#make_up_table td {
+    border: 1px solid black;
+    padding: 11px 10px;
+}
+
+.well {
+    float:left;
+    padding: 19px 19px 5px 19px;
+    font-size: 0.8em;
+}
+
+.well h4 {
+    text-align: center;
+    margin-top: 0;
+}
+
+.well td {
+    padding: 0 5px;
+    border: none;
+}
+
+</style>
+
+<script type="text/javascript">
+
+PertsApp.value(
+    'cohort',
+
+{# /* provide the cohort details to javascript, if they're available */ #}
+{% if cohort %}
+    {{ cohort.to_dict() | tojson | safe }}
+{% else %}
+    {}
+{% endif %}
+
+);
+
+PertsApp.controller('SessionInstructionsController', [
+    '$scope', '$pertsAjax', 'cohort',
+    function ($scope, $pertsAjax, cohort) {
+        'use strict';
+        $scope.cohort = cohort;
+        $scope.numMakeUpRows = util.range(10);
+    }
+]);
+
+$().ready(function () {
+    $('.navbar, #footer').addClass('no-print');
+});
+</script>
+{% endblock %}
+
+
+
+{% block content %}
+
+<button id="print-button" class="no-print glyphicon glyphicon-print"
+        onclick="print()">
+</button>
+
+<div ng-controller="SessionInstructionsController">
+
+<img src="/static/images/pertslogo.png" height="50" class="print-only">
+
+<p class="title">High School Transition Program Session Instructions</p>
+<h3>Instructions for <b>[[ cohort.name ]]</b></h3>
+
+<hr>
+
+<h3>Contents</h3>
+<ul class="list-of-contents">
+    <li><span>Intro</span><span class="page-number">p. 1</span></li>
+    <li><span>Session Instructions</span><span class="page-number">p. 2</span></li>
+    <li><span>Troubleshooting Guide</span><span class="page-number">p. 4</span></li>
+    <li><span>Answers to Student Questions</span><span class="page-number">p. 5</span></li>
+    <li><span>Student Make-Up Lists</span><span class="page-number">p. 7</span></li>
+</ul>
+
+<hr>
+
+<p class="letter-greeting">Dear Research Partner,</p>
+<p>
+    This document includes the instructions you will need to deliver this program. Please take a few minutes to review these instructions and bring them with you when your class(es) participate. We have also included some helpful tips regarding troubleshooting and FAQs, so you know what to do if any issues or questions come up while your students are participating.
+</p> 
+<p>
+    We hope this program is helpful for your students, however, please do not emphasize that it might be helpful for them. Instead, please emphasize how much the researchers need their input and that their opinions are valuable and will help the researchers improve the program for students in the future. It is important to emphasize the honorific components of the program so that students do not feel stigmatized or like they &ldquo;need
+    help.&rdquo;
+</p>
+<p>
+    <font color="red"><b>**IMPORTANT: Your school is using Student Aliases. Students will NOT be able to enter their real names, they will need to enter an assigned alias to access the program. Please make sure that you have reviewed the Student Alias List and have assigned aliases to students before they begin the program.**</font></b>
+</p>
+<p>
+    Before you begin the first session, remember to verify that:
+</p>
+<ul class="paragraph">
+    <li>
+        Parent information letters have been sent home. Parents do not need to sign these, but can choose to opt their child out if they wish. 
+    </li>
+    <li>
+        You have reviewed this document carefully.
+    </li>
+    <li>
+        The program works on school computers and each student will have
+        their own computer. This program is compatible with Macs, PCs, iPads, Chromebooks, Safari, Internet Explorer 8 and above, Chrome, and Firefox. Note: Windows XP has known issues with audio. If audio doesn't work in one browser, please try another one.
+    </li>
+    <li>
+        Students have access to headphones. If you are not able to provide
+        headphones, please make sure all computers are muted during
+        the session.
+    </li>
+</ul>
+<p class="letter-closing">
+    Thank you for your participation!<br>
+    The PERTS Team
+</p>
+
+<hr>
+
+<div class="page-break"></div>
+<h2>Session Instructions</h2>
+<a class="anchor" id="session_instructions"></a>
+<p>
+   Both sessions will take about 45 minutes and should be scheduled approximately one month apart. Please follow the instructions below for each session:
+</p>
+
+<h3><b>Step 1</b></h3>
+<p>
+    Any student whose parent has requested that they do not participate should be provided with an alternative activity while the rest of the class goes through the program. An alternative activity is available on the study website, but you can also use your own alternative activity if you would like. An activity should be prepared for students if they finish early (i.e. homework, worksheet, website, etc.).
+</p>
+
+<h3><b>Step 2</b></h3>
+
+<p class="important-body"><b>Read the following instructions to the class.</b></p>
+<p>Note: It is important to read the instructions in first box exactly as they are written.</p>
+<blockquote style="border-bottom: none; margin-bottom: 0;">
+    <p>
+        &ldquo;<i>Our school is participating in a program developed by Stanford University. Today, our class will participate in the [first/second] of two online modules designed for 9th grade students. The researchers at Stanford would like to learn more about your opinions and experiences in school, and they would like your help to make the program better. They will use your input to improve the program for students in the future, so it is important that you take your time reading the materials and answering the questions in the program</i>
+    </p>
+</blockquote>
+<blockquote style="border-top: none; margin-top: 0; border-bottom: none; margin-bottom: 0;">
+    <p>
+        &ldquo;<i>First, you’ll be answering some survey questions to help researchers understand more about your experience in school. Then, you will read some short passages and answer questions about what you read to help improve the program for future students.</i>
+    </p>
+</blockquote>
+<blockquote style="border-top: none; margin-top: 0; border-bottom: none; margin-bottom: 0;">
+    <p>
+        &ldquo;<i>Participating in this program is voluntary and your grade in this class will not be affected whether you complete the program or not. You may skip any question or part of the program you do not wish to answer or complete. When responding, choose the answer that best fits what you know or feel. Don’t pick a response just because you think that’s what someone wants you to say. I would like to emphasize that this is not a test of you or our school.</i>
+    </p>
+</blockquote>
+<blockquote style="border-top: none; margin-top: 0; border-bottom: none; margin-bottom: 0;">
+    <p>
+        &ldquo;<i>Only a limited number of students are participating in this program, and the answers you give are very important for helping the researchers and other students. So please read the instructions carefully and do your best to answer all of the questions to the best of your ability.</i> 
+    </p>
+</blockquote>
+<blockquote style="border-top: none; margin-top: 0; border-bottom: none; margin-bottom: 0;">
+    <p>
+        &ldquo;<i>Finally, it is <strong>very important</strong> that you
+        not talk to each other or look at each other's screens. That
+        would be a violation of privacy, and I cannot allow it. No one at our
+        school will look at your specific answers.</i>
+    </p>
+</blockquote>
+<blockquote style="border-top: none; margin-top: 0;">
+    <p>
+        &ldquo;<i>We’ll get started in just a moment. When you finish, please
+        remain quiet so others can finish too.</i>&rdquo;
+    </p>
+</blockquote>
+
+<p class="important-body">Distribute headphones.</p>
+<blockquote>
+    <p>
+        &ldquo;<i>Some sections of the program have audio, so you will need to use
+        headphones. Please plug your headphones into your computer and put them
+        on when we start the program.</i>&rdquo;
+    </p>
+</blockquote>
+<p>Note: Students can also use their own personal headphones, according to school policy, if it’s not disruptive to the class to retrieve them.</p>
+
+<p class="important-body">Pause here to answer any questions.</p>
+
+<h3><b>Step 3</b></h3>
+<p>
+    Hand out the student aliases and write the website address and the code phrase where all your students can see it. If this is not possible, you may want to make cards with this information on it to hand out to your students. It is important to not let students see the website address and code phrase until you read the script above so that they pay attention while you are introducing the program.
+</p>
+<p class="important-body">
+    If this the <strong>first session</strong> with the students, read the
+    following:
+</p>
+<blockquote>
+    <p>
+        &ldquo;<i>Now open your browser and please go to <b>perts.me</b>. Enter the phrase
+        &lsquo;<strong><b>[[ cohort.code ]] 1</b></strong>&rsquo; and follow the
+        on-screen instructions.</i>&rdquo;
+    </p>
+</blockquote>
+
+<p class="important-body">If this the <strong>second session</strong> with the students, read the following:</p>
+<blockquote>
+    <p>
+        &ldquo;<i>Now open your browser and please go to <b>perts.me</b>. Enter the phrase
+        &lsquo;<strong><b>[[ cohort.code ]] 2</b></strong>&rsquo; and follow the
+        on-screen instructions.</i>&rdquo;
+    </p>
+</blockquote>
+
+<p class="important-body">
+    For both sessions, read the following:
+</p>
+<blockquote>
+    <p>
+        &ldquo;<i>Use the drop down menu and select this class. Then, enter the alias I gave you exactly how it is written. Do not type in your real first and last name, you will not be able to enter the program. </i>
+    </p>
+    <p>
+        &ldquo;<i>Please be aware that as you move through the program, you may
+        want to go back to a previous question. If so, <strong>do not
+        use</strong> the back arrow on the browser. Instead, use the &ldquo;Go
+        Back&rdquo; link in the upper left corner, just above the questions.</i>
+    </p>
+    <p>&ldquo;Please begin.&rdquo;</p>
+
+</blockquote>
+<h3><b>Step 4</b></h3>
+<p>
+    As the students are completing the program, please complete the Student Make-Up List to indicate which students on your roster are <strong>not</strong> participating and the reason why not. Return this form to your school coordinator at the end of the session, or no later than the end of the school day.
+</p>
+
+<h3><b>Step 5</b></h3>
+<p>
+    Ten minutes before students need to finish, tell them how much time is
+    remaining and that it is okay if they do not have time to finish
+    everything.
+</p>
+<blockquote>
+    <p>
+        &ldquo;<i>We have about ten minutes remaining in the class period. Please
+        continue with the activity, but do not rush. It is okay if you do not
+        have time to finish everything.</i>&rdquo;
+    </p>
+</blockquote>
+
+<h3><b>Step 6</b></h3>
+<p>
+    At the end of the class period, ask your students to log out by closing
+    their browser window.
+</p>
+<blockquote>
+    <p>
+        &ldquo;<i>We have reached the end of the session. It's okay if you are not
+        totally done with the activity, just close the browser.</i>
+    </p>
+    <p>
+        &ldquo;<i>Thank you. The information you have provided may be used to
+        improve students' experience here and at other schools as well.</i>
+    </p>
+</blockquote>
+
+<h2>Troubleshooting</h2>
+<a class="anchor" id="troubleshooting"></a>
+<p>
+    We work hard to minimize the technical problems, but sometimes issues come
+    up. Below are some problems students have experienced in the past and the
+    best ways to solve them.
+</p>
+<p>
+    If there is a time-sensitive problem that you need assistance with, please call your <b>PERTS team coordinator, Rachel Herter</b>, at <b>(413) 687-5008</b>. If you can’t reach Rachel, call <b>(650) 241-9056</b> to speak with another PERTS team member. For all school-related issues please contact your school’s coordinator.
+</p>
+<h3>Students are not able to move past the student sign-in page</h3>
+<p>
+    <strong>Problem</strong>: Students are getting an error message when they enter in their information on the student sign-in page.<br>
+    <strong>Solution</strong>: Make sure students are entering an approved alias. If they enter in their own name, or if they misspell their alias, they will not be allowed to progress. 
+</p>
+
+<h3>Error Message: Confirm Form Resubmission</h3>
+<p>
+    <strong>Problem</strong>: A student clicked the back button on the browser
+    instead of the &ldquo;Go Back&rdquo; button in the survey.<br>
+    <strong>Solution</strong>: Click the &ldquo;reload&rdquo; or
+    &ldquo;refresh&rdquo; button. You may also need to click
+    &ldquo;confirm&rdquo; or &ldquo;continue&rdquo;.
+</p>
+
+<h3>Closed Page</h3>
+<p>
+    <strong>Problem</strong>: A student closed the browser window.<br>
+    <strong>Solution</strong>: Tell the student to go to
+    <a href="//www.perts.me">perts.me</a> and sign in
+    again, just like they did the first time. The program will continue where
+    the student left off.
+</p>
+
+<h3>Warning Message or Connection Expired Message</h3>
+<p>
+    <strong>Problem</strong>: A student's screen says that the connection
+    expired or a similar warning.<br>
+    <strong>Solution</strong>: Click the &ldquo;reload&rdquo; or
+    &ldquo;refresh&rdquo; button.
+</p>
+
+<h3>Lost Location</h3>
+<p>
+    <strong>Problem</strong>: The survey restarted from the beginning.<br>
+    <strong>Solution</strong>: Tell the student to skip up to the part where
+    they left off. The answers the student previously provided have been saved,
+    but the server lost the page they were on for network reasons. Note: Some
+    pages will not allow students to advance until a certain amount of time
+    (about 5 seconds) has passed.
+</p>
+
+<h3>Cannot Connect to perts.me</h3>
+<p>
+    <strong>Problem</strong>: Students cannot access the sign-in page when they
+    go to perts.me.</br>
+    <strong>Solution</strong>: Check if they can access another website, like
+    google.com.
+</p>
+<ul>
+    <li>
+        If not, there is a problem with your Internet connection. Talk to
+        technical support staff at your school to resolve the issue.
+    </li>
+    <li>
+        If you can connect to google.com but you cannot connect to perts.me,
+        wait for a few minutes and try again. If the connection still does not
+        work, call the numbers listed above to speak with a PERTS team member.
+        If you do not reach someone immediately, please leave a message and
+        someone will call you back promptly.
+    </li>
+</ul>
+
+<h3>A Student Completed the program in Another Class</h3>
+<p>
+    <strong>Problem</strong>: A student tells you they have already completed
+    the survey in another class.</br>
+    <strong>Solution</strong>: The student should NOT do the same session of
+    the program more than once. Ask the student to work on something else quietly
+    or you may let them leave quietly.
+</p>
+
+<h3>Some Students Ran Out of Time</h3>
+<p>
+    <strong>Problem</strong>: Some students do not complete the survey.</br>
+    <strong>Solution</strong>: That is fine. Just ask them to get as much done
+    as possible. They may be asked to try to complete the session on a later
+    date.
+</p>
+
+<h3>Audio Issue</h3>
+<p>
+    <strong>Problem</strong>: Student cannot hear the sound.</br>
+    <strong>Solution</strong>: Look for a speaker cone symbol in the upper
+    right or lower right corners of the screen for volume controls. Check that
+    the computer is not muted, that the volume is turned up high enough, and
+    that the headphones are fully plugged in.
+</p>
+
+<h3>Headphones Not Working</h3>
+<p>
+    <strong>Problem</strong>: Student’s headphones are not working.</br>
+    <strong>Solution</strong>: Try to find another pair. If another pair cannot
+    be found, mute the computer audio so that the student does not disturb
+    others while going through the program.
+</p>
+
+<h2>Answers to Student Questions</h2>
+<a class="anchor" id="student_questions"></a>
+<h3>Do I have to do this?</h3>
+    <p>
+        Your opinions are important, so I hope that you would at least
+        try.<br>
+        <em>If a student refuses again, just accept this.</em>
+    </p>
+<h3>Why should I do this?</h3>
+    <p>
+        Because all of my students are doing this today, and we will learn
+        important information.
+    </p>
+<h3>Will I get a grade on this?</h3>
+    <p>
+        It’s not graded. But, when you provide honest answers, it will help
+        faculty to do a better job teaching students like you in the future.
+    </p>
+<h3>Does spelling and grammar matter?</h3>
+    <p>
+        No, just concentrate on getting your ideas across.
+    </p>
+
+<div class="page-break"></div>
+<p class="title">Student Make-Up List Session 1</p>
+<br>
+
+<p class="letter-greeting">Dear Teacher,</p>
+<p>
+    Thank you for your participation this program.  Please
+    fill in the names of the students that did not participate in today’s
+    session and use the codes below indicate the reason.
+</p> 
+<p>
+    Please return this form to me at the end of the session or no later than
+    the end of the school day.
+</p> 
+<p class="letter-closing">
+    Again, thank you for your help.<br>
+</p>
+
+<hr style="border:1px solid black;height:0;margin-bottom:30px">
+
+<p>
+    Teacher Name:&nbsp;
+    <span class="blank-line"></span>
+</p>
+<p>
+    Class:&nbsp;
+    <span class="blank-line"></span>
+</p>
+
+<table id="make_up_table" class="col-xs-12">
+    <thead>
+        <tr>
+            <th>Student Needing Make-Up</th>
+            <th>Code*</th>
+            <th>Student Needing Make-Up</th>
+            <th>Code*</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="x in numMakeUpRows">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="well col-xs-12">
+        <h4>*<strong>Participation Codes</strong></h4>
+        <table class="col-xs-6">
+            <tbody>
+                <tr>
+                    <td>A</td><td>Absent</td>
+                </tr>
+                <tr>
+                    <td>ISS</td><td>In School Suspension</td>
+                </tr>
+                <tr>
+                    <td>SR</td><td>Student Refusal</td>
+                </tr>
+                <tr>
+                    <td>NFR</td><td>No Form Returned (active permission only)</td>
+                </tr>
+                <tr>
+                    <td>T</td><td>Technology Related Issue</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="col-xs-6">
+            <tbody>
+                <tr>
+                    <td>CCI</td><td>Cannot Complete Independently</td>
+                </tr>
+                <tr>
+                    <td>DC</td><td>Dropped Class</td>
+                </tr>
+                <tr>
+                    <td>DS</td><td>Dropped School</td>
+                </tr>
+                <tr>
+                    <td>E</td><td>Expelled</td>
+                </tr>
+                <tr>
+                    <td>EA</td><td>Extended Absence</td>
+                </tr>
+                <tr>
+                    <td>H</td><td>Homebound</td>
+                </tr>
+                <tr>
+                    <td>MA</td><td>Moved Away</td>
+                </tr>
+                <tr>
+                    <td>OGR</td><td>Out of Grade Range</td>
+                </tr>
+                <tr>
+                    <td>OSS</td><td>Out of School Suspension</td>
+                </tr>
+                <tr>
+                    <td>PR</td><td>Parental Refusal</td>
+                </tr>
+                <tr>
+                    <td>TAC</td><td>Took in Another Class</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="page-break"></div>
+<p class="title">Student Make-Up List Session 2</p>
+<br>
+
+<p class="letter-greeting">Dear Teacher,</p>
+<p>
+    Thank you for your participation this program.  Please
+    fill in the names of the students that did not participate in today’s
+    session and use the codes below indicate the reason.
+</p> 
+<p>
+    Please return this form to me at the end of the session or no later than
+    the end of the school day.
+</p> 
+<p class="letter-closing">
+    Again, thank you for your help.<br>
+</p>
+
+<hr style="border:1px solid black;height:0;margin-bottom:30px">
+
+<p>
+    Teacher Name:&nbsp;
+    <span class="blank-line"></span>
+</p>
+<p>
+    Class:&nbsp;
+    <span class="blank-line"></span>
+</p>
+
+<table id="make_up_table" class="col-xs-12">
+    <thead>
+        <tr>
+            <th>Student Needing Make-Up</th>
+            <th>Code*</th>
+            <th>Student Needing Make-Up</th>
+            <th>Code*</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="x in numMakeUpRows">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="well col-xs-12">
+        <h4>*<strong>Participation Codes</strong></h4>
+        <table class="col-xs-6">
+            <tbody>
+                <tr>
+                    <td>A</td><td>Absent</td>
+                </tr>
+                <tr>
+                    <td>ISS</td><td>In School Suspension</td>
+                </tr>
+                <tr>
+                    <td>SR</td><td>Student Refusal</td>
+                </tr>
+                <tr>
+                    <td>NFR</td><td>No Form Returned (active permission only)</td>
+                </tr>
+                <tr>
+                    <td>T</td><td>Technology Related Issue</td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="col-xs-6">
+            <tbody>
+                <tr>
+                    <td>CCI</td><td>Cannot Complete Independently</td>
+                </tr>
+                <tr>
+                    <td>DC</td><td>Dropped Class</td>
+                </tr>
+                <tr>
+                    <td>DS</td><td>Dropped School</td>
+                </tr>
+                <tr>
+                    <td>E</td><td>Expelled</td>
+                </tr>
+                <tr>
+                    <td>EA</td><td>Extended Absence</td>
+                </tr>
+                <tr>
+                    <td>H</td><td>Homebound</td>
+                </tr>
+                <tr>
+                    <td>MA</td><td>Moved Away</td>
+                </tr>
+                <tr>
+                    <td>OGR</td><td>Out of Grade Range</td>
+                </tr>
+                <tr>
+                    <td>OSS</td><td>Out of School Suspension</td>
+                </tr>
+                <tr>
+                    <td>PR</td><td>Parental Refusal</td>
+                </tr>
+                <tr>
+                    <td>TAC</td><td>Took in Another Class</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</div> <!-- end Controller -->
+
+{% endblock %}
+

@@ -1,0 +1,205 @@
+{% extends "templates/base_programs.html" %}
+
+{# This template is handled by page_handlers.ProgramHandler, #}
+{# the same handler as for the program app. #}
+
+{% block title %}
+PERTS Coordinator Instructions
+{% endblock %}
+
+{% block program_header %}
+
+<style>
+
+body {
+    color: #333; /* dark-gray */
+}
+
+h2 {
+    font-size: 18px;
+}
+
+h3 {
+    font-size: 14px;
+}
+
+p, ul, ol {
+    font-size: 1em;
+    font-family: helvetica, arial, freesans, clean, sans-serif;
+    line-height: 1.2em;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.indented {
+    margin-left: 30px;
+}
+
+section#content ul {
+    margin-top: 10px;
+}
+
+ol ol {
+    list-style: lower-alpha;
+}
+
+section#content a {
+    color: blue;
+    text-decoration: underline;
+}
+
+#content img.print-only {
+    margin-bottom: 10mm;
+}
+
+/* http://stackoverflow.com/questions/10732690/offsetting-an-html-anchor-to-adjust-for-fixed-header */
+a.anchor {
+    display: block;
+    position: relative;
+    top: -150px;
+    visibility: hidden;
+}
+
+</style>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<button id="print-button" class="no-print glyphicon glyphicon-print"
+        onclick="print()">
+</button>
+<img src="/static/images/pertslogo.png" height="50" class="print-only">
+
+<h1>Coordinator Instructions</h1>
+
+<p>
+    Thank you for agreeing to coordinate the Middle School Transition program
+    at your school! Your role is particularly important. You will be our main
+    point of contact with your school and will be responsible for helping
+    teachers schedule their classes, arranging computer lab access, and making
+    sure that the program runs smoothly.
+</p>
+<p>
+    Below is the contact information for the study coordinator and a checklist
+    of what will be required to oversee this project.
+</p>
+
+<h2>Study Coordinator Contact Information</h2>
+
+<p>
+    This study will be coordinated by PERTS at Stanford University. The study
+    coordinator is:
+</p>
+<p class="bold indented">
+Rachel Herter<br>
+<br>413-687-5008<br>
+<a href="http://www.perts.net">perts.net</a><br>
+</p>
+<p>
+    If you encounter a problem during the delivery of the program and you
+    cannot reach Rachel, please call (650) 241 9056 to speak with another PERTS
+    team member.
+</p>
+
+<h2>Scheduling</h2>
+
+<p>
+    Sessions 1 and 2 will take about 45 miuntes each. Session 3 will take about
+    15 minutes. The program will open on September 15th and close on November
+    15th. All three sessions must be completed within that window.
+</p>
+<ul>
+<li><strong>Session 1</strong> should be scheduled as close to September 15th as possible.</li>
+<li><strong>Session 2</strong> should be scheduled 1-2 weeks after session 1.</li>
+<li><strong>Session 3</strong> should be scheduled 3-4 weeks after session 2.</li>
+</ul>
+
+<h2>Coordinator Checklist</h2>
+
+<p>To insure smooth program implementation, please follow these steps.</p>
+<ol>
+    <li>
+        <strong>Email your PERTS coordinator</strong> a signed copy of the
+        School Letter of Agreement.
+    </li>
+    <li>
+        <strong>Notify parents</strong> about the study by sending home the
+        parent information letter provided under the <em>Documents</em> tab. Parents
+        do not need to sign these, but can choose to opt their child out if
+        they wish.
+    </li>
+    <li>
+        <strong>Work with teachers to schedule</strong> when their students
+        will complete all three sessions and help coordinate computer lab
+        access. Each session should take place at a time when students can pay
+        full attention. Our previous research suggests that it is best not to
+        schedule sessions in the week before a break or on a day when the class
+        schedule is disrupted by standardized testing.
+    </li>
+    <li>
+        <strong>Login at perts.net</strong> to add and schedule
+        participating classrooms under the <em>Schedule</em> tab.
+    </li>
+    <li>
+        <strong>For each participating classroom, add the classroom
+        roster</strong> by clicking <em>Add Student</em> under the <em>Classroom
+        Roster</em> tab. You can enter the names individually, or you can
+        copy and paste from a pre-existing roster.
+    </li>
+    <li>
+        <strong>Send the <em>Middle School Transition Program
+        Instructions</em></strong>, located under the documents tab, to
+        participating teachers and provide support if needed.
+    </li>
+    <li>
+        <strong>Prepare computer labs.</strong> Test the students’ survey link
+        on a computer in your school’s computer lab:
+        <ol>
+            <li>
+                Sign into a computer using the same type of login credentials a
+                student would use (i.e., don’t log in as an administrator).
+            </li>
+            <li>
+                <span class="bold">Important: Our program supports Chrome,
+                Firefox, Safari, and Internet Explorer versions 8 and
+                up.</span>
+            </li>
+            <li>
+                Go to <a href="//www.perts.me">perts.me</a> to check that
+                you are able to access the student login page.
+            </li>
+            <li>
+                If you are, go to <a href="http://www.perts.net/test">perts.net/test</a> and click
+                all the way through to the end to make sure you do not
+                encounter any issues. If you do, please call your coordinator
+                at the above number.
+            </li>
+        </ol>
+    </li>
+    <li>
+        <strong>Provide students with headphones</strong> during the program so
+        they can listen along to the audio. If you are NOT able provide
+        headphones, please let your PERTS coordinator know as soon as possible.
+    </li>
+    <li>
+        <strong>Collect the <em>Student Make-up List</em></strong> from
+        teachers after each session. Update students’ participation status
+        under the <em>Participation Code</em> column in the <em>Classroom Roster</em> tab.
+    </li>
+    <li>
+        <strong>Provide student transcript data.</strong> At the end of the
+        semester you will upload the academic records of your stu- dents to a
+        secure website. We will use these records to analyze the effects of the
+        program. See <em>Data Submission Instructions</em> in the documents tab for
+        more information.
+    </li>
+</ol>
+
+{% endblock %}
+
+

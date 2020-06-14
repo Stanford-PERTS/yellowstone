@@ -1,0 +1,52 @@
+###############################################################################
+##                                                                           ##
+##                    !!  EDIT ONLY IN TEMPLATE  !!                          ##
+##                                                                           ##
+##  Only edit the following if this is the cron.template.yaml file. Specific ##
+##  cron jobs can be enabled or disabled via the branch_environment.json     ##
+##  file. Then generate cron.yaml by running `python branch_environment.py`  ##
+##  at the command line.                                                     ##
+##                                                                           ##
+###############################################################################
+cron:
+- description: aggregate user data by activity and cohort
+  url: /cron/aggregate
+  schedule: every 2 minutes
+- description: update search index
+  url: /cron/index
+  schedule: every 1 minutes
+- description: check for errors and email us
+  url: /cron/check_for_errors
+  schedule: every 1 minutes
+- description: check for and send reminders
+  url: /cron/send_reminders
+  schedule: every 1 hours
+# # Constructing Backup URLs: (using gcs daily backup 1 for example)
+# # name = backup-bulk-daily-1
+# # kind = Activity, Aggregator, Classroom, Cohort, CsvCache, Email,
+# #        Error Checker, Indexer, LogEntry, Program, Reminder, ResetPasswordToken,
+# #        School, Stratifier, StratifierHistory, User
+# # queue = (Optional, not used here. If left out, backup runs on "default" queue.)
+# # filesystem = gs (for Google Cloud Storage)
+# # gs_bucket_name = yellowstone-backup-daily-1
+# # namespace = (Optional. When specified, only entities from namespace are backed up.)
+# #
+# # Scheduled Backups with Cron documentation:
+# # developers.google.com/appengine/articles/scheduled_backups
+# #
+
+# Monthly 1 set
+- description: gcs monthly backup 1
+  url: /cron/backup?bucket=yellowstone-backup-monthly-1&kind=ShortLink
+  schedule: 1 of jan,mar,may,jul,sep,nov 09:00
+- description: clean out yellowstone-backup-monthly-1
+  url: /cron/clean_gcs_bucket/yellowstone-backup-monthly-1
+  schedule: 1 of jan,mar,may,jul,sep,nov 08:45
+
+# Monthly 2 set
+- description: gcs monthly backup 2
+  url: /cron/backup?bucket=yellowstone-backup-monthly-2&kind=ShortLink
+  schedule: 1 of feb,apr,jun,aug,oct,dec 09:00
+- description: clean out yellowstone-backup-monthly-2
+  url: /cron/clean_gcs_bucket/yellowstone-backup-monthly-2
+  schedule: 1 of feb,apr,jun,aug,oct,dec 08:45

@@ -1,0 +1,212 @@
+<form
+  class="get-started bordered-inset"
+  id="inquiry-form"
+  action="https://dlf6qebo.insight.ly/WebToLead/Create"
+  method="post"
+>
+  <div class="form-group">
+    <label>I would like to</label>
+    <div class="checkbox">
+      <label>
+        <input
+          type="checkbox"
+          class="description-option"
+          name="askQuestion"
+        >
+        Ask a question
+      </label>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input
+          type="checkbox"
+          class="description-option"
+          name="mailingList"
+          checked
+        >
+        Get updates and opportunities related to the Engagement Project
+      </label>
+    </div>
+
+    <input type="hidden" name="Description" />
+  </div>
+
+  <div class="form-group">
+    <label for="inquiry-role">Role*</label>
+    <select class="form-control" id="inquiry-role" name="Title" required>
+      {% include 'engage/_includes.form.copilot-role-options.html' %}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="inquiry-first-name">First Name*</label>
+    <input
+      class="form-control"
+      type="text"
+      id="inquiry-first-name"
+      name="FirstName"
+      required
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="inquiry-last-name">Last Name*</label>
+    <input
+      class="form-control"
+      type="text"
+      id="inquiry-last-name"
+      name="LastName"
+      required
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="inquiry-email">Email address*</label>
+    <input
+      class="form-control"
+      type="email"
+      id="inquiry-email"
+      name="email"
+      required
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="inquiry-organization-name">I work at</label>
+    <input
+      class="form-control"
+      type="text"
+      id="inquiry-organization-name"
+      name="OrganizationName"
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="hear-about-us">How did you hear about the Engagement Project?</label>
+    <select
+      class="form-control"
+      id="hear-about-us"
+      name="hearAboutUsOption"
+    >
+      <option disabled selected>Please select&hellip;</option>
+      <option value="colleague">Colleague or administrator at my school</option>
+      <option value="network">Network I am part of</option>
+      <option value="perts">Email or post from PERTS</option>
+      <option value="social-media">Social media</option>
+      <option value="presentation">Presentation</option>
+      <option value="other">Other</option>
+    </select>
+    <p class="option-detail">
+      <span>Tell us more:</span>
+      <input
+        id="hear-about-us-detail"
+        class="form-control"
+        type="text"
+        name="hearAboutUsDetail"
+      />
+    </p>
+    <input type="hidden" name="Industry" />
+  </div>
+
+  <div class="form-group">
+    <label for="inquiry-comments">Questions or Comments</label>
+    <input
+      class="form-control"
+      type="text"
+      id="inquiry-comments"
+      name="AddressStreet"
+    >
+  </div>
+
+  <!-- We use the "fax" field for the program code. -->
+  <input type="hidden" name="formId" value="9zsIqn4YDxUVALfLBGezSg==">
+  <input type="hidden" name="Fax" value="{{ program_label }}">
+  <input type="hidden" name="ResponsibleUser" value="927431">
+  <input type="hidden" name="LeadSource" value="174881">
+
+  <div class="form-submit">
+    <button
+      type="submit"
+      id="submit-inquiry-form"
+      class="btn btn-block btn-shadow btn-accent"
+    >
+      Submit Inquiry
+    </button>
+  </div>
+
+  <div class="form-loading">
+    <i class="fas fa-2x fa-spinner fa-pulse"></i>
+  </div>
+</form>
+
+<script type="text/javascript">
+  (function(window, $) {
+    'use strict';
+
+    // We can't expand the number of fields available in insightly. Instead,
+    // track the activity of various custom fields, and collapse them into a
+    // single description string, which we can submit.
+
+    var checkboxes = $('#inquiry-form input.description-option');
+    var descInput = $('#inquiry-form input[name="Description"]');
+    var activeDescOptions = [];
+
+    function descChange(input) {
+      var option = input.name;
+      var optionIndex = activeDescOptions.indexOf(option);
+
+      if (input.checked && optionIndex === -1) {
+        activeDescOptions.push(option)
+      } else if (!input.checked && optionIndex !== -1) {
+        activeDescOptions.splice(optionIndex, 1);
+      }
+
+      descInput.val(activeDescOptions.join(', '));
+    }
+
+    checkboxes.each(function (index, input) { descChange(input); });
+    checkboxes.on('change', function (event) { descChange(event.target); });
+
+    // Infer what option people want if they click one of the banner actions.
+    $('[data-description-option]').on('click', function (event) {
+      var option = $(event.target)
+        .closest('[data-description-option]')
+        .attr('data-description-option');
+      var input = $('#inquiry-form input[name="' + option + '"]');
+      input.prop('checked', true);
+      // Don't forget to update the hidden description field, since the
+      // checkbox wasn't actually clicked.
+      descChange(input.get(0));
+    });
+
+    // Also collapse the "hear about us" data, which includes a dropdown option
+    // and a text field, into one string.
+    var hearAboutUsOption = $('#inquiry-form select[name="hearAboutUsOption"]');
+    var hearAboutUsDetail = $('#inquiry-form input[name="hearAboutUsDetail"]');
+    var hearAboutUsInput = $('#inquiry-form input[name="Industry"]');
+     $.merge(hearAboutUsOption, hearAboutUsDetail).on('change', function () {
+      hearAboutUsInput.val(
+        hearAboutUsOption.val() + ': ' + hearAboutUsDetail.val()
+      );
+    });
+
+    // We want to notify google analytics about submissions of this form. They
+    // wouldn't normally be captured since the "action" style submission leaves
+    // the page, essentially cutting off any chance for javascript to act. This
+    // hooks into the submit event and notifies GA before the submit happens.
+
+    $('#inquiry-form').submit(function() {
+      // Track Form Submission Event
+      // https://developers.google.com/analytics/devguides/collection/analyticsjs/sending-hits
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'Form',
+        eventAction: 'submit',
+        // jinja variable should differentiate the event label based on the
+        // page this form appears on.
+        eventLabel: 'engage:{{ga_event_role}}:inquiry'
+      });
+    });
+
+  })(this, jQuery);
+</script>

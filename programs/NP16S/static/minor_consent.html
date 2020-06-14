@@ -1,0 +1,914 @@
+<style>
+    @font-face {
+  font-family: octicons-anchor;
+  src: url(data:font/woff;charset=utf-8;base64,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) format('woff');
+}
+
+.markdown-body {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  color: gray;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 12px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.markdown-body a {
+  background-color: transparent;
+}
+
+.markdown-body a:active,
+.markdown-body a:hover {
+  outline: 0;
+}
+
+.markdown-body strong {
+  font-weight: bold;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+  text-align: center;
+}
+
+.markdown-body img {
+  border: 0;
+}
+
+.markdown-body hr {
+  box-sizing: content-box;
+  height: 0;
+}
+
+.markdown-body pre {
+  overflow: auto;
+}
+
+.markdown-body code,
+.markdown-body kbd,
+.markdown-body pre {
+  font-family: monospace, monospace;
+  font-size: 1em;
+}
+
+.markdown-body input {
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.markdown-body html input[disabled] {
+  cursor: default;
+}
+
+.markdown-body input {
+  line-height: normal;
+}
+
+.markdown-body input[type="checkbox"] {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.markdown-body table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+.markdown-body td,
+.markdown-body th {
+  padding: 0;
+}
+
+.markdown-body * {
+  box-sizing: border-box;
+}
+
+.markdown-body input {
+  font: 13px / 1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.markdown-body a {
+  color: #4078c0;
+  text-decoration: none;
+}
+
+.markdown-body a:hover,
+.markdown-body a:active {
+  text-decoration: underline;
+}
+
+.markdown-body hr {
+  height: 0;
+  margin: 15px 0;
+  overflow: hidden;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.markdown-body hr:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body hr:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  line-height: 1.1;
+}
+
+.markdown-body h1 {
+  font-size: 30px;
+}
+
+.markdown-body h2 {
+  font-size: 21px;
+}
+
+.markdown-body h3 {
+  font-size: 16px;
+}
+
+.markdown-body h4 {
+  font-size: 14px;
+}
+
+.markdown-body h5 {
+  font-size: 12px;
+}
+
+.markdown-body h6 {
+  font-size: 11px;
+}
+
+.markdown-body blockquote {
+  margin: 0;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body ol ol,
+.markdown-body ul ol {
+  list-style-type: lower-roman;
+}
+
+.markdown-body ul ul ol,
+.markdown-body ul ol ol,
+.markdown-body ol ul ol,
+.markdown-body ol ol ol {
+  list-style-type: lower-alpha;
+}
+
+.markdown-body dd {
+  margin-left: 0;
+}
+
+.markdown-body code {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 0;
+  font: 12px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
+.markdown-body .select::-ms-expand {
+  opacity: 0;
+}
+
+.markdown-body .octicon {
+  font: normal normal normal 16px/1 octicons-anchor;
+  display: inline-block;
+  text-decoration: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.markdown-body .octicon-link:before {
+  content: '\f05c';
+}
+
+.markdown-body>*:first-child {
+  margin-top: 0 !important;
+}
+
+.markdown-body>*:last-child {
+  margin-bottom: 0 !important;
+}
+
+.markdown-body a:not([href]) {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-body .anchor {
+  display: inline-block;
+  padding-right: 2px;
+  margin-left: -18px;
+}
+
+.markdown-body .anchor:focus {
+  outline: none;
+}
+
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 1em;
+  margin-bottom: 16px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.markdown-body h1 .octicon-link,
+.markdown-body h2 .octicon-link,
+.markdown-body h3 .octicon-link,
+.markdown-body h4 .octicon-link,
+.markdown-body h5 .octicon-link,
+.markdown-body h6 .octicon-link {
+  color: #000;
+  vertical-align: middle;
+  visibility: hidden;
+}
+
+.markdown-body h1:hover .anchor,
+.markdown-body h2:hover .anchor,
+.markdown-body h3:hover .anchor,
+.markdown-body h4:hover .anchor,
+.markdown-body h5:hover .anchor,
+.markdown-body h6:hover .anchor {
+  text-decoration: none;
+}
+
+.markdown-body h1:hover .anchor .octicon-link,
+.markdown-body h2:hover .anchor .octicon-link,
+.markdown-body h3:hover .anchor .octicon-link,
+.markdown-body h4:hover .anchor .octicon-link,
+.markdown-body h5:hover .anchor .octicon-link,
+.markdown-body h6:hover .anchor .octicon-link {
+  visibility: visible;
+}
+
+.markdown-body h1 {
+  padding-bottom: 0.3em;
+  font-size: 2.25em;
+  line-height: 1.2;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h1 .anchor {
+  line-height: 1;
+}
+
+.markdown-body h2 {
+  padding-bottom: 0.3em;
+  font-size: 1.75em;
+  line-height: 1.225;
+  border-bottom: 1px solid #eee;
+}
+
+.markdown-body h2 .anchor {
+  line-height: 1;
+}
+
+.markdown-body h3 {
+  font-size: 1.5em;
+  line-height: 1.43;
+}
+
+.markdown-body h3 .anchor {
+  line-height: 1.2;
+}
+
+.markdown-body h4 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 .anchor {
+  line-height: 1.2;
+}
+
+.markdown-body h5 {
+  font-size: 1em;
+}
+
+.markdown-body h5 .anchor {
+  line-height: 1.1;
+}
+
+.markdown-body h6 {
+  font-size: 1em;
+  color: #777;
+}
+
+.markdown-body h6 .anchor {
+  line-height: 1.1;
+}
+
+.markdown-body p,
+.markdown-body blockquote,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body dl,
+.markdown-body table,
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.markdown-body hr {
+  height: 4px;
+  padding: 0;
+  margin: 16px 0;
+  background-color: #e7e7e7;
+  border: 0 none;
+}
+
+.markdown-body ul,
+.markdown-body ol {
+  padding-left: 2em;
+}
+
+.markdown-body ul ul,
+.markdown-body ul ol,
+.markdown-body ol ol,
+.markdown-body ol ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown-body li>p {
+  margin-top: 16px;
+}
+
+.markdown-body dl {
+  padding: 0;
+}
+
+.markdown-body dl dt {
+  padding: 0;
+  margin-top: 16px;
+  font-size: 1em;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.markdown-body dl dd {
+  padding: 0 16px;
+  margin-bottom: 16px;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body table {
+  display: block;
+  width: 100%;
+  overflow: auto;
+  word-break: normal;
+  word-break: keep-all;
+}
+
+.markdown-body table th {
+  font-weight: bold;
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid #ddd;
+}
+
+.markdown-body table tr {
+  background-color: #fff;
+  border-top: 1px solid #ccc;
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+.markdown-body img {
+  max-width: 100%;
+  box-sizing: content-box;
+  background-color: #fff;
+}
+
+.markdown-body code {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: rgba(0,0,0,0.04);
+  border-radius: 3px;
+}
+
+.markdown-body code:before,
+.markdown-body code:after {
+  letter-spacing: -0.2em;
+  content: "\00a0";
+}
+
+.markdown-body pre>code {
+  padding: 0;
+  margin: 0;
+  font-size: 100%;
+  word-break: normal;
+  white-space: pre;
+  background: transparent;
+  border: 0;
+}
+
+.markdown-body .highlight {
+  margin-bottom: 16px;
+}
+
+.markdown-body .highlight pre,
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body .highlight pre {
+  margin-bottom: 0;
+  word-break: normal;
+}
+
+.markdown-body pre {
+  word-wrap: normal;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: initial;
+  padding: 0;
+  margin: 0;
+  overflow: initial;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+.markdown-body pre code:before,
+.markdown-body pre code:after {
+  content: normal;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font-size: 11px;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.markdown-body .pl-c {
+  color: #969896;
+}
+
+.markdown-body .pl-c1,
+.markdown-body .pl-s .pl-v {
+  color: #0086b3;
+}
+
+.markdown-body .pl-e,
+.markdown-body .pl-en {
+  color: #795da3;
+}
+
+.markdown-body .pl-s .pl-s1,
+.markdown-body .pl-smi {
+  color: #333;
+}
+
+.markdown-body .pl-ent {
+  color: #63a35c;
+}
+
+.markdown-body .pl-k {
+  color: #a71d5d;
+}
+
+.markdown-body .pl-pds,
+.markdown-body .pl-s,
+.markdown-body .pl-s .pl-pse .pl-s1,
+.markdown-body .pl-sr,
+.markdown-body .pl-sr .pl-cce,
+.markdown-body .pl-sr .pl-sra,
+.markdown-body .pl-sr .pl-sre {
+  color: #183691;
+}
+
+.markdown-body .pl-v {
+  color: #ed6a43;
+}
+
+.markdown-body .pl-id {
+  color: #b52a1d;
+}
+
+.markdown-body .pl-ii {
+  background-color: #b52a1d;
+  color: #f8f8f8;
+}
+
+.markdown-body .pl-sr .pl-cce {
+  color: #63a35c;
+  font-weight: bold;
+}
+
+.markdown-body .pl-ml {
+  color: #693a17;
+}
+
+.markdown-body .pl-mh,
+.markdown-body .pl-mh .pl-en,
+.markdown-body .pl-ms {
+  color: #1d3e81;
+  font-weight: bold;
+}
+
+.markdown-body .pl-mq {
+  color: #008080;
+}
+
+.markdown-body .pl-mi {
+  color: #333;
+  font-style: italic;
+}
+
+.markdown-body .pl-mb {
+  color: #333;
+  font-weight: bold;
+}
+
+.markdown-body .pl-md {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.markdown-body .pl-mi1 {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.markdown-body .pl-mdr {
+  color: #795da3;
+  font-weight: bold;
+}
+
+.markdown-body .pl-mo {
+  color: #1d3e81;
+}
+
+.markdown-body kbd {
+  display: inline-block;
+  padding: 3px 5px;
+  font: 11px Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  line-height: 10px;
+  color: #555;
+  vertical-align: middle;
+  background-color: #fcfcfc;
+  border: solid 1px #ccc;
+  border-bottom-color: #bbb;
+  border-radius: 3px;
+  box-shadow: inset 0 -1px 0 #bbb;
+}
+
+.markdown-body:before {
+  display: table;
+  content: "";
+}
+
+.markdown-body:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item+.task-list-item {
+  margin-top: 3px;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 0.35em 0.25em -1.6em;
+  vertical-align: middle;
+}
+
+.markdown-body :checked+.radio-label {
+  z-index: 1;
+  position: relative;
+  border-color: #4078c0;
+}
+</style>
+
+<div class="markdown-body">
+
+<h1>Transition Mindsets Privacy Notice</h1>
+
+<h2>Our Privacy Notice is fueled by our commitment to the following Privacy Principles:</h2>
+
+<ol>
+    <li>We’re deeply committed to creating a safe and secure online environment for our users.</li>
+    <li>We do not store any personal information. We only store anonymized survey responses.</li>
+    <li>We do not sell the anonymized survey responses to third parties. </li>
+    <li>We take the protection of data very seriously.</li>
+    <li>We do not advertise. We use survey responses to provide users with a better learning experience, not to sell products.</li>
+</ol>
+
+<h2>About Transition Mindsets and Our Privacy Notice</h2>
+
+<p>
+    Transition Mindsets feels strongly about protecting the privacy of our
+    users. We are committed to creating a safe and secure environment for our
+    users. This Privacy Notice describes how the Transition Mindsets team
+    collects and uses the information users provide on our Properties. We use
+    the data we collect to provide users with a better experience.
+</p>
+
+<p>
+    Our Privacy Notice describes what information we gather from our users and
+    others who visit and use our Properties, how we use that information, and
+    what we do to protect it. By visiting or using our Properties, users
+    consent to the information handling practices described in this Privacy
+    Notice.
+</p>
+
+<h2>How We Collect Data</h2>
+
+<h3>Personal Information.</h3>
+
+<p>
+    We do not store any &ldquo;personally identifiable information&rdquo; or
+    &ldquo;personal data&rdquo; (such as full name, email address, or phone
+    number) that can be used to identify users. We do ask users to provide the
+    first three letters of their first name and the first three letters of
+    their last name so that we may link their two online sessions. However, we
+    protect this data with a one-way encryption method so it is impossible
+    to reconstruct the original information or connect it to any individual.
+</p>
+
+<h3>Information about the use of our Properties and other user-provided information.</h3>
+
+<p>
+    We will collect usage information about the use of certain features on our
+    Properties, as well as users’ responses to survey questions. This enables
+    us to improve the experience for our users.
+</p>
+
+<h3>Location Information.</h3>
+
+<p>
+    We will collect and use information about a user’s location (such as
+    country). Users may change the settings on their computer to prevent it
+    from providing us with any location information.
+</p>
+
+<h2>How We Use Data</h2>
+
+<h3>To enhance our Properties and the services we provide.</h3>
+
+<p>
+    Transition Mindsets uses the information users provide or that we collect
+    to enhance the experiences of our users. For example, Transition Mindsets
+    remembers a user’s recent activity so if the user needs to complete a
+    session at a different time, when the user logs in again, it will pick-up
+    where he or she last left off.
+</p>
+
+<h3>To understand how Users use our Properties.</h3>
+
+<p>
+    Transition Mindsets uses all of the information that users provide or that
+    we collect to understand and analyze the usage trends, learning behaviors,
+    and preferences of our users, to improve the way the Properties work and
+    look, and to create new features and functionality.
+</p>
+
+<h3>Data Retention</h3>
+
+<p>
+    Unless we receive a deletion request, we will retain users’ information.
+</p>
+
+<h3>Technical Information</h3>
+
+<p>
+    To provide a high-quality experience for our users, we may use various
+    technologies that automatically record certain technical information from
+    the browser or device, including standard log files, web beacons, or pixel
+    tags. This technical information may include the Internet Protocol (IP)
+    address, device or browser type, Internet service provider (ISP),
+    referring or exit pages, clickstream data, operating system, and the dates
+    and times that users visit the Website. We do this to better understand
+    how our users are using our Website so we can improve site functionality
+    and the services we offer.
+</p>
+
+<p>
+    Like most websites, we may send one or more cookies&mdash;small text files
+    containing a string of alphanumeric characters&mdash;to users’ computers.
+    Cookies remember information about users’ activities on a website and
+    enable us to provide users with a better experience. Transition Mindsets
+    may use both session cookies and persistent cookies. A session cookie
+    disappears automatically after a user closes a browser. A persistent
+    cookie remains after a browser is closed and may be used by the browser on
+    subsequent visits to the Website. A user can, however, remove a persistent
+    cookie at any time. Please review the web browser &ldquo;Help&rdquo; file
+    to learn the proper way to modify cookie settings. However, without
+    cookies users will not have access to certain services and features on the
+    Website.
+</p>
+
+<p>
+    Transition Mindsets uses a variety of third-party service providers, such
+    as YouTube to host our videos or Google Analytics to understand our
+    Website usage. We may allow third-party service providers to place and
+    read their own cookies, web beacons, and similar technologies to collect
+    information through the Website. This information is collected directly
+    and automatically by these third parties, and Transition Mindsets does not
+    participate in these data transmissions. Transitions Mindsets will,
+    wherever feasible, contractually obligate our third-party service
+    providers to abide by the terms of this Privacy Notice.
+</p>
+
+<h2>How We Share or Transfer Data</h2>
+
+<p>
+    Transition Mindsets takes great care to protect the information users
+    provide us. We do not rent or sell data that we collect from users with
+    third parties.
+</p>
+
+<h3>We may share anonymous or aggregate data to improve our services and learn more about our users.</h3>
+
+<p>
+    In certain occasions, Transition Mindsets may work with partners to
+    improve our services or offerings. We may disclose automatically collected
+    and other aggregate non-Personal Information to authorized partners to
+    conduct research or assist in understanding the usage, viewing, and
+    demographic patterns for certain programs, content, services, and/or
+    functionality on our Properties.
+</p>
+
+<h3>We will share data when required by law.</h3>
+
+<p>
+    Transition Mindsets may also disclose User information if required to do
+    so by law, or if we have a good-faith belief that such action is necessary
+    to comply with local, state, federal, international, or other applicable
+    laws (such as U.S. Copyright law) or respond to a court order, judicial or
+    other government subpoena, or warrant, or administrative request. In some
+    cases, we may make such disclosures without first providing notice to
+    users.
+</p>
+
+<h3>We may share data in the context of a change of business, including a merger or acquisition.</h3>
+
+<p>
+    In the event that Transition Mindsets is acquired by or merged with a
+    third-party entity, we may transfer or assign the information that we have
+    collected from users as part of such merger, acquisition, sale, or other
+    change of control.
+</p>
+
+<h3>We may share data when necessary or appropriate to protect Transition Mindsets or others.</h3>
+
+<p>
+    Transition Mindsets may disclose information that we believe, in good
+    faith, is appropriate or necessary to take precautions against liability;
+    to protect Transition Mindsets from fraudulent, abusive, or unlawful uses;
+    to investigate and defend ourselves against any third-party claims or
+    allegations; to assist government enforcement agencies; to protect the
+    security or integrity of our Properties; or to protect the rights,
+    property, or personal safety of Transition Mindsets, our users, or others.
+</p>
+
+<h2>Our approach to Data Security</h2>
+
+<h3>Data security is extremely important to us.</h3>
+
+<p>
+    To protect our users’ privacy and security, we do not collect any
+    personally identifiable information&rdquo; or &ldquo;personal data&rdquo;
+    (such as full name, email address, or phone number) that can be used to
+    identify them. We only ask users to provide the first three letters of
+    their first name and the first three letters of their last name so that we
+    may link their two online sessions. We use a one-way encryption method so
+    that this information is never actually stored. It is only used to match a
+    user’s Session 1 data with the same user’s Session 2 data.
+</p>
+
+<h3>We try to ensure that our Properties and information sent to us are safe, but no security measures are perfect.</h3>
+
+<p>
+    Transition Mindsets uses certain physical, managerial, and technical
+    safeguards designed to preserve the integrity and security of users’
+    survey responses and other information we maintain in connection with our
+    Properties. We cannot, however, ensure or warrant the security of any or
+    all of the information users transmit to Transition Mindsets, and users do
+    so at their own risk. Once we receive transmission of information,
+    Transition Mindsets makes commercially reasonable efforts to ensure the
+    security of our systems. When users enter sensitive information, we
+    encrypt the transmission of that information using secure socket layer
+    technology (SSL) or similar technologies. However, please note that this
+    is not a guarantee that such information may not be accessed, disclosed,
+    altered, or destroyed by breach of any of our physical, technical, or
+    managerial safeguards.
+</p>
+
+<h2>Links to other sites</h2>
+
+<p>
+    The Properties may link to and may be linked by websites operated by other
+    entities or individuals. This Privacy Notice does not apply to, and we
+    cannot always control the activities of, such other third-party websites.
+    Users should consult the respective privacy policies of those third-party
+    websites.
+</p>
+
+<h2>International visitors</h2>
+
+<p>
+    Our Properties are operated and managed on servers located within the
+    United States. If users choose to use our Properties from the European
+    Union or other regions of the world with laws governing data collection
+    and use that differ from U.S. law, then they acknowledge and agree that
+    they are transferring their information outside of those regions to the
+    United States and that, by providing their information on the Properties,
+    they consent to that transfer.
+</p>
+
+<h2>Changes and updates to this Privacy Notice</h2>
+
+<p>
+    Transition Mindsets may modify or revise this Privacy Notice from time to
+    time. Transition Mindsets will notify users of any changes to our Privacy
+    Notice by posting the revised Privacy Notice with an updated date of
+    revision on our Properties.
+</p>
+
+<h2>Contacting Transition Mindsets</h2>
+
+<p>
+    Please contact Transition Mindsets with any questions or comments about
+    this Privacy Notice by email at .
+</p>
+
+</div>

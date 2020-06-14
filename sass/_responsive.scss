@@ -1,0 +1,15 @@
+$break-mobile: 767px;
+$break-tablet: 991px;
+$break-laptop: 1199px;
+
+@mixin mobile {
+  @media only screen and (max-width: $break-mobile) { @content; }
+}
+
+@mixin tablet {
+  @media only screen and (max-width: $break-tablet) { @content; }
+}
+
+@mixin laptop {
+  @media only screen and (max-width: $break-laptop) { @content; }
+}

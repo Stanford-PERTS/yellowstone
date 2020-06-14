@@ -1,0 +1,124 @@
+{# PERTS : Template : Program Orientation Page #}
+
+{# DO NOT CHANGE #}
+{% extends "orientation/_template.orientation.html" %}
+
+{# TODO: Update the following program information: #}
+{% set program_name = "Classroom Connections Program" %}
+{% set program_label = "ccp19" %}
+{% set platform = "triton" %}
+{% set domain = triton_protocol + "://" + triton_domain %}
+{% set program_cohort = "Fall 2019" %}
+{% set program_description = "
+  Helping teachers build strong relationships that foster equitable student engagement and success
+" %}
+
+{# TODO: Set program participation settings: #}
+{% set participation_is_open = true %}
+{% set participation_enrolled = 0 %}
+{% set participation_slots = 100 %}
+{% set enrollment_is_unlimited = true %}
+
+
+{# TODO: Set program YouTube video's ID or false if not using one:            #}
+{#       Example: if the YouTube video's location is                          #}
+{#         https://www.youtube.com/watch?v=YYJLMmWZiMQ                        #}
+{#         then {% set youtube = "YYJLMmWZiMQ" %}                             #}
+{% set youtube = false %}
+
+{% block content %}
+
+<!-- INTRODUCTION -->
+<div class="section">
+  <div class="col-12">
+    <p>
+      New Teacher Center (NTC), EDENS Lab, and PERTS are collaborating on a
+      pilot program to provide support for building empathy in student-teacher
+      relationships. Research shows that student-teacher relationships are
+      important for student success. In a recent peer-reviewed study, suspension
+      rates dropped by 50% in the classes of teachers who completed a 60-minute
+      training about the importance of supportive student-teacher relationships
+      (Okonofua, Paunesku, & Walton, 2016; see also &ldquo;<a
+        href="https://www.nytimes.com/2017/09/02/opinion/sunday/dont-suspend-students-empathize.html"
+        >Don&rsquo;t Suspend Students. Empathize.</a
+      >&rdquo;) These dramatic results underscore what many teachers know and
+      what research has shown time and again: students engage and learn best
+      when they feel trusted, respected, and valued by their teachers.
+    </p>
+    <p>
+      The Classroom Connections Program (CCP) is a data-driven professional
+      learning experience designed to help teachers build strong, empathic
+      relationships that provide students with the trust, respect, and
+      psychological safety that are essential to academic engagement and
+      success. The CCP includes an empathic mindset training developed by Dr.
+      Jason Okonofua and colleagues. The training will be delivered in the
+      context of the New Teacher Center's proven coaching model, giving teachers
+      the support they need to adapt the empathic teaching strategies with their
+      own students.
+    </p>
+    <p>
+      Finally, the PERTS Copilot platform will provide teachers and coaches with
+      rapid formative feedback about the effects of the training on students’
+      classroom experiences, relationships, and engagement. Teachers will work
+      with coaches to complete online lessons and implement three improvement
+      cycles, each including brief student surveys, collaborative
+      reflection/planning with coaches during meetings, implementation of plans,
+      coach observation, and refinement. We anticipate these activities will be
+      highly valuable to instruction and in providing data-driven guidance to
+      the field.
+    </p>
+  </div>
+</div>
+
+<div id="collaborators" class="section color5">
+  <h2>Collaborators</h2>
+  <div class="row">
+    <div class="col-md-4">
+      <img
+        src="/static/images/ccp/logo_berkeley.png"
+        alt="University of California, Berkeley"
+        class="img-fluid full-width"
+      />
+    </div>
+    <div class="col-md-4">
+      <img
+        src="/static/images/ccp/logo_new_teacher_center.png"
+        alt="New Teacher Center"
+        class="img-fluid full-width"
+      />
+    </div>
+    <div class="col-md-4">
+      <img
+        src="/static/images/ccp/logo_perts.png"
+        alt="PERTS"
+        class="img-fluid full-width"
+      />
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+{% endblock %}
+
+{% block aboutperts %}
+<div id="about-perts" class="section color5">
+  <h2>About PERTS</h2>
+  <p>
+    PERTS is an applied research center based out of Stanford University. We
+    believe that evidence-based strategies should benefit all students, not just
+    the privileged few. To make research accessible to all, we empower educators
+    everywhere to implement evidence-based strategies cost-effectively. We are
+    so excited to bring you Growth Mindset for College Students and to make the
+    latest research on growth mindset strategies actionable to every college in
+    the United States.
+  </p>
+</div>
+{% endblock %}
+
+{% block aboutctc %}
+{# Do not display About CTC section #}
+{% endblock %}
+
+{% block moreinfo %}
+{% endblock %}

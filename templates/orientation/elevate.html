@@ -1,0 +1,482 @@
+{# PERTS : Template : Program Orientation Page #}
+
+{# DO NOT CHANGE #}
+{% extends "orientation/_template.orientation.html" %}
+
+{# TODO: Update the following program information: #}
+{% set program_name = "Copilot-Elevate" %}
+{% set program_label = "beleset19" %}
+{% set program_description = "Elevate student voice to elevate engagement, excellence, and equity." %}
+
+{# TODO: Set program participation settings: #}
+{% set participation_is_open = true %}
+{% set participation_enrolled = 0 %}
+{% set participation_slots = 1 %}
+{% set enrollment_is_unlimited = true %}
+
+{# TODO: Set program YouTube video's ID or false if not using one: #}
+{# Example: if the YouTube video's location is #}
+{# https://www.youtube.com/watch?v=YYJLMmWZiMQ #}
+{# then {% set youtube = "YYJLMmWZiMQ" %} #}
+{% set youtube = false %}
+
+{% set login_url = triton_protocol ~ "://" ~ triton_domain ~ "/login?program=" ~ program_label %}
+{% set platform = "triton" %}
+{% set domain = triton_protocol + "://" + triton_domain %}
+
+{% block masthead %}
+  {% set login_url = login_url %}
+  {% set program_name = program_name %}
+  {% set program_description = program_description %}
+  {% set youtube = youtube %}
+  {% set wistia = wistia %}
+  {% set enrollment_is_unlimited = enrollment_is_unlimited %}
+  {% set participation_enrolled = participation_enrolled %}
+  {% set participation_slots = participation_slots %}
+  {% set program_cohort = program_cohort %}
+  {% set unlimited_enrollment_message = unlimited_enrollment_message %}
+  {% set participation_is_open = participation_is_open %}
+
+  <style>
+    .covid-banner {
+      color: white;
+      background-color: #042744;
+
+      padding: 20px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
+
+    blockquote {
+      font-size: 1.4em;
+    }
+
+    .container .content-main .section.color1 blockquote::before {
+      color: white;
+    }
+  </style>
+
+  <div class="covid-banner">
+    <p>
+      PERTS is committed to supporting educators and learners during COVID-19.
+    </p>
+    <p>
+      <a
+        href="https://docs.google.com/document/d/1wMYH0K_UDCtvtaYzAaqWOKMGdzn02YHtR4UKq3-e6UU/edit#"
+      >
+        Learn how to use Copilot-Elevate during virtual instruction.
+      </a>
+    </p>
+  </div>
+
+  {% include "orientation/_includes.section-banner.html" %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="section">
+
+  <div class="row">
+    <div class="col-lg-8">
+      <h2>Student Experience &rarr; Excellence & Equity</h2>
+
+      <p>
+        Students are more motivated and successful when they experience school in
+        specific ways—like when teachers are supportive and schoolwork is relevant.
+        Positive experiences are even more important for students of color. Copilot
+        helps teachers create these experiences through a student-centered,
+        data-driven process. Read the
+        <a href="http://perts.net/creating-learning-conditions">research</a>.
+      </p>
+    </div>
+    <div class="col-lg-3">
+      <div style="max-width: 400px; margin: 30px auto">
+        <img
+          src="/static/images/programs/elevate_teacher_helping_young_student.png"
+          alt="Teacher helping student with workbook"
+          style="width: 100%"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="section color2">
+  <div class="row">
+    <div class="col-lg-10 offset-lg-1 text-center">
+      <blockquote>
+        We&rsquo;re finally getting data that is helping us improve our
+        instruction, along with helping the kids understand that we truly do
+        care about them. It's been a great journey.
+      </blockquote>
+      <p>
+        &mdash; Jennifer Maichin, learning specialist and educator in Long Island, NY.
+        <br />
+        <a href="/engage/stories-biddix">Read our case studies</a>.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="section color3">
+  <div class="row">
+    <div class="col-lg-10">
+      <h2>How does it work?</h2>
+
+      <p>
+        Copilot-Elevate is a professional learning program with a built-in survey
+        engine. It gives educators the formative feedback and best practices they
+        need to ensure all of their students can thrive.
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6 text-center">
+      <p>
+        <img
+          style="height: 120px;"
+          src="/static/images/home/program-icon-participate-dark-2.png"
+          alt="outline of three people in a group"
+        />
+      </p>
+      <h3>1. Survey students</h3>
+      <p>
+        A 5-10 minute, customizable
+        <a href="/elevate/measures-summary">survey</a> sheds light on the way students are
+        experiencing your class or school.
+      </p>
+    </div>
+
+    <div class="col-md-6 text-center">
+      <p>
+        <img
+          style="height: 120px;"
+          src="/static/images/home/program-icon-signup-dark.png"
+          alt="paper document with checkmark"
+        />
+      </p>
+      <h3>2. Review Results</h3>
+      <p>
+        Your confidential
+        <a href="/engage/report">report</a> will show how students’ experiences
+        are promoting or hindering equitable learning.
+      </p>
+    </div>
+
+    <div class="col-md-6 text-center">
+      <p>
+        <img
+          style="height: 120px;"
+          src="/static/images/home/program-icon-library-dark.png"
+          alt="open laptop"
+        />
+      </p>
+      <h3>3. Learn New Practices</h3>
+      <p>
+        Access a <a href="http://equitablelearning.org">library</a> of
+        teacher-tested practices, and select some to try with your own
+        students.
+      </p>
+    </div>
+
+    <div class="col-md-6 text-center">
+      <p>
+        <img
+          style="height: 120px;"
+          src="/static/images/home/program-icon-track-dark.png"
+          alt="charted data with magnifying glass"
+        />
+      </p>
+      <h3>4. Track Your Improvement</h3>
+      <p>
+        Rerun the survey to see how students responded to your new practices.
+        Repeat Steps 1-4 to <a href="/engage/stories-biddix">keep
+        improving</a>.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<div class="section color1">
+  <div class="row">
+    <div class="col-lg-10 offset-lg-1 text-center">
+      <h2>Our Partners Say&hellip;</h2>
+
+      <blockquote>
+        I think [my teacher] cares what I think because she is asking us to
+        take this survey about her teaching. If she didn&rsquo;t care what I had to
+        say, she wouldn't be asking us to do this survey.
+      </blockquote>
+      <p>&mdash; Student Participant</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-10 offset-lg-1 text-center">
+
+      <blockquote>
+        It&rsquo;s a great tool. The survey is really asking the right questions and
+        putting data in front of teachers that can be helpful.
+      </blockquote>
+      <p>&mdash; Josh Maisel, district administrator in California</p>
+  </div>
+  </div>
+</div>
+
+<div class="section color3">
+  <div class="row">
+    <div class="col-lg-10">
+      <h2>Key Features</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-6 text-center">
+      <div style="max-width: 200px; margin: 30px auto">
+        <img
+          src="/static/images/programs/elevate_graduation_cap.png"
+          alt="graduation cap"
+          style="width: 100%"
+        />
+      </div>
+      <p>
+        Designed for grades 6-12. Relevant to all subjects.
+      </p>
+    </div>
+    <div class="col-md-4 col-6 text-center">
+      <div style="max-width: 200px; margin: 30px auto">
+        <img
+          src="/static/images/programs/elevate_lock.png"
+          alt="closed padlock"
+          style="width: 100%"
+        />
+      </div>
+      <p>
+        We <a href="/security">keep your information safe</a>.
+      </p>
+    </div>
+    <div class="col-md-4 col-6 text-center">
+      <div style="max-width: 200px; margin: 30px auto">
+        <img
+          src="/static/images/programs/elevate_computer.png"
+          alt="open laptop"
+          style="width: 100%"
+        />
+      </div>
+      <p>
+        Works on any Internet-connected device.
+      </p>
+    </div>
+    <div class="col-md-4 col-6 text-center">
+      <div style="max-width: 200px; margin: 30px auto">
+        <img
+          src="/static/images/programs/elevate_money.png"
+          alt="money in bills and coins"
+          style="width: 100%"
+        />
+      </div>
+      <p>
+        <strong>Free</strong> to U.S. teachers because of our
+        <a href="#partners-and-funders">funders</a>.
+      </p>
+    </div>
+    <div class="col-md-4 col-6 text-center">
+      <div style="max-width: 200px; margin: 30px auto">
+        <img
+          src="/static/images/programs/elevate_lightbulb.png"
+          alt="lighbulb"
+          style="width: 100%"
+        />
+      </div>
+      <p>
+        Grounded in
+        <a href="/static/documents/Conditions_for_Learning-January_2020.pdf"
+          >research</a
+        >. <br />Led by top <a href="#scientific-advisors">researchers</a>.
+      </p>
+    </div>
+    <div class="col-md-4 col-6 text-center">
+      <div style="max-width: 200px; margin: 30px auto">
+        <img
+          src="/static/images/programs/elevate_target.png"
+          alt="archery target with arrow in bullseye"
+          style="width: 100%"
+        />
+      </div>
+      <p>
+        Adaptive because no two classrooms are the same.
+      </p>
+    </div>
+  </div>
+  <div class="section color2">
+    <div class="row">
+      <div class="col-lg-10 offset-lg-1 text-center">
+        <blockquote>
+          I wanted to get authentic feedback from my students to help better my
+          craft, and to better help them in the learning process.
+        </blockquote>
+        <p>
+          &mdash; Staci Durnin, 6th grade math and science teacher in New York,
+          NY<br />
+          Read our <a href="/engage/stories-biddix">case studies</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="row">
+      <div class="col-lg-10">
+        <h2>Questions &amp; Support</h2>
+      </div>
+      <div class="col-6 text-center">
+        <div style="max-width: 200px; margin: 30px auto">
+          <img
+            src="/static/images/programs/elevate_speech_bubbles.png"
+            alt="speech bubbles"
+            style="width: 100%"
+          />
+        </div>
+        <p>
+          For support, schedule an <a href="/officehours">office hours</a> chat
+          or email <a href="</a>.
+        </p>
+      </div>
+      <div class="col-6 text-center">
+        <div style="max-width: 200px; margin: 30px auto">
+          <img
+            src="/static/images/programs/elevate_information.png"
+            alt="lowercase letter i suggesting information"
+            style="width: 100%"
+          />
+        </div>
+        <p>
+          Find answers to common questions in our
+          <a href="/copilot/faq">FAQ</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block get_started_text %}
+  <h2>Ready to get started?</h2>
+  <p>
+    <strong>Enter your email</strong> &mdash; We&rsquo;ll immediately
+    send you a link to our online platform where you can see
+    exactly how Copilot-Elevate works. You&rsquo;ll be able to
+    start to survey your students within minutes. If you&rsquo;d
+    like to talk with someone from our team before or after
+    signing up, please find a time at
+    <a href="//perts.net/officehours" target="_blank">perts.net/officehours</a>
+    or email <a href="</a>.
+  </p>
+{% endblock %}
+
+{% block sidebar %}
+{# No sidebar #}
+{% endblock %}
+
+{% block aboutperts %}
+<div id="partners-and-funders" class="section">
+<div class="row">
+  <div class="col-lg-10">
+    <h2>Our Partners &amp; Funders</h2>
+    <p>
+      Copilot-Elevate was developed through a partnership between
+      <a href="/">PERTS</a>, the
+      <a href="https://nationalequityproject.org/">National Equity Project</a>,
+      <a href="https://shift-results.com/">Shift Results</a>, and the
+      <a href="https://consortium.uchicago.edu/"
+        >University of Chicago Consortium</a
+      >
+      as part of the Building Equitable Learning Environments (BELE) initiative.
+      It's free to teachers because of generous sponsorship from the
+      <a href="https://raikesfoundation.org/">Raikes Foundation</a>,
+      <a href="https://overdeck.org/">Overdeck Family Foundation</a>, and
+      <a href="https://www.gatesfoundation.org/"
+        >Bill & Melinda Gates Foundation</a
+      >.
+    </p>
+  </div>
+</div>  <div class="row">
+    <div class="col-md-4 text-center align-self-center">
+      <a href="https://nationalequityproject.org">
+        <img
+          src="/static/images/logos/logo-national-equity-project.png"
+          alt="National Equity Project"
+          style="max-height: 100px; max-width: 100%;"
+        />
+      </a>
+    </div>
+    <div class="col-md-4 text-center align-self-center">
+      <a href="https://belenetwork.org">
+        <img
+          src="/static/images/logos/logo-bele.png"
+          alt="BELE"
+          style="max-height: 100px; max-width: 100%;"
+        />
+      </a>
+    </div>
+    <div class="col-md-4 text-center align-self-center">
+      <a href="https://www.uchicago.edu">
+        <img
+          src="/static/images/logos/logo-university-of-chicago.png"
+          alt="University of Chicago"
+          style="max-height: 100px; max-width: 100%;"
+        />
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6 text-center align-self-center">
+      <a href="https://shift-results.com">
+        <img
+          src="/static/images/logos/logo-shiftresults.png"
+          alt="Shift"
+          style="max-height: 100px; max-width: 100%;"
+        />
+      </a>
+    </div>
+    <div class="col-md-6 text-center align-self-center">
+      <a href="https://www.perts.net">
+        <img
+          src="/static/images/logos/logo-perts.png"
+          alt="PERTS"
+          style="max-height: 100px; max-width: 100%;"
+        />
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-10">
+      <h2 id="scientific-advisors">Scientific Advisors</h2>
+      <p>
+        Copilot is developed in partnership with leading researchers.
+      </p>
+      <ul>
+        <li>Carol Dweck, Professor, Stanford University</li>
+        <li>
+          Camille Farrington, Managing Director, UChicago Consortium for School
+          Research
+        </li>
+        <li>Jason Okonofua, Assistant Professor, UC Berkeley</li>
+        <li>Dave Paunesku, Executive Director, PERTS, Stanford University</li>
+        <li>Greg Walton, Associate Professor, Stanford University</li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block aboutctc %}
+{% endblock %}
+
+{% block moreinfo %}
+{% endblock %}

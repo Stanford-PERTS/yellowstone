@@ -1,0 +1,180 @@
+{% extends "p3-base.html" %}
+
+{% set title = "Network Test | PERTS" %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+
+
+<div class="research-page">
+
+  <div class="page-masthead page-masthead--light">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-md-6">
+          <h1>Test Your Network</h1>
+          <p>
+            If you&rsquo;re planning on participating in a PERTS program,
+            it&rsquo;s important that your local network can support our tools.
+          </p>
+          <button class="perts-button" onclick="testAndReport()">Run Test</button>
+          <p id="busy" style="display:none">Working&hellip;</p>
+          <div id="test-success" style="display:none">
+            <p>Everything works great!</p>
+          </div>
+          <div id="test-failure" style="display:none">
+            <p>
+              <strong>There was a problem.</strong> Please copy and paste the
+              following into an email and send it to
+              <a href="</a>.
+            </p>
+            <pre></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% include 'components/navbar_top.html' %}
+  </div>
+
+</div>
+
+<script src="https://cdn.ravenjs.com/3.17.0/raven.min.js" crossorigin="anonymous"></script>
+<script type="text/javascript">
+Raven.config('').install()
+var testAndReport = (function () {
+  'use strict';
+
+  var $q,  // will be filled in when document loads
+      // The domains we want to test, and an image hosted on each. We use
+      // images because there's no same-origin policy, unlike AJAX requests.
+      domains = {
+        'www.perts.net': 'https://www.perts.net/static/images/pertslogo.png?',
+        'neptune.perts.net': 'https://neptune.perts.net/static/images/pertslogo.png?',
+        'copilot.perts.net': 'https://copilot.perts.net/static/media/perts_logo.142fea01.png?',
+        'perts.me': 'https://perts.me/static/images/pertslogo.png?',
+        // PERTS logo hosted in qualtrics graphics library
+        'qualtrics.com': 'https://login.qualtrics.com/ControlPanel/Graphic.php?IM=IM_8JiWyM7KJ6kAvyd'
+      },
+      // We attempt to load several times because we have experience with
+      // firewalls blocking traffic intermittently.
+      numAttempts = 5,
+      attemptInterval = 500,
+      // Being crazy slow is also a problem we want to know about.
+      maxWait = 2000,
+      responses = [];
+
+  // Grab the promise service once angular is up and running.
+  $(function () {
+    var injector = angular.element(document.body).injector();
+    $q = injector.get('$q');
+  });
+
+  /**
+   * Try to load a single image and hook into is load and error events to
+   * detect problems.
+   * @param {string} url of image
+   * @returns a promise which will resolve with 'load', 'error', or 'timeout',
+   *   and only after both the image is resolved and the attemptInterval has
+   *   has passed.
+   * See: https://stackoverflow.com/questions/1977871/check-if-an-image-is-loaded-no-errors-in-javascript
+   */
+  function loadImage(url) {
+    return $q(function (resolve, reject) {
+
+      var timeout;
+
+      $("<img/>")
+        .on('load', function () {
+          timeout = resolveLater('load');
+        })
+        .on('error', function () {
+          timeout = resolveLater('error');
+        })
+        // Vary the URL we use by the current time to make sure the browser
+        // doesn't just use the cache.
+        .attr("src", url + '&nocache=' + +(new Date()));
+
+      function resolveLater(result) {
+        return setTimeout(function () {
+          resolve(result);
+        }, attemptInterval);
+      }
+
+      setTimeout(function () {
+        clearTimeout(timeout);
+        resolve('timeout');
+      }, maxWait);
+
+    });
+  }
+
+  /**
+   * Launch several chains of promises in parallel, one for each domain. The
+   * length of each chain is defined by numAttempts.
+   * @returns a promise which results with an object like
+   *   {domain: [result, ...], ...}
+   */
+  function testNetwork() {
+    var chains = {};
+    angular.forEach(domains, function (url, domain) {
+
+      var chain = $q.when(),
+          results = [];
+
+      for (var i = 0; i < numAttempts; i += 1) {
+        chain = chain.then(function () {
+          return loadImage(url).then(function (result) {
+            results.push(result);
+          });
+        });
+      }
+
+      chains[domain] = chain.then(function () {
+        return results;
+      });
+
+    });
+
+    return $q.all(chains);
+  }
+
+  /**
+   * Manage UI to notify users of the activity and results of the test.
+   */
+  function testAndReport() {
+    $('#test-success').hide();
+    $('#test-failure').hide();
+    $('#busy').show();
+    testNetwork().then(function (results) {
+      $('#busy').hide();
+      var success = true;
+      angular.forEach(results, function (domainResults, domain) {
+        domainResults.forEach(function (singleResult) {
+          if (singleResult !== 'load') {
+            success = false;
+          }
+        });
+      });
+
+      results.timestamp = (new Date()).toString();
+
+      if (success) {
+        $('#test-success').show();
+      } else {
+        $('#test-failure pre').html(JSON.stringify(results, null, '  '));
+        $('#test-failure').show();
+        Raven.captureMessage("Network test failed.", {extra: results});
+      }
+    });
+  }
+
+  return testAndReport;
+
+}());
+
+</script>
+
+{% endblock %}

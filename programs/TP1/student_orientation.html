@@ -1,0 +1,343 @@
+{% extends "templates/base_programs.html" %}
+
+{# This template is handled by page_handlers.ProgramHandler, #}
+{# the same handler as for the program app. #}
+
+{% block program_header %}
+
+<style>
+
+body {
+    color: #333; /* dark-gray */
+}
+
+section#content a {
+    color: blue;
+    text-decoration: underline;
+}
+
+#content img.print-only {
+    margin-bottom: 10mm;
+}
+
+/* http://stackoverflow.com/questions/10732690/offsetting-an-html-anchor-to-adjust-for-fixed-header */
+a.anchor {
+    display: block;
+    position: relative;
+    top: -150px;
+    visibility: hidden;
+}
+
+p.letter-greeting {
+    font-style: italic;
+}
+
+p.letter-body {
+    text-indent: 1.5em;
+}
+
+p.letter-closing {
+    margin-left: 60%;
+}
+
+strong {
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+.student_questions strong {
+    font-weight: normal;
+    text-decoration: none;
+    font-style: italic;
+}
+
+blockquote {
+    margin-top: 10px;
+}
+
+ul {
+    margin-top: 10px;
+}
+
+li {
+    margin-left: 4em;
+    margin-bottom: 20px;
+}
+
+ul.toc li {
+    margin-bottom: 5px;
+}
+
+.cohort_code {
+    font-size: 1.25em;
+    font-weight: bold;
+    color: #CB0000;
+    padding: 10px 10px 10px 10px;
+    border: 1px #CB0000 solid;
+
+}
+</style>
+
+<script type="text/javascript">
+function Controller($scope, $pertsAjax) {
+    $pertsAjax({
+        url: '/api/get/cohort',
+        params: {id: util.queryString('cohort')}
+    }).then(function (response) {
+        $scope.cohort = response[0];
+    });
+}
+
+$().ready(function () {
+    $('.navbar, #footer').addClass('no-print');
+});
+</script>
+{% endblock %}
+
+
+
+{% block content %}
+
+<div ng-controller="Controller">
+
+<img class="print-only" src="/static/images/pertslogo.png">
+<h2>TP1 Student Study Day Instructions (same for both sessions)</h2>
+
+<p class="letter-greeting">Dear Research Partner,</p>
+<p>
+    Today, your students will participate in a program that uses the latest evidence-based methods to positively affect student attitudes about school. The instructions you will need to deliver this program are written below. Please print these intstructions and be sure to have them with you when your students are ready to begin. Beforehand, take the time to carefully read these instructions as well as the troubleshooting and FAQ sections so you know what to do if any issues or questions come up while you’re administering the program.
+</p> 
+<p>
+    We hope this program is helpful for your students, however, we would appreciate it if you would not emphasize that it might be helpful for them. Instead, please emphasize how much the researchers need their input, and that their opinions are valuable.
+</p>
+<p>
+    In addition, unless you suspect that a student is experiencing difficulty and needs support, please do not ask students anything about their experience - whether they liked it, what they thought about it, what they wrote about. And discourage students from sharing information about it with their peers. You can say "let other students experience it for themselves."</p>
+<p>
+    Thank you for your participation!
+</p>
+</p>
+<p class="letter-closing">The PERTS Team</p>
+
+<hr>
+
+<h2>Contents</h2>
+<ul class="toc">
+    <li><a href="#faculty_instructions">Teacher Instructions</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+    <li><a href="#student_questions">Answers to Student Questions</a></li>
+</ul>
+
+<h2>Teacher Instructions:</h2>
+<a class="anchor" id="faculty_instructions"></a>
+<p>
+    Schedule each session for the day you will take your students to the
+    computer lab. You may reschedule at any time by signing into the teacher
+    panel at perts.me and clicking on
+    the relevant date. Below are instructions for the first session.
+</p>
+
+<h3>SESSION INSTRUCTIONS:</h3>
+<p>
+    Sessions 1 will take about 45 minutes. Session 2 will take about 20 minutes. This is what should take place on the day of the study:
+</p>
+<ol>
+    <li>
+        <strong>Read these instructions</strong> and skim the remainder of the
+        document before the session.
+    </li>
+    <li>
+        <strong>Introduce the activities</strong> to your students by reading the script below:
+        <blockquote>
+            <p>
+                &ldquo;[As you may remember,] Our school is working on a special project with
+                Stanford University. Today, our class will participate in a
+                study as a part of this project. The study will help teachers
+                and administrators at our own school and researchers at
+                Stanford University better understand how to make school a
+                better place for all students.
+            </p>
+            <p>
+                &ldquo;The activities are designed to help us understand more
+                about the way you think and the way you learn. The kinds of
+                things you will be doing are answering survey questions,
+                reading some short passages, and answering some questions about
+                what you read. I may be able to see some of what you write, but
+                it will not be linked to your name or any other information
+                that could be used to figure out who you are. You will always
+                be told beforehand which of your answers might be shared. None
+                of your teachers or anyone at our school will know how you
+                answer specific questions. But based on what you say, we will
+                learn about things that we can do to make school a better
+                place for students.
+            </p>
+            <p>
+                &ldquo;Remember: We will use what we learn to improve students'
+                experience here and at other schools as well. So please read
+                the instructions carefully and do your best to answer all of
+                the questions to the best of your ability.
+            </p>
+            <p>
+                &ldquo;Finally, it is <strong>very important</strong> that you
+                not talk to each other or look at each other's answers. That
+                would be a violation of privacy, and I cannot allow it.
+            </p>
+        </blockquote>
+        <p>If this the first session with the students, read the following:</p>
+        <blockquote>
+            <p>
+                &ldquo;Now please go to <b>perts.me</b>. Enter the phrase
+                &lsquo;<strong>[[ cohort.code ]] 1</strong>&rsquo; and get
+                started.&rdquo;
+            </p>
+        </blockquote>
+        <p>If this the second session with the students, read the following:</p>
+        <blockquote>
+            <p>
+                &ldquo;Now please go to <b>perts.me</b>. Enter the phrase
+                &lsquo;<strong>[[ cohort.code ]] 2</strong>&rsquo; and get
+                started.&rdquo;
+            </p>
+        </blockquote>
+    </li>
+    <li>
+        Tell your students to visit
+        <a href="http://perts.me">perts.me</a>, sign in, and get
+        started. Write the website address and the code phrase where all your
+        students can see it. If this is not possible, you may want to make
+        cards with this information on it to hand out to your students. The
+        code phrase your students should enter is:
+        <br><br><br>
+        For session 1: <span class="cohort_code">[[ cohort.code ]] 1</span>
+        <br><br><br>
+        For session 2: <span class="cohort_code">[[ cohort.code ]] 2</span>
+        <br><br>
+    </li>
+    <li>
+        <strong>Monitor your students</strong> to ensure they stay on task, and
+        help them if they have questions. Don't let them talk. If they finish
+        the program ahead of time, ask them to work in their seat quietly
+        without interrupting others.
+    </li>
+    <li>
+        <strong>Make sure your students choose the correct session</strong> by telling them which session they should be working on (i.e. Session 1 or Session 2).
+    </li>
+    <li>
+        <strong>10 minute warning</strong>. Ten minutes before students need to
+        finish, tell them how much time is remaining and that it is okay if
+        they do not have time to finish everything.
+    </li>
+    <li>
+        <strong>Sign out</strong>. Once the class period is over, ask your
+        students to sign out by clicking &lsquo;log out&rsquo; in the top right of the
+        screen. It's okay if they're not totally done.
+    </li>
+</ol>
+
+<h2>Troubleshooting</h2>
+<a class="anchor" id="troubleshooting"></a>
+<p>
+    We work hard to minimize the technical problems, but sometimes issues come
+    up. Here are some problems students have experienced in the past and the
+    best ways to solve them.
+</p>
+
+<h3>Emergency Contact</h3>
+<p>
+    If there is a time-sensitive problem that you need assistance with, please
+    call <b>(650) 241-9056</b>. For all school related issues please contact your
+    school’s PERTS coordinator.
+</p>
+
+<h3>Closed Page</h3>
+<p>
+    <strong>Problem</strong>: A student closed the browser window.<br>
+    <strong>Solution</strong>: Tell the student to go to <a href="http://perts.me">perts.me</a> and sign in again.
+</p>
+
+<h3>Warning Message or Connection Expired Message</h3>
+<p>
+    <strong>Problem</strong>: A student's screen says that the connection expired or a similar warning.<br>
+    <strong>Solution</strong>: Click the "reload" or "refresh" button.
+</p>
+
+<h3>Lost Location</h3>
+<p>
+    <strong>Problem</strong>: The survey restarted from the beginning.<br>
+    <strong>Solution</strong>: Tell the student to skip up to the part where they left off. (The
+    answers the student previously provided have been saved, but the server
+    lost the page they were on for network reasons.)
+</p>
+
+<h3>Cannot Connect to perts.me</h3>
+<p>
+    <strong>Problem</strong>: Students cannot access the sign-in page when they go to perts.me.</br>
+    <strong>Solution</strong>: Check if they can access another website, like google.com.
+</p>
+<ul>
+    <li>
+        If not, there is a problem with your Internet connection. Talk to
+        technical support staff at your school to resolve the issue.
+    </li>
+    <li>
+        If you can connect to google.com but you cannot connect to perts.me,
+        wait for a few minutes and try again. If the connection still does not
+        work, call (650) 241-9056 to speak with a PERTS team member. If you do
+        not reach someone immediately, please leave a message and someone will
+        call you back promptly.
+    </li>
+</ul>
+
+<h3>A Student Completed the Study in Another Class</h3>
+<p>
+    <strong>Problem</strong>: A student tells you they have already completed the survey in another class.</br>
+    <strong>Solution</strong>: The student should NOT do the same session of the study more than once. Ask
+    the student to work on something else quietly or you may let them leave
+    quietly.
+</p>
+
+<h3>Some Students Ran Out of Time</h3>
+<p>
+    <strong>Problem</strong>: Some students do not complete the survey.</br>
+    <strong>Solution</strong>: That is fine. Just ask them to get as much done as possible.</p>
+
+<h2>Answers to Student Questions</h2>
+<a class="anchor" id="student_questions"></a>
+<ul class="student_questions">
+    <li>
+        <strong>Do I have to do this?</strong><br>
+        Your opinions are important, so I hope that you would at least try. If
+        a student refuses again, just accept this.
+    </li>
+    <li>
+        <strong>Why should I do this?</strong><br>
+        Because all of my students are doing this today, and we will learn
+        important information.
+    </li>
+    <li>
+        <strong>Will I get a grade on this?</strong><br>
+        It’s not graded. But, when you provide honest answers, it will help
+        faculty to do a better job teaching students like you in the future.
+    </li>
+    <li>
+        <strong>Why do I have different questions from him/her?</strong><br>
+        Different students are doing different activities. We have a lot of
+        different activities, but there’s not enough time for everyone to do
+        all of them. You should do the ones you were assigned.
+    </li>
+    <li>
+        <strong>Does spelling/grammar matter?</strong><br>
+        No, just concentrate on getting your ideas across.
+    </li>
+    <li>
+        <strong>Do I have to share my personal information (name, birth date, student ID #)?</strong><br>
+        Yes, it is necessary in order to participate. Be assured, your
+        information will be kept completely secure and won’t be shared with
+        outside parties. If a student refuses, just accept this.
+    </li>
+</ul>
+
+</div> <!-- end Controller -->
+
+{% endblock %}
+
+

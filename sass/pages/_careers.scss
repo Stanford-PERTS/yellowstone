@@ -1,0 +1,83 @@
+// ===========================================================
+// CAREERS PAGE
+// ===========================================================
+
+.careers-page {
+
+  .page-masthead {
+    h1 {
+      @include mobile {
+        font-size: 32px;
+      }
+    }
+  }
+}
+
+.page-section--careers-about {
+  padding: 120px 0;
+
+  img {
+    margin-bottom: 30px;
+    max-width: 500px !important;
+  }
+}
+
+.page-section--job-openings {
+  text-align: center;
+  background-color: $pale-blue-color;
+  padding: 90px 0 120px 0;
+
+  .open-position {
+    margin-top: 30px;
+    text-align: left;
+    background-color: white;
+    padding: 15px 30px;
+
+    .position_details {
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    > p {
+      font-size: 22px;
+    }
+  }
+
+  .career-ender {
+    margin: 75px auto 0 auto;
+    height: 40px;
+    width: 40px;
+    @include border-radius(20px);
+    border: 5px solid $indigo-color;
+  }
+}
+
+.page-section--career-perks {
+  background-color: $indigo-color;
+  text-align: center;
+  padding: 90px 0;
+
+  h2 {
+    font-size: 32px;
+  }
+
+  h2, h3, p {
+    color: white;
+    letter-spacing: 0.5px;
+  }
+  p {
+    font-size: 20px;
+  }
+}
+
+.page-section--careers-footer {
+  padding: 150px 0 120px 0;
+  border-bottom: 2px solid white;
+  text-align: center;
+
+  .callout-text {
+    color: $indigo-color;
+    font-size: 36px;
+    font-weight: 600;
+  }
+}

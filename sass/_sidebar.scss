@@ -1,0 +1,78 @@
+nav.bs-docs-sidebar #sidebar {
+  &.affix {
+    top: 12px;
+    width: 257px;
+  }
+
+  padding-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  hr {
+    margin: 7px 0;
+  }
+
+  ul {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  /* all links */
+  &.nav > li > a {
+    color: #495061;
+    border-left: 2px solid transparent;
+    padding: 4px 20px;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: 'proxima-nova', sans-serif;
+  }
+
+  /* nested links */
+  &.nav .nav > li > a {
+    padding-top: 1px;
+    padding-bottom: 1px;
+    padding-left: 30px;
+    font-size: 13px;
+    font-family: 'proxima-nova', sans-serif;
+  }
+
+  &.nav .nav .nav > li > a {
+    padding-left: 44px;
+  }
+
+  &.nav a {
+    text-decoration: none;
+  }
+
+  /* active & hover links */
+  &.nav a.active,
+  &.nav a:hover,
+  &.nav a:focus {
+    color: #3faeeb;
+    text-decoration: none;
+    background-color: transparent;
+    border-left: 2px solid #3faeeb;
+  }
+  /* all active links */
+  &.nav a.active,
+  &.nav a.active:hover,
+  &.nav a.active:focus {
+    font-weight: 700;
+  }
+  /* nested active links */
+  &.nav a.active a.active,
+  &.nav a.active:hover a.active,
+  &.nav a.active:focus a.active {
+    font-weight: 500;
+  }
+
+  /* hide inactive nested list */
+  &.nav ul.nav {
+    // display until I can figure out why position: fixed is not working
+    display: none;
+  }
+  /* show active nested list */
+  &.nav .active + ul.nav {
+    display: block;
+  }
+}

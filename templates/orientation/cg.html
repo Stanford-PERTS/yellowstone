@@ -1,0 +1,248 @@
+{# PERTS : Template : Program Orientation Page #}
+
+{# DO NOT CHANGE #}
+{% extends "orientation/_template.orientation.html" %}
+
+{# TODO: Update the following program information: #}
+{% set program_name = "Growth Mindset for College Students" %}
+{% set program_label = "cg17" %}
+{% set program_cohort = "2020-2021" %}
+{% set program_description = "
+  A free, evidence-based program designed to increase students' engagement, motivation, and ultimately success by laying the foundation for a growth mindset.
+" %}
+
+{# TODO: Set program participation settings: #}
+{% set enrollment_is_unlimited = true %}
+{% set unlimited_enrollment_message = "Free for all 2- and 4-year colleges" %}
+{% set participation_is_open = true %}
+{% set participation_enrolled = 0 %}
+{% set participation_slots = 1 %}
+C
+
+{# TODO: Set program YouTube video's ID or false if not using one:            #}
+{#       Example: if the YouTube video's location is                          #}
+{#         https://www.youtube.com/watch?v=YYJLMmWZiMQ                        #}
+{#         then {% set youtube = "YYJLMmWZiMQ" %}                             #}
+{% set youtube = "daBTlLOGPIs" %}
+
+{% block content %}
+
+<!-- INTRODUCTION -->
+<div class="section">
+  <div class="row">
+    <div class="col-md-8">
+      <p>Many students worry that they lack the ability to master college-level coursework, no matter what they do. Some fear, “I’m just not a math person.” Left unaddressed, such fears can become self-fulfilling prophecies that feed a destructive cycle of reduced motivation and performance that ends in dropping out.</p>
+      <p>However, research shows that colleges can boost retention—particularly for students from historically underrepresented groups—by helping students develop a growth mindset: the belief that they can improve their academic abilities through effective study strategies.</p>
+    </div>
+    <div class="col-md-4">
+      <img class="img-fluid" src="https://www.perts.net/static/images/home/survey_screenshot.png" alt="">
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT THE PROGRAM -->
+<div class="section color1">
+  <h2 id="about">About the Program</h2>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h3 id="about-simple">Short, Simple</h3>
+      <p>
+        This 30-minute online program includes survey questions, short reading
+        passages, and brief reflection exercises. Students will learn:
+      </p>
+      <ul>
+        <li>Scientific evidence showing that the brain is malleable.</li>
+        <li>Specific behaviors that can increase abilities over time.</li>
+        <li>Importance of effective study strategies.</li>
+      </ul>
+    </div>
+    <div class="col-md-4">
+      <p><img class="img-fluid rounded" src="/static/images/programs/cg17-4.png" alt=""></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h3 id="about-evidence-based">Evidence-based</h3>
+      <p>
+        Rigorously tested since 2010 in multiple randomized controlled
+        trials with thousands of college students. Findings include:
+      </p>
+      <ul>
+        <li>
+          <strong>4% point increase</strong> in continuous, full-time
+          enrollment after a semester among minority and first-generation
+          college students when tested in a 4-year college.
+        </li>
+        <li>
+          <strong>5% point increase</strong> in transfer, graduation, and
+          continued enrollment after 2 years when tested across several
+          community colleges.
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-4 order-md-first">
+      <p><img class="img-fluid rounded" src="/static/images/programs/cg17-2.png" alt=""></p>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-8">
+      <h3 id="about-free">Free</h3>
+      <p>
+         We&rsquo;re thrilled to bring you {{ program_name }} as an open
+         enrollment program, and we want to involve as many eligible
+         colleges as possible.
+       </p>
+       <p>
+         We’re a small team and we want everyone who participates to have a great
+        experience. We’re offering our programs for free to eligible colleges thanks to our generous funders.
+       </p>
+    </div>
+    <div class="col-md-4">
+      <p><img class="img-fluid rounded" src="/static/images/programs/cg17-3.png" alt=""></p>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section color3">
+  <h2 id="how-it-works">How It Works</h2>
+
+  <div class="row">
+    <div class="col-md-6 text-center">
+      <p><img style="height: 120px;" src="/static/images/home/program-icon-register-dark.png" /></p>
+      <h3>1. Learn & Discuss</h3>
+      <p>Download the <a href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/cg17/information_packet.pdf">Program Information Packet</a> to learn how participation works.</p>
+    </div>
+
+    <div class="col-md-6 text-center">
+      <p><img style="height: 120px;" src="/static/images/home/program-icon-signup-dark.png" /></p>
+      <h3>2. Sign-up</h3>
+      <p>Create a user account and prepare to participate using our online platform.</p>
+    </div>
+
+    <div class="col-md-6 text-center">
+      <p><img style="height: 120px;" src="/static/images/home/program-icon-participate-dark-2.png" /></p>
+      <h3>3. Participate</h3>
+      <p>Students complete a 30-min web module during new student orientation or a first year experience class.</p>
+    </div>
+
+    <div class="col-md-6 text-center">
+      <p><img style="height: 120px;" src="/static/images/home/program-icon-track-dark.png" /></p>
+      <h3>4. Track Impact</h3>
+      <p>See how many students completed the program, and receive a report about the program's impact at your school.</p>
+    </div>
+  </div>
+</div>
+
+<!-- LEARN MORE -->
+<div class="section">
+  <h2 id="learn-more">Learn More</h2>
+  <p>Here you can find additional information to learn about how to bring {{ program_name }} to your campus. This section includes promotional materials and sample implementation documents.</p>
+
+  <div class="row">
+    <div class="col-lg-6 space-bottom">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title" id="program-information">Program Information</h5>
+          <p class="card-text">These materials provide a helpful introduction to the program. You can use these documents to familiarize yourself with the program or to share with your colleagues. The Information Packet goes in-depth about the research behind the program and how to get your college signed up. We’ve also compiled the answers to your most frequently asked questions here.</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><a href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/{{ program_label }}/information_packet.pdf">Program Information Packet</a></li>
+          <li class="list-group-item"><a href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/{{ program_label }}/FAQ.pdf">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-6 space-bottom">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title" id="supporting-documents">Supporting Documents</h5>
+          <p class="card-text">The supporting documents here provide more information about the program implementation process, including how you’ll get your college signed up, sample facilitator instructions, and sample student handouts.</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><a href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/{{ program_label }}/implementation-checklist.pdf">Implementation Checklist</a></li>
+          <li class="list-group-item"><a href="{{ neptune_protocol }}://{{ neptune_domain }}/facilitator_instructions/{{ program_label }}">Sample Facilitator Instructions</a></li>
+          <li class="list-group-item"><a href="{{ neptune_protocol }}://{{ neptune_domain }}/student_handout/{{ program_label }}">Sample Student Handout</a></li>
+          <li class="list-group-item"><a href="/terms-of-use">Terms of Use</a></li>
+          <li class="list-group-item"><a href="/privacy">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- INFORMATION PACKET -->
+<div class="section color4 background-image" style="background-image: url(/static/images/programs/cg-doc-preview.png);">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 id="pip">Information Packet</h2>
+      <p>Download the Program Information Packet to learn more about the research and how to run {{ program_name }} at your college.</p>
+      <p><a class="btn btn-white" href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/cg17/information_packet.pdf">Download Now</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<nav class="navbar sticky-top">
+  <nav id="sidebar-menu" class="nav nav-pills flex-column">
+    <a class="nav-link" href="#">Introduction</a>
+    <a class="nav-link" href="#about">About the Program</a>
+    <nav class="nav nav-pills flex-column">
+      <a class="nav-link ml-3 my-1" href="#about-simple">Short, Simple</a>
+      <a class="nav-link ml-3 my-1" href="#about-evidence-based">Evidence-based</a>
+      <a class="nav-link ml-3 my-1" href="#about-free">Free</a>
+    </nav>
+    <a class="nav-link" href="#how-it-works">How It Works</a>
+    <a class="nav-link" href="#pip">Information Packet</a>
+    <a class="nav-link" href="#get-started">Get Started</a>
+  </nav>
+</nav>
+{% endblock %}
+
+{% block aboutperts %}
+<div id="about-perts" class="section color5">
+  <h2>About PERTS</h2>
+  <p>
+    PERTS is an applied research center based out of Stanford University. We
+    believe that evidence-based strategies should benefit all students, not just
+    the privileged few. To make research accessible to all, we empower educators
+    everywhere to implement evidence-based strategies cost-effectively. We are
+    so excited to bring you Growth Mindset for College Students and to make the
+    latest research on growth mindset strategies actionable to every college in
+    the United States.
+  </p>
+</div>
+{% endblock %}
+
+{% block aboutctc %}
+{# Do not display About CTC section #}
+{% endblock %}
+
+{% block moreinfo %}
+<div id="more-info" class="section color5">
+  <h2>For More Information</h2>
+  <ul>
+    <li>
+      Read about PERTS and the mindset programs in the <a
+      href="http://www.nytimes.com/2016/08/21/opinion/sunday/conquering-the-freshman-fear-of-failure.html?_r=1">
+      New York Times</a>.
+    </li>
+
+    <li>
+      Get more background about mindsets from the <a
+      href="http://mindsetscholarsnetwork.org/">Mindset Scholars Network</a>.
+    </li>
+
+    <li>
+      Read <a href="https://www.perts.net/research">published research
+      articles</a> about our work to advance mindset science.
+    </li>
+  </ul>
+</div>
+{% endblock %}

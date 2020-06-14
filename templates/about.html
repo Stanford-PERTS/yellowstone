@@ -1,0 +1,505 @@
+{% extends "p3-base.html" %}
+
+{% set title = "Academic Motivation Research | About PERTS" %}
+{% set description = "PERTS is an applied research center at Stanford University. We work with experts on academic motivation to raise student achievement on a large scale. We're focused on growth mindset, belonging mindset, student engagement, student learning and student programs." %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block meta_description %}
+{{ description }}
+{% endblock %}
+
+{% block content %}
+
+<div class="about-page">
+
+  <div class="page-masthead">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-md-6">
+          <h1>Always Improving.</h1>
+          <p>
+            We are building an engine for scalable impact in education.
+          </p>
+        </div>
+      </div>
+    </div>
+    {% include 'components/navbar_top.html' %}
+  </div>
+
+  <div class="page-section page-section--mission">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-5 col-lg-offset-1 col-sm-6">
+          <h3>
+            Our Mission
+          </h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-5 col-lg-offset-1 col-sm-6">
+          <p>
+            Students from underserved communities graduate from high school and college at far lower rates than their advantaged peers, and these opportunity gaps powerfully perpetuate longstanding socioeconomic inequalities. Despite notable pockets of excellence and equity, our education system chronically fails to scale up effective strategies to reach the students who need them most. That needs to change.
+          </p>
+        </div>
+        <div class="col-lg-5 col-sm-6">
+          <p>
+            PERTS (Project for Education Research that Scales) helps educators apply evidence-based strategies in order to advance educational excellence and equity on a large scale. We believe that properly scaling educational research can empower schools to reduce inequality and create better experiences and outcomes for students and teachers alike.
+            <!-- <br><br>
+            <a class="learn-more"><i class="fa fa-caret-right"></i>&nbsp;Learn more</a> -->
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-section page-section--breakdown">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-5">
+          <div class="breakdown-graphic">
+            <div class="breakdown-graphic_background"></div>
+            <div class="breakdown-graphic_text">
+              RESEARCH&nbsp;&nbsp;
+              <img src="/static/images/pertslogo-mini-white.png" alt="">
+              &nbsp;&nbsp;PRACTICE
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-sm-offset-1 col-lg-7 col-lg-offset-0">
+          <h4>
+            Bring research innovations into practice
+          </h4>
+          <p>
+            We bridge the gap between research and practice by translating
+            research findings into practical solutions. These solutions can be
+            quickly implemented to serve large numbers of historically
+            underserved students.
+          </p>
+          <h4>
+            Learn from implementations to grow impact
+          </h4>
+          <p>
+            While supporting the dissemination of research-based innovations,
+            PERTS gathers essential data on their outcomes. That data teaches
+            us how to faithfully and sustainably grow the reach of these
+            innovations and maximize their impact on educational equity.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-section page-section--wedge-right light">
+    <div class="graphic-right">
+
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-5">
+          <h2>Our work</h2>
+          <p>
+            Our work reaches hundreds of thousands of students across the
+            nation. Learn more about individual projects and research.
+          </p>
+          <a class="perts-button" href="/our-work">Explore our work</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-section page-section--full-image-button">
+    <div class="background-image"
+         image-loader
+         image="/static/images/home/enroll-background.jpg"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-sm-offset-2">
+          <p class="callout-text">
+            Enroll your school or organization in one of our current or
+            upcoming programs.
+          </p>
+          <a class="perts-button btn-blue" href="/programs">
+            About enrolling
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-section page-section--team" id="team">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2>Our team</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+
+          <h3>PERTS Staff</h3>
+
+          <div class="team-member-wrapper">
+            <a class="team-member" href="//www.stanford.edu/~paunesku" target="_blank">
+              <div style="background-image: url('static/home/img/perts_img/headshot_paunesku1.JPG')" alt="Dave Paunesku" class="team-member_image"></div>
+              <h4 class="name">Dave Paunesku</h4>
+              <span class="job-title">Executive Director<br>(PERTS Co-Founder)</span>
+            </a>
+          </div>
+
+          <div class="team-member-wrapper">
+            <div class="team-member">
+              <div style="background-image: url('static/home/img/perts_img/headshot_cossey.JPG')" alt="Laura Cossey" class="team-member_image"></div>
+              <h4 class="name">Laura Cossey</h4>
+              <span class="job-title">Director of Operations</span>
+            </div>
+          </div>
+
+          <div class="team-member-wrapper">
+            <div class="team-member">
+              <div style="background-image: url('static/home/img/perts_img/headshot_gripshover1.JPG')" alt="Sarah Gripshover" class="team-member_image"></div>
+              <h4 class="name">Sarah Gripshover</h4>
+              <span class="job-title">Director of Research</span>
+            </div>
+          </div>
+
+          <div class="team-member-wrapper">
+            <div class="team-member">
+              <div style="background-image: url('static/home/img/perts_img/headshot_macrander1.JPG')" alt="Chris Macrander" class="team-member_image"></div>
+              <h4 class="name">Chris Macrander</h4>
+              <span class="job-title">Director of Technology<br>(PERTS Co-Founder)</span>
+            </div>
+          </div>
+
+          <div class="team-member-wrapper">
+            <div class="team-member">
+              <div style="background-image: url('static/home/img/perts_img/headshot_diazdelewis1.JPG')" alt="Lilia Diaz de Lewis" class="team-member_image"></div>
+              <h4 class="name">Lilia Diaz de Lewis</h4>
+              <span class="job-title">Director of Programs</span>
+            </div>
+          </div>
+
+          <div class="team-member-wrapper">
+            <div class="team-member">
+              <div style="background-image: url('static/home/img/perts_img/headshot_fiore1.JPG')" alt="Daniel Fiore" class="team-member_image"></div>
+              <h4 class="name">Daniel Fiore</h4>
+              <span class="job-title">Front-end Developer</span>
+            </div>
+          </div>
+
+          <div class="team-member-wrapper">
+            <div class="team-member">
+              <div style="background-image: url('static/home/img/perts_img/headshot_domingo1.JPG')" alt="Arnrow Domingo" class="team-member_image"></div>
+              <h4 class="name">Arnrow Domingo</h4>
+              <span class="job-title">Partner Success Manager</span>
+            </div>
+          </div>
+
+          <div class="team-member-wrapper">
+            <div class="team-member">
+              <div style="background-image: url('static/home/img/perts_img/headshot_shumaker.jpg')" alt="Lauren Shumaker" class="team-member_image"></div>
+              <h4 class="name">Lauren Shumaker</h4>
+              <span class="job-title">Research Associate</span>
+            </div>
+          </div>
+
+          <div class="team-member-wrapper">
+            <div class="team-member">
+              <div style="background-image: url('static/home/img/perts_img/headshot_gonzalez1.JPG')" alt="Natali Gonzalez" class="team-member_image"></div>
+              <h4 class="name">Natali Gonzalez</h4>
+              <span class="job-title">Finance &amp; Administrative Associate</span>
+            </div>
+          </div>
+
+          <div class="team-member-wrapper">
+            <div class="team-member">
+              <div style="background-image: url('static/home/img/perts_img/headshot_mehta.jpg')" alt="Smriti Mehta" class="team-member_image"></div>
+              <h4 class="name">Smriti Mehta</h4>
+              <span class="job-title">Research Assistant</span>
+            </div>
+          </div>
+
+          <div class="team-member-wrapper">
+            <div class="team-member">
+              <div style="background-image: url('static/home/img/perts_img/headshot_zeiger.jpg')" alt="Alejandra Zeiger" class="team-member_image"></div>
+              <h4 class="name">Alejandra Zeiger</h4>
+              <span class="job-title">Research Assistant</span>
+            </div>
+          </div>
+
+          <h3>Collaborators</h3>
+
+          <div class="team-member-wrapper">
+            <div class="team-member">
+              <div style="background-image: url('static/home/img/perts_img/headshot_romero.jpg')" alt="Carissa Romero" class="team-member_image"></div>
+              <h4 class="name">Carissa Romero</h4>
+              <span class="job-title">Advisor<br>(PERTS Co-Founder)</span>
+            </div>
+          </div>
+
+          <div class="team-member-wrapper">
+            <a class="team-member" href="https://www.stanford.edu/dept/psychology/cgi-bin/drupalm/cdweck" target="_blank">
+              <div style="background-image: url('static/home/img/perts_img/headshot_dweck.jpg')" alt="Carol Dweck" class="team-member_image"></div>
+              <h4 class="name">Carol Dweck</h4>
+              <span class="job-title">Professor<br>Stanford University<br>Faculty Advisor</span>
+            </a>
+          </div>
+
+          <div class="team-member-wrapper">
+            <a class="team-member" href="//www.stanford.edu/~gwalton/home/Welcome.html" target="_blank">
+              <div style="background-image: url('static/home/img/perts_img/headshot_walton.jpg')" alt="Greg Walton" class="team-member_image"></div>
+              <h4 class="name">Greg Walton</h4>
+              <span class="job-title">Associate Professor<br>Stanford University<br>Faculty Advisor</span>
+            </a>
+          </div>
+
+          <div class="team-member-wrapper">
+            <a class="team-member" href="//labs.la.utexas.edu/adrg/" target="_blank">
+              <div style="background-image: url('static/home/img/perts_img/headshot_yeager.jpg')" alt="David Yaeger" class="team-member_image"></div>
+              <h4 class="name">David Yeager</h4>
+              <span class="job-title">Assistant Professor<br>Univ. Texas Austin</span>
+            </a>
+          </div>
+
+          <div class="team-member-wrapper">
+            <div class="team-member">
+              <div style="background-image: url('static/home/img/perts_img/headshot_farrington.jpg')" alt="Camille Farrington" class="team-member_image"></div>
+              <h4 class="name">Camille Farrington</h4>
+              <span class="job-title">Senior Research Associate<br>UChicago Consortium</span>
+            </div>
+          </div>
+
+          <div class="team-member-wrapper">
+            <div class="team-member">
+              <div style="background-image: url('static/home/img/perts_img/headshot_okonofua.jpg')" alt="Jason Okonofua" class="team-member_image"></div>
+              <h4 class="name">Jason Okonofua</h4>
+              <span class="job-title">Assistant Professor<br>University of California, Berkeley</span>
+            </div>
+          </div>
+
+          <div class="team-member-wrapper">
+            <div class="team-member">
+              <div style="background-image: url('static/home/img/perts_img/headshot_haley.jpg')" alt="Ben Haley" class="team-member_image"></div>
+              <h4 class="name">Ben Haley</h4>
+              <span class="job-title">Data Scientist<br>Khan Academy<br>(PERTS Co-Founder)</span>
+            </div>
+          </div>
+
+          <div class="team-member-wrapper">
+            <a class="team-member" href="//ed.stanford.edu/faculty/joboaler" target="_blank">
+              <div style="background-image: url('static/home/img/perts_img/headshot_boaler.jpg')" alt="Jo Boaler" class="team-member_image"></div>
+              <h4 class="name">Jo Boaler</h4>
+              <span class="job-title">Professor<br>Stanford University</span>
+            </a>
+          </div>
+
+          <div class="team-member-wrapper">
+            <div class="team-member">
+              <div style="background-image: url('static/home/img/perts_img/headshot_claro.jpg')" alt="Susana Claro" class="team-member_image"></div>
+              <h4 class="name">Susana Claro</h4>
+              <span class="job-title">Assistant Professor<br>Universidad Católica de Chile</span>
+            </div>
+          </div>
+
+          <div class="team-member-wrapper">
+            <a class="team-member" href="//psychology.stanford.edu/jgross" target="_blank">
+              <div style="background-image: url('static/home/img/perts_img/headshot_gross.jpg')" alt="James Gross" class="team-member_image"></div>
+              <h4 class="name">James Gross</h4>
+              <span class="job-title">Associate Professor<br>Stanford University</span>
+            </a>
+          </div>
+
+          <div class="team-member-wrapper">
+            <div class="team-member">
+              <div style="background-image: url('static/home/img/perts_img/headshot_beaubien.jpg')" alt="Jacquie Beaubien" class="team-member_image"></div>
+              <h4 class="name">Jacquie Beaubien</h4>
+              <span class="job-title">Consultant</span>
+            </div>
+          </div>
+
+          <div class="team-member-wrapper">
+            <div class="team-member">
+              <div style="background-image: url('static/home/img/perts_img/headshot_smith.jpg')" alt="Eric Smith" class="team-member_image"></div>
+              <h4 class="name">Eric Smith</h4>
+              <span class="job-title">Doctoral Candidate<br>Stanford University</span>
+            </div>
+          </div>
+
+          <h3>Interested in joining?</h3>
+
+          <a class="perts-button btn-accent" href="/careers">
+            Career Opportunities
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-section page-section--media" id="media">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2>Media coverage</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-10 col-lg-offset-1">
+          <div class="row">
+
+            <div class="col-lg-6 col-md-6">
+              <a class="news-article" href="https://www.nature.com/articles/s41586-019-1466-y" target="_blank">
+                <h4>Nature</h4>
+                <h3>A national experiment reveals where a growth mindset improves achievement</h3>
+                <span>August 7, 2019</span>
+              </a>
+            </div>
+
+            <div class="col-lg-6 col-md-6">
+              <a class="news-article" href="https://www.edweek.org/ew/articles/2019/07/10/the-deficit-lens-of-the-achievement-gap.html" target="_blank">
+                <h4>Education Week</h4>
+                <h3>The Deficit Lens of the &lsquo;Achievement Gap&rsquo; Needs to Be Flipped. Here&rsquo;s How.</h3>
+                <span>July 9, 2019</span>
+              </a>
+            </div>
+
+            <div class="col-lg-6 col-md-6">
+              <a class="news-article" href="https://www.nytimes.com/2017/09/02/opinion/sunday/dont-suspend-students-empathize.html" target="_blank">
+                <h4>The New York Times</h4>
+                <h3>Don’t Suspend Students. Empathize.</h3>
+                <span>September 2, 2017</span>
+              </a>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <a class="news-article" href="http://www.nytimes.com/2016/08/21/opinion/sunday/conquering-the-freshman-fear-of-failure.html?_r=0" target="_blank">
+                <h4>The New York Times</h4>
+                <h3>Conquering the Freshman Fear of Failure</h3>
+                <span>August 20, 2016</span>
+              </a>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <a class="news-article" href="http://www.edweek.org/ew/articles/2016/08/03/mindset-a-key-factor-in-student-success.html" target="_blank">
+                <h4>Education Week</h4>
+                <h3>Mindset a Key Factor In Student Success</h3>
+                <span>August 2, 2016</span>
+              </a>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <a class="news-article" href="https://hbr.org/2016/07/the-antidote-to-our-anxious-times-is-a-learning-mindset" target="_blank">
+                <h4>Harvard Business Review</h4>
+                <h3>The Antidote to Our Anxious Times Is a Learning Mindset</h3>
+                <span>July 28, 2016</span>
+              </a>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <a class="news-article" href="http://blogs.edweek.org/edweek/rulesforengagement/2016/04/can_an_increase_in_empathy_lead_to_a_drop_in_suspensions.html" target="_blank">
+                <h4>Education Week</h4>
+                <h3>Can an Increase in Empathy Lead to a Drop in Suspensions?</h3>
+                <span>April 27, 2016</span>
+              </a>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <a class="news-article" href="http://www.businesswire.com/news/home/20160202005555/en/%E2%80%9CWith-Math-Can%E2%80%9D-Initiative-Unveiled-Change-Student" target="_blank">
+                <h4>Business Wire</h4>
+                <h3>“With Math I Can” Initiative Unveiled to Change Student Mindsets about Math</h3>
+                <span>February 2, 2016</span>
+              </a>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <a class="news-article" href="http://www.ecampusnews.com/top-news/stanford-community-college-049/?" target="_blank">
+                <h4>eCampus News</h4>
+                <h3>Stanford Expands Community College Success Program</h3>
+                <span>January 29, 2016</span>
+              </a>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <a class="news-article" href="http://www.usatoday.com/story/news/2016/01/19/growth-mindset-videos/79026138/" target="_blank">
+                <h4>USA Today</h4>
+                <h3>Short Videos to Teach 'Growth Mindset' to Students, Teachers</h3>
+                <span>January 19, 2016</span>
+              </a>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <a class="news-article" href="http://ww2.kqed.org/mindshift/2016/01/19/what-classdojo-monsters-can-teach-kids-about-growth-mindset/" target="_blank">
+                <h4>MindShift</h4>
+                <h3>What ClassDojo Monsters Can Teach Kids About Growth Mindset</h3>
+                <span>January 19, 2016</span>
+              </a>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <a class="news-article" href="http://ww2.kqed.org/mindshift/2015/12/29/beyond-working-hard-what-growth-mindset-teaches-us-about-our-brains/" target="_blank">
+                <h4>MindShift</h4>
+                <h3>Beyond Working Hard: What Growth Mindset Teaches Us About Our Brains</h3>
+                <span>December 29, 2015</span>
+              </a>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <a class="news-article" href="http://www.ed.gov/news/press-releases/us-department-education-announces-first-ever-skills-success-grants-and-initiative-support-learning-mindsets-and-skills/" target="_blank">
+                <h4>U.S. Department of Education</h4>
+                <h3>U.S. Department of Education Announces First Ever Skills for Success Grants and Initiative to Support Learning Mindsets and Skills</h3>
+                <span>October 14, 2015</span>
+              </a>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <a class="news-article" href="http://www.edweek.org/ew/articles/2015/09/09/teachers-nurture-growth-mindsets-in-math.html?qs=stanford+perts" target="_blank">
+                <h4>Education Week</h4>
+                <h3>Teachers Nurture Growth Mindsets in Math</h3>
+                <span>September 8, 2015</span>
+              </a>
+            </div>
+            <div class="col-lg-6 col-md-6">
+              <a class="news-article" href="http://ww2.kqed.org/mindshift/2015/08/24/growth-mindset-how-to-normalize-mistake-making-and-struggle-in-class/" target="_blank">
+                <h4>MindShift</h4>
+                <h3>Growth Mindset: How to Normalize Mistake Making and Struggle in Class</h3>
+                <span>August 24, 2015</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="press-kit-link">
+          <p>
+            Learn more about us.
+          </p>
+          <a class="perts-button btn-invert" href="/press_kit">Press kit</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-section page-section--sponsors">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <h2>Our sponsors</h2>
+          <p>
+            Our work is generously supported by the following organizations.
+          </p>
+        </div>
+      </div>
+      <div class="row partners" id="partnersSection">
+        <div class="col-lg-10 col-lg-offset-1">
+          <div class="col-md-4 col-xs-6"><div class="partner-wrapper">
+            <a href="http://raikesfoundation.org/" target="_blank" class="partner"><img src="/static/images/funder-raikes.png" alt="Raikes Foundation"></a>
+          </div></div><div class="col-md-4 col-xs-6"><div class="partner-wrapper">
+            <a href="http://humsci.stanford.edu/" target="_blank" class="partner"><img src="/static/images/funder-stanford-2.png" alt="Stanford University School of Humanities & Sciences"></a>
+          </div></div><div class="col-md-4 col-xs-6"><div class="partner-wrapper">
+            <a href="http://www.joycefdn.org/" target="_blank" class="partner"><img src="/static/images/funder-joyce.png" alt="The Joyce Foundation"></a>
+          </div></div><div class="col-md-6 col-xs-6"><div class="partner-wrapper">
+            <a href="http://ies.ed.gov/" target="_blank" class="partner"><img src="/static/images/funder-ies.png" style="margin-top: 15px;" alt="IES"></a>
+          </div></div><div class="col-md-6 col-xs-12"><div class="partner-wrapper">
+            <a href="http://www.nsf.gov/" target="_blank" class="partner"><img src="/static/images/funder-nsf-2.png" alt="National Science Foundation"></a>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

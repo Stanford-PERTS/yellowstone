@@ -1,0 +1,117 @@
+{% set page_title = "PERTS : " + program_name %}
+{% set page_description = program_description.replace('\n', ' ') %}
+{% set page_body_class = program_label %}
+
+{# Necessary to pass through to included templates: #}
+{% set youtube = youtube %}
+{% set program_cohort = program_cohort %}
+{% set enrollment_is_unlimited = enrollment_is_unlimited %}
+{% set unlimited_enrollment_message = unlimited_enrollment_message %}
+{% set participation_enrolled = participation_enrolled %}
+{% set participation_slots = participation_slots %}
+{% set participation_full = participation_enrolled >= participation_slots %}
+{% set participation_is_open = participation_is_open and participation_full != true %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>{{ page_title }}</title>
+    <meta name="description" content="{{ page_description }}">
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Google Font -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,800italic,800,700,700italic,600italic,400italic,600' rel='stylesheet' type='text/css'>
+
+    <!-- Font Awesome -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+
+    <!-- Bootstrap -->
+    <!-- https://getbootstrap.com/docs/4.0/getting-started/introduction/ -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Don't use the `.slim` version since we need `getScript` for YouTube popups -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- PERTS Styles -->
+    <link rel="stylesheet" href="/static/css/app-orientation.css">
+
+    <!-- Open Graph data -->
+    <meta property="og:title" content="{{ page_title }}" />
+    <meta property="og:description" content="{{ page_description }}" />
+    <meta property="og:site_name" content="PERTS" />
+    <meta property="og:image" content="https://www.perts.net/static/images/perts-share.png" />
+    <meta property="og:url" content="https://wwww.perts.net" />
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:description" content="{{ page_description }}" />
+    <meta name="twitter:site" content="@pertslab" />
+    <meta name="twitter:title" content="{{ page_title }}" />
+    <meta name="twitter:image" content="https://www.perts.net/static/images/perts-share.png" />
+
+    <!-- Schema.org markup for Google+ -->
+    <meta itemprop="name" content="{{ page_title }}" />
+    <meta itemprop="description" content="{{ page_description }}" />
+    <meta itemprop="image" content="https://www.perts.net/static/images/perts-share.png" />
+  </head>
+</html>
+
+<body class="orientation {{ page_body_class }}"  data-spy="scroll" data-target="#sidebar-menu" data-offset="2">
+
+{% include "orientation/_includes.navbar.html" %}
+{% include "orientation/_includes.section-banner.html" %}
+{% include "orientation/_includes.call-to-action.html" %}
+
+<div class="container">
+  <div class="row">
+    <div class="content-main col-12">
+      {% block content %}
+      {% include "orientation/_includes.content.html" %}
+      {% endblock %}
+
+      {% block form %}
+        {# blocks have a different scope #}
+        {% set program_label = program_label %}
+        {% if participation_is_open %}
+          <div id="get-started" class="section get-started">
+            <h2>Ready to get started?</h2>
+            <p>
+              <strong>Enter your email</strong> &mdash; You will receive a link to our
+              online platform where you will be able to sign-up and prepare to participate.
+            </p>
+            {% include "orientation/_includes.form.invite.html" %}
+          </div>
+        {% else %}
+          {% include "orientation/_includes.form.updates.html" %}
+        {% endif %}
+      {% endblock %}
+
+      {% block aboutperts %}
+      {% include "orientation/_includes.about-perts.html" %}
+      {% endblock %}
+
+      {% block aboutctc %}
+      {% include "orientation/_includes.about-ctc.html" %}
+      {% endblock %}
+
+      {% block moreinfo %}
+      {% include "orientation/_includes.about-more-info.html" %}
+      {% endblock %}
+    </div>
+  </div>
+</div>
+
+{% include "orientation/_includes.youtube.html" %}
+{% include "orientation/_includes.footer.html" %}
+
+<a class="btn btn-mobile" href="#get-started">
+  {% if participation_is_open %}
+    Get Started
+  {% else %}
+    Get Updates
+  {% endif %}
+</a>
+</body>

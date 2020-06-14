@@ -1,0 +1,927 @@
+@import 'animations';
+@import 'colors';
+@import 'spacing';
+
+@import 'buttons';
+@import 'get_started_form';
+
+$content-bg-color: rgba(248, 248, 248, 1);
+$hf-link-color-hover: $white;
+$hf-link-color: rgba($hf-link-color-hover, 0.75);
+
+@mixin section-color-scheme($bg-color, $text-color: false, $link-color: false) {
+  @include section-background($bg-color);
+  @include section-background-fix();
+  @include section-colors($text-color, $link-color);
+}
+
+@mixin section-color-scheme-sidebar($bg-color, $text-color: false, $link-color: false) {
+  @include section-background-sidebar($bg-color);
+  @include section-background-fix();
+  @include section-colors($text-color, $link-color);
+}
+
+@mixin section-background-left-right($color) {
+  // "spill out" bg left/right so color is full width
+  box-shadow: -100px 0px $color, -500px 0px $color, -1000px 0px $color,
+    -1500px 0px $color, -2000px 0px $color, -2500px 0px $color,
+    -3000px 0px $color, 100px 0px $color, 500px 0px $color, 1000px 0px $color,
+    1500px 0px $color, 2000px 0px $color, 2500px 0px $color, 3000px 0px $color;
+}
+
+@mixin section-background-left($color) {
+  // for larger screens, only "spill out" bg left since the sidebar
+  // navigation menu will be to the right of content-main
+  box-shadow: -100px 0px $color, -500px 0px $color, -1000px 0px $color,
+    -1500px 0px $color, -2000px 0px $color, -2500px 0px $color,
+    -3000px 0px $color;
+}
+
+@mixin section-background($color) {
+  background: $color;
+  @include section-background-left-right($color);
+}
+
+@mixin section-background-sidebar($color) {
+  background: $color;
+  @include section-background-left-right($color);
+
+  @media (min-width: 992px) {
+    @include section-background-left($color);
+  }
+}
+
+@mixin section-background-fix() {
+  margin-right: -$bootstrap-col-gutter;
+  padding-right: $bootstrap-col-gutter;
+}
+
+@mixin section-colors($text-color: false, $link-color: false) {
+  @if $text-color {
+    color: $text-color;
+
+    a {
+      color: $text-color;
+      text-decoration: underline;
+    }
+  }
+
+  @if $link-color {
+    a {
+      color: $link-color;
+    }
+  }
+}
+
+html {
+  font-size: 20px;
+}
+
+body {
+  background: $content-bg-color;
+
+  font-family: proxima-nova, sans-serif;
+  color: $font-color;
+}
+
+h1 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: $padding-base;
+
+  &.teacher-stories-name {
+    font-style: italic;
+    color: $light-blue-color;
+    margin-top: -20px;
+  }
+}
+
+h2 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: $padding-base * 1.3;
+}
+
+h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: $padding-base * 1.2;
+}
+
+h4 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: $padding-base * 1.1;
+}
+
+img.icon {
+  width: 100%;
+  max-width: 120px;
+}
+
+img.logo {
+  height: 74px;
+}
+
+img.img-fluid {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+}
+
+.space-bottom {
+  margin-bottom: 6px;
+}
+
+// Top of page navbar
+.navbar-orientation {
+  padding: 16px 24px;
+
+  background: $deep-blue-color;
+  color: white;
+
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+
+  a {
+    color: $hf-link-color;
+    letter-spacing: 0.5px;
+
+    &.navbar-brand,
+    &:hover {
+      color: $hf-link-color-hover;
+    }
+  }
+
+  .navbar-nav {
+    .nav-link {
+      padding-left: 32px;
+    }
+  }
+
+  .navbar-toggler {
+    color: white;
+    border-color: white;
+  }
+
+  .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+  }
+
+  .navbar-collapse {
+    text-align: center;
+  }
+}
+
+// Banner / Masthead
+.banner {
+  padding: $section-padding 0;
+
+  background: $light-blue-color;
+  color: $white;
+
+  a {
+    color: $white;
+  }
+
+  p {
+    color: $white-light;
+  }
+
+  p:last-child {
+    font-size: 1.1rem;
+    margin-bottom: 0;
+  }
+
+  &.masthead {
+    padding: 60px 0;
+
+    text-shadow: 0 2px 2px black;
+
+    .btn {
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      text-shadow: none;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+    }
+
+    .spot-counter {
+      text-align: center;
+      width: 100%;
+
+      .spot-count {
+        font-size: 1.4rem;
+        font-weight: 600;
+
+        border-bottom: 1px solid $white;
+        margin-bottom: 10px;
+      }
+
+      .spot-text {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+      }
+    }
+
+    .hide-max-991 {
+      @media (max-width: 991px) {
+        display: none;
+      }
+    }
+
+    .space-bottom {
+      margin-bottom: 40px;
+    }
+
+    background-image: linear-gradient(rgba(6, 40, 67, 0.2), rgba(6, 40, 67, 0.2)),
+      url('/static/images/programs/cg17-cover.jpg');
+    background-size: cover;
+  }
+}
+
+body.hg,
+body.hg17 {
+  .banner {
+    &.masthead {
+      background-image: linear-gradient(rgba(6, 40, 67, 0.2), rgba(6, 40, 67, 0.2)),
+        url('/static/images/programs/hg17-cover.jpg');
+      background-position: 0% 20%;
+    }
+  }
+}
+
+// Call to action
+.call-to-action {
+  padding: $padding-base * 1.2;
+
+  background: $light-blue-color;
+  color: $white;
+  font-weight: 600;
+
+  .btn.btn-getstarted {
+    background: $white;
+    color: $font-color;
+
+    font-weight: 600;
+
+    box-shadow: 1px 1px;
+
+    &:hover {
+      background: $white-light;
+      color: $font-color;
+    }
+  }
+
+  a {
+    color: $white;
+  }
+
+  .spot-counter {
+    width: 100%;
+    height: 100%;
+
+    background: $white;
+    color: $font-color;
+
+    border: 1px solid $white;
+    border-radius: 10px;
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+
+    .spot-text {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+
+      padding: 0 10px;
+
+      background: $light-blue-color;
+      color: $white;
+    }
+
+    .spot-count {
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+
+      padding: 0 10px;
+    }
+  }
+
+  .spot-status {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-transform: uppercase;
+
+    .spot-status-cohort {
+      font-weight: 800;
+      font-style: italic;
+    }
+  }
+}
+
+// Content container (main and sidebar)
+.container {
+  .content-main {
+    // add white background to main content
+    @include section-color-scheme($white, $font-color, $light-blue-color);
+
+    .sidebar {
+      padding-top: $section-padding;
+
+      .section, section {
+        padding: 0 0 $section-padding / 4 0;
+      }
+    }
+
+    .section, section {
+      padding: $section-padding 0;
+
+      &.teacher-stories {
+        padding: 0;
+
+        h2 {
+          color: $white;
+        }
+
+        .content {
+          padding: $section-padding 0;
+        }
+
+        a.perts-button {
+          display: block;
+
+          margin-top: 16px;
+          padding: 0 45px;
+
+          min-width: 260px;
+          min-height: 45px;
+          line-height: 43px;
+
+          color: white;
+          background-color: $indigo-color;
+          border: 1px solid $indigo-color;
+          border-radius: 5px;
+
+          font-size: 14px;
+          font-weight: 800;
+          text-transform: uppercase;
+          text-align: center;
+          letter-spacing: 0.5px;
+          text-decoration: none;
+
+          &:hover {
+            background-color: darken($indigo-color, 5);
+            border-color: darken($indigo-color, 5);
+          }
+
+          &.btn-secondary {
+            background-color: $secondary-color;
+            border-color: $secondary-color;
+
+            &:hover {
+              background-color: darken($secondary-color, 5);
+              border-color: darken($secondary-color, 5);
+            }
+          }
+        }
+      }
+
+      &.nav {
+        flex-direction: column;
+
+        &.main {
+          /* For teacher-stories nav in the main-content area */
+          padding: 0;
+
+          .nav-stories {
+            a {
+              padding: 20px 20px;
+              font-size: 18px;
+
+              svg {
+                margin-bottom: -2px;
+              }
+            }
+          }
+        }
+
+        .nav-engage {
+          a {
+            padding: 4px 20px;
+
+            font-family: 'proxima-nova', sans-serif;
+            font-size: 14px !important;
+            text-decoration: none;
+
+            color: $font-color;
+            border-left: 2px solid transparent;
+
+            &:hover {
+              color: $light-blue-color;
+              border-left: 2px solid $light-blue-color;
+            }
+          }
+
+          hr {
+            margin: 8px 0;
+          }
+        }
+
+        .nav-stories {
+          a {
+            display: block;
+
+            margin-bottom: 4px;
+            padding: 8px;
+
+            color: $white;
+            background: #042744;
+            box-shadow: 2px 2px #cccccc;
+
+            font-size: 14px;
+            text-align: left;
+            text-decoration: none;
+          }
+
+          &.nav-next {
+            a {
+              margin-left: 80px;
+
+              text-align: right;
+
+              &:hover {
+                background: lighten(#042744, 3%);
+              }
+            }
+          }
+
+          &.nav-prev {
+            a {
+              margin-right: 80px;
+
+              background: $light-blue-color;
+
+              &:hover {
+                background: lighten($light-blue-color, 3%);
+              }
+            }
+          }
+        }
+      }
+
+      &.profile {
+        .profile-photo {
+          position: relative;
+          z-index: 5;
+
+          margin-right: 40px;
+        }
+
+        .profile-text {
+          position: relative;
+          z-index: 10;
+
+          margin-top: -30px;
+          margin-left: 40px;
+          padding: 20px;
+
+          color: $white;
+          background: $light-blue-color;
+
+          font-size: 14px;
+
+          h2 {
+            color: $white;
+            font-size: 22px;
+            margin-bottom: 8px;
+          }
+
+          .profile-text-label {
+            font-weight: bold;
+          }
+
+          .profile-text-text {
+            padding-left: 20px;
+          }
+
+          .profile-text-logo {
+            margin-top: 8px;
+            margin-left: 20px;
+            padding: 8px;
+            width: 150px;
+            background-color: white;
+          }
+        }
+      }
+
+      &.color1 {
+        @include section-color-scheme($light-blue-color, $white-light);
+      }
+
+      &.color2 {
+        @include section-color-scheme($deep-blue-color, $white-light);
+      }
+
+      &.color3 {
+        @include section-color-scheme($pale-blue-color);
+      }
+
+      &.color4 {
+        @include section-color-scheme($bold-blue-color, $white-light);
+      }
+
+      &.color5 {
+        @include section-color-scheme($indigo-color, $white-light, $light-blue-color);
+      }
+
+      // Add space after bootstrap each .row
+      .row {
+        // All but last within a .section
+        &:not(:last-child) {
+          margin-bottom: $section-padding;
+        }
+      }
+
+      // Positioning for section background image.
+      // These styles work for the standard PIP document image.
+      &.background-image {
+        background-position: top right;
+        background-size: 350px;
+        background-repeat: no-repeat;
+
+        // Hides when smaller than Bootstrap medium width.
+        @media (max-width: 767px) {
+          background-image: none !important;
+        }
+      }
+
+      // Content styles
+      blockquote {
+        position: relative;
+        padding-left: 40px;
+
+        &::before {
+          // Unicode for Left Double Quote
+          content: '\201C';
+
+          font-family: serif;
+          font-size: 60px;
+          font-weight: bold;
+          color: #666666;
+
+          position: absolute;
+          left: 0;
+          top: -1rem;
+        }
+
+        &::after {
+          content: '';
+        }
+
+        .author {
+          display: block;
+          text-align: right;
+          font-style: italic;
+
+          &::before {
+            content: '\025aa';
+          }
+        }
+      }
+
+      .card {
+        @include section-colors($font-color, $light-blue-color);
+
+        &:not(:last-child) {
+          margin-bottom: $section-padding;
+        }
+      }
+
+      .col {
+        margin-bottom: $section-padding;
+      }
+    }
+
+    .teacher-stories-banner {
+      position: relative;
+      display: block;
+      width: 100%;
+      min-height: 100px;
+
+      padding: 20px 200px 30px 20px;
+      @media (max-width: 600px) {
+        padding: 20px 20px 30px 20px;
+      }
+
+      border-radius: 8px;
+
+      color: #ffffff;
+      font-size: 22px;
+      font-weight: 300;
+
+      .header {
+        font-size: 32px;
+      }
+
+      /* Override some more global <a> styles. */
+      text-decoration: none;
+
+      &:hover {
+        color: white;
+        text-decoration: none;
+      }
+
+      /*
+        Even though the entire .banner is an <a>, we're also adding an additional UI
+        element that looks like a traditional button.
+      */
+      .button {
+        /* Position bottom along bottom of banner, centered horizontally. */
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+
+        /* Content alignment. */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+
+        /* Match up relevant styles with .primary-button */
+        height: 44px;
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+
+        /* Custom color scheme. */
+        color: #ffffff;
+        background: rgba(102,143,190,1);
+
+        &.inline {
+          display: inline-block;
+          position: relative;
+
+          color: #373439;
+          background: #ffffff;
+
+          margin-bottom: 10px;
+        }
+      }
+
+      /* Gradient background with image. */
+
+      /* FF3.6-15 */
+      background: -moz-linear-gradient(-45deg, rgba(40,48,67,1) 0%, rgba(40,48,67,1) 59%, rgba(83,160,253,0) 100%),
+        url('/static/images/engage-bright-spots-illustration.png') no-repeat 130%,
+        rgba(102,143,190,1);
+
+      /* Chrome10-25,Safari5.1-6 */
+      background: -webkit-linear-gradient(-45deg, rgba(40,48,67,1) 0%,rgba(40,48,67,1) 59%,rgba(83,160,253,0) 100%),
+        url('/static/images/engage-bright-spots-illustration.png') no-repeat 130%,
+        rgba(102,143,190,1);
+
+      /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      background:
+        linear-gradient(135deg, rgba(40,48,67,1) 0%,rgba(40,48,67,1) 50%,rgba(83,160,253,0) 100%),
+        url('/static/images/engage-bright-spots-illustration.png') no-repeat 130%,
+        rgba(102,143,190,1);
+    }
+  }
+
+  .content-sidebar {
+    padding: $section-padding 0 0 0 ($section-padding / 2);
+  }
+
+  &.sidebar-right {
+    .content-main {
+      // add white background to main content
+      @include section-color-scheme-sidebar($white, $font-color, $light-blue-color);
+
+      .section, section {
+        padding: $section-padding 0;
+
+        &.color1 {
+          @include section-color-scheme-sidebar($light-blue-color, $white-light);
+        }
+
+        &.color2 {
+          @include section-color-scheme-sidebar($deep-blue-color, $white-light);
+        }
+
+        &.color3 {
+          @include section-color-scheme-sidebar($pale-blue-color);
+        }
+
+        &.color4 {
+          @include section-color-scheme-sidebar($bold-blue-color, $white-light);
+        }
+
+        &.color5 {
+          @include section-color-scheme-sidebar($indigo-color, $white-light, $light-blue-color);
+        }
+      }
+    }
+  }
+}
+
+// Invite / Updates Forms
+#get-started.get-started {
+  max-width: 800px;
+
+  border: 2px dotted $light-blue-color;
+  border-radius: 5px;
+
+  margin: $section-padding auto;
+  padding: $padding-base;
+
+  h2 {
+    text-align: center;
+  }
+}
+
+// sidebar nav styles
+.content-sidebar {
+  nav {
+    margin-top: $padding-base;
+
+    &.nav.nav-pills {
+      width: 100%;
+
+      a {
+        color: $light-blue-color;
+
+        &:hover {
+          background: $pale-blue-color;
+        }
+
+        &.active {
+          background: $light-blue-color;
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
+// Footer
+footer {
+  padding: $footer-padding 0;
+  background-color: $footer-color;
+
+  font-size: 14px;
+
+  .connect-links {
+    @media (min-width: 992px) {
+      // "Connect With Us" links are only right aligned on larger screens
+      text-align: right;
+    }
+  }
+
+  ul.footer-category {
+    margin-bottom: $footer-padding;
+
+    list-style-type: none;
+
+    margin: 0 0 $footer-padding 0;
+    padding: 0;
+
+    .category-label {
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 1px;
+
+      border-bottom: 1px solid $hf-link-color;
+      margin-bottom: 5px;
+      padding-bottom: 5px;
+    }
+
+    .footer-link {
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    a {
+      color: $hf-link-color;
+      text-decoration: none;
+
+      &:hover {
+        color: $white;
+        text-decoration: none;
+      }
+    }
+  }
+
+  .subfooter {
+    margin: $footer-padding 0;
+
+    color: $hf-link-color;
+
+    .perts {
+      color: $light-blue-color;
+    }
+
+    a {
+      color: $hf-link-color;
+      text-decoration: none;
+
+      &:hover {
+        color: $white;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+// YouTube play button
+.play-button {
+  position: relative;
+
+  height: 100px;
+  width: 100px;
+
+  margin-left: auto;
+  margin-right: auto;
+
+  border: 4px solid white;
+  border-radius: 50px;
+
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: ease-in-out 260ms;
+
+  cursor: pointer;
+
+  &:after {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 38px;
+    top: 32px;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 25px solid white;
+  }
+
+  &:hover {
+    background-color: white;
+
+    &:after {
+      border-left-color: $deep-blue-color;
+    }
+  }
+}
+
+// YouTube modal
+.modal {
+  .modal-dialog {
+    margin-top: 90px;
+    max-width: 95%;
+    width: 850px;
+  }
+
+  .modal-body {
+    padding: 0;
+  }
+
+  .close {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+
+    height: 30px;
+    width: 30px;
+
+    border: 4px solid $white;
+    border-radius: 50%;
+
+    background: #000000;
+    color: $white;
+
+    opacity: 1;
+
+    div {
+      font-size: 21px;
+    }
+  }
+}

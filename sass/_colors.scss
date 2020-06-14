@@ -1,0 +1,36 @@
+$font-color: #404040;
+$light-font-color: #999;
+
+$light-blue-color: #3faeeb;
+$deep-blue-color: #042744;
+$bold-blue-color: #4678a3;
+$blue-color: #135691;
+$dark-blue-color: #33333d;
+$accent-color: #c44606;
+$violet-color: #8384f7;
+
+$indigo-color: #283044;
+$midnight-color: #011638;
+$pale-blue-color: #e9f1f7;
+$footer-color: #121317;
+$accent-color: #ff5e5b; // Orange (pink?)
+$secondary-color: #5b6195; // Purple
+
+$white: rgba(255, 255, 255, 1);
+$white-light: rgba(255, 255, 255, 0.85);
+
+@mixin input-placeholder($color) {
+  &::-webkit-input-placeholder {
+    color: $color;
+  }
+  &:-moz-placeholder {
+    color: $color;
+  }
+  &::-moz-placeholder {
+    // for newer versions of Firefox
+    color: $color;
+  }
+  &:-ms-input-placeholder {
+    color: $color;
+  }
+}

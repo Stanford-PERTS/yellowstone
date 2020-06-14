@@ -1,0 +1,206 @@
+{% extends "templates/base_programs.html" %}
+
+{# This template is handled by page_handlers.ProgramHandler, #}
+{# the same handler as for the program app. #}
+
+{% block title %}
+PERTS Coordinator Instructions
+{% endblock %}
+
+{% block program_header %}
+
+<style>
+
+body {
+    color: #333; /* dark-gray */
+}
+
+h2 {
+    font-size: 18px;
+}
+
+h3 {
+    font-size: 14px;
+}
+
+p, ul, ol {
+    font-size: 1em;
+    font-family: helvetica, arial, freesans, clean, sans-serif;
+    line-height: 1.2em;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.indented {
+    margin-left: 30px;
+}
+
+ol ol {
+    list-style: lower-alpha;
+}
+
+section#content a {
+    color: blue;
+    text-decoration: underline;
+}
+
+#content img.print-only {
+    margin-bottom: 10mm;
+}
+
+/* http://stackoverflow.com/questions/10732690/offsetting-an-html-anchor-to-adjust-for-fixed-header */
+a.anchor {
+    display: block;
+    position: relative;
+    top: -150px;
+    visibility: hidden;
+}
+
+</style>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<button id="print-button" class="no-print glyphicon glyphicon-print"
+        onclick="print()">
+</button>
+<img src="/static/images/pertslogo.png" height="50" class="print-only">
+
+<h1>Data Submission Instructions</h1>
+
+<p>
+    Thank you again for agreeing to coordinate this program at your school!
+    Below are instructions for the data submission process. If your school’s
+    data will be provided by someone other than yourself, please connect your
+    PERTS Coordinator with the correct person.
+</p>
+
+<h2>Important Note</h2>
+<p>
+    <b>Please DO NOT send any student data via email!</b> In order to provide the
+    highest level of security for confidential student data, all data must be
+    uploaded to a secure website. The link for uploading data is provided
+    below.
+</p>
+
+<h2>General Instructions</h2>
+
+<ol>
+    <li>
+        <strong>Formatting your Data:</strong> Our preference is to receive
+        data as a single csv file. If you would like a sample template, please
+        let your PERTS coordinator know.
+    </li>
+    <li>
+        <strong>Uploading your data:</strong> 
+        <ol>
+            <li>
+                <strong>Create a Box.com accout:</strong> You will be uploading
+                your data to a secure folder on Box.com. If you do not have a
+                Box account already, you will need to create one. It is free
+                and simple to create a personal account. You will only need to
+                provide your email address, a password, and a phone number.
+            </li>
+            <li>
+                <strong>Upload your file:</strong> When you are ready to submit
+                your data, click the following link and select &ldquo;Upload&rdquo;.
+                <br>
+                <b><a href="https://app.box.com/signup/collablink/d_1461972131/11cfffc38cfe4f">
+                    Middle School Transition Program Data Folder
+                </b></a>
+            </li>
+        </ol>
+    </li>
+    <li>
+        <strong>Notify your PERTS coordinator once your data has been uploaded:</strong> 
+        Please email your coordinator to let them know once you have
+        successfully uploaded your data.
+    </li>
+    <li>
+        <strong>When to submit data:</strong> Please provide student data as
+        soon as it becomes available at the end of the semester.
+    </li>
+</ol>
+
+<h2>Provide Data For Which Students</h2>
+<ul>
+    <li>
+        <strong>Ideally:</strong> We would like academic records for all
+        students in your school. This will allow us to compare students in the
+        program to those that were not so that we can perform a more powerful
+        analysis.
+    </li>
+    <li>
+        <strong>Minimally:</strong> We will need academic records from those
+        students who participated in the program. We can provide a list of
+        these students if necessary.
+    </li>
+</ul>
+
+
+<h2>What Data To Provide</h2>
+<p>At the end of the semester, please provide the following data:</p>
+<ul>
+    <li>
+        Demographic data including:
+        <ul>
+            <li>First and last name</li>
+            <li>Birth date</li>
+            <li>Free or reduced lunch status (if available)</li>
+            <li>Special education status</li>
+            <li>English language learner status</li>
+        </ul>
+    </li>
+    <li>
+        Performance data from Academic year 2013-2014, Fall 2014, and Spring
+        2015 (when it becomes available):
+        <ul>
+           <li>Class grades by semester (for all classes taken by each student)</li>
+           <li>Standardized exam results (if available)</li>
+        </ul>
+    </li>
+    <li>
+        Absences (either by class or total)
+    </li>
+    <li>
+        Tardies (either by class or total)
+    </li>
+    <li>
+        Suspensions or other disciplinary actions (either in-school or off-site)
+    </li>
+    <li>
+        Other (for example, citizenship or conduct scores)0
+    </li>
+</ul>
+
+<h2>Frequently Asked Questions</h2>
+<h3><b>How long will the data collection process take?</b></h3>
+<p>
+    The process of compiling and submitting your students' data typically takes
+    about 1 to 1.5 hours. If it seems as though it will take longer, please
+    speak with your PERTS coordinator to see if we can suggest ways to
+    streamline the process.
+</p>
+<h3><b>Is it okay to provide separate files for grades and other data?</b></h3>
+<p>Yes, this is fine.</p>
+<h3><b>I won't be the one providing you with data. Is that okay?</b></h3>
+<p>
+    Yes, this is fine. Please provide us with the contact information of the
+    person who will provide data prior to the beginning of the study. This
+    will allow us to make sure they are clear on the timeline and on what they
+    will need to provide.
+</p>
+<h3><b>What kind of suspension and/or discipline data should I provide?</b></h3>
+<p>
+    Whatever your school's system is for suspensions (for example, in-school
+    versus at-home) and other disciplinary actions (for example, detensions)
+    will be fine. You can provide a description of abbreviations used if
+    necessary.
+</p>
+
+{% endblock %}

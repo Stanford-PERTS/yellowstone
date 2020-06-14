@@ -1,0 +1,295 @@
+{# PERTS : Template : Program Orientation Page #}
+
+{# DO NOT CHANGE #}
+{% extends "orientation/_template.orientation.html" %}
+
+{# TODO: Update the following program information: #}
+{% set program_name = "Social-Belonging for College Students" %}
+{% set program_label = "cb17" %}
+{% set program_cohort = "Summer/Fall 2020" %}
+{% set program_description = "
+  A free, evidence-based program designed to support a sense of belonging on campus to improve engagement, retention, and achievement for students at four-year colleges and universities.
+" %}
+
+{# TODO: Set program participation settings: #}
+{% set enrollment_is_unlimited = true %}
+{% set unlimited_enrollment_message = "Free for all 4-year colleges" %}
+{% set participation_is_open = true %}
+{% set participation_enrolled = 0 %}
+{% set participation_slots = 1 %}
+C
+
+{# TODO: Set program YouTube video's ID or false if not using one:            #}
+{#       Example: if the YouTube video's location is                          #}
+{#         https://www.youtube.com/watch?v=YYJLMmWZiMQ                        #}
+{#         then {% set youtube = "YYJLMmWZiMQ" %}                             #}
+{% set youtube = "YYJLMmWZiMQ" %}
+
+{% block content %}
+
+<!-- INTRODUCTION -->
+<div class="section">
+  <p>
+    Almost all first-year students experience challenges in the
+    transition to college, such as failing a test or feeling like they
+    aren&rsquo;t making friends. For students who are socially
+    disadvantaged in higher education&mdash;including students of
+    color, low income students, and first-generation college
+    students&mdash;persistent negative stereotypes and
+    underrepresentation can lead them to wonder if they belong in
+    college, especially when faced with challenges and setbacks. This
+    concern can lead to social and academic withdrawal which, in turn,
+    leads to lower academic achievement and persistence.
+  </p>
+  <p>
+    The Social-Belonging Program aims to help all students view
+    challenges encountered in the transition to college as normal and
+    improvable so they are more able to remain socially and
+    academically engaged in the face of challenges. In previous
+    studies, the Social-Belonging Program has been effective in
+    improving both social and academic engagement on campus as well as
+    GPA and retention among socially disadvantaged students.
+  </p>
+  <p>
+    Social-Belonging for College Students is a joint partnership
+    between the <a class="reverse"
+    href="http://collegetransitioncollaborative.org">College Transition
+    Collaborative</a> (CTC) and PERTS.
+  </p>
+</div>
+
+<!-- QUOTES -->
+<div class="section color2">
+  <blockquote>
+    I don't tell my friends, but I&rsquo;m nervous for
+    college. I&rsquo;m nervous I&rsquo;ll feel out of place with kids
+    who go out to eat…or that I&rsquo;ll be in for a big shock when I
+    get what would have been a great assignment at home back with a
+    poor grade. But college is essentially a lot of people, and all
+    of them are different…professors are people, people who care
+    about students and learning. I will feel a little out of my depth
+    at first, but so does every other person there. That&rsquo;s why
+    [my college] has resources to help ease the transition, like
+    advisors&hellip;So I&rsquo;m nervous about the first part,
+    getting through to the security, but I know that&rsquo;s coming,
+    so everything WILL be okay!
+    <span class="author">
+      Student essay from past implementation of Social-Belonging for College
+      Students
+    </span>
+  </blockquote>
+  <blockquote>
+    One of the things that&rsquo;s really difficult when
+    you&rsquo;re on the ground in an institution is to do this work
+    and know it&rsquo;s working. To know what we&rsquo;re doing has
+    solid research behind it is priceless.
+    <span class="author">
+      Administrator at CTC partner institution
+    </span>
+  </blockquote>
+</div>
+
+<!-- ABOUT THE PROGRAM -->
+<div class="section color1">
+  <h2 id="about">About the Program</h2>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h3 id="about-simple">Short, easy-to-implement</h3>
+      <p>
+        This 30-minute online program includes reading short essays, a brief
+        reflection exercise, and brief survey questions. Students will read and
+        write short essays designed to emphasize how difficulties in the
+        transition to college are normal and can be overcome with time.
+      </p>
+    </div>
+    <div class="col-md-4">
+      <p><img class="img-fluid rounded" src="/static/images/programs/cg17-4.png" alt=""></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h3 id="about-evidence-based">Evidence-based</h3>
+      <p>
+        Rigorously tested in multiple randomized controlled trials with
+        thousands of college students. Findings include:
+      </p>
+      <ul>
+        <li>
+          <strong>13 percentage point increase in first-year, full-time
+            enrollment</strong> among college-admitted high school seniors at
+            four urban charter schools
+        </li>
+        <li>
+          <strong>4 percentage point increase in first-year, full-time
+            enrollment</strong> among minority and first-generation students at
+            a large, public four-year university
+        </li>
+        <li>
+          <strong>.09 increase in cumulative first-year GPA</strong> among
+          minority and first-generation students at a selective, private
+          four-year university
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-4 order-md-first">
+      <p><img class="img-fluid rounded" src="/static/images/programs/cg17-2.png" alt=""></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h3 id="about-free">Complementary with other student success efforts</h3>
+      <p>
+        The Social-Belonging Program is typically implemented as one
+        component of new  student orientation among other activities.
+        It is meant to complement your  institution&rsquo;s existing
+        student success efforts. It can also help provide  insights
+        into student experiences at your school, which may inform
+        other institutional programs around student achievement,
+        persistence, and wellbeing.
+      </p>
+    </div>
+    <div class="col-md-4">
+      <p><img class="img-fluid rounded" src="/static/images/programs/cg17-5.png" alt=""></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <h3 id="about-free">Free</h3>
+      <p>
+        We’re thrilled to bring you {{ program_name }} as an open enrollment
+        program, and we want to involve as many 4-year colleges and universities
+        as possible.
+      </p>
+      <p>
+        We’re a small team and we want everyone who participates to have a great
+        experience. We’re offering our programs for free to eligible colleges thanks to our generous funders.
+      </p>
+    </div>
+    <div class="col-md-4 order-md-first">
+      <p><img class="img-fluid rounded" src="/static/images/programs/cg17-3.png" alt=""></p>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section color3">
+  <h2 id="how-it-works">How It Works</h2>
+
+  <div class="row">
+    <div class="col-md-6 text-center">
+      <p><img style="height: 120px;" src="/static/images/home/program-icon-register-dark.png" alt="" /></p>
+      <h3>1. Learn & Discuss</h3>
+      <p>Download the <a href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/{{ program_label }}/information_packet.pdf">Program Information Packet</a> to learn how participation works.</p>
+    </div>
+
+    <div class="col-md-6 text-center">
+      <p><img style="height: 120px;" src="/static/images/home/program-icon-signup-dark.png" alt="" /></p>
+      <h3>2. Sign-up</h3>
+      <p>Create a user account and prepare to participate using our online platform.</p>
+    </div>
+
+    <div class="col-md-6 text-center">
+      <p><img style="height: 120px;" src="/static/images/home/program-icon-participate-dark-2.png" alt="" /></p>
+      <h3>3. Participate</h3>
+      <p>Incoming first-year students complete a 30-min web module independently over the summer or on campus during new student orientation.</p>
+    </div>
+
+    <div class="col-md-6 text-center">
+      <p><img style="height: 120px;" src="/static/images/home/program-icon-track-dark.png" alt="" /></p>
+      <h3>4. Track Impact</h3>
+      <p>See how many students completed the program and receive a report about the program’s impact at your school.</p>
+    </div>
+  </div>
+</div>
+
+<!-- LEARN MORE -->
+<div class="section">
+  <h2 id="learn-more">Learn More</h2>
+  <p>
+    Here you can find additional information to learn about how to bring
+    {{ program_name }} to your campus. This section includes promotional
+    materials and sample implementation documents.
+  </p>
+
+  <div class="row">
+    <div class="col-lg-6 space-bottom">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title" id="program-information">Program Information</h5>
+          <p class="card-text">
+            These materials provide a helpful introduction to the program. You
+            can use these documents to familiarize yourself with the program or
+            to share with your colleagues. The Program Information Packet
+            goes in-depth about the research behind the program and how to get
+            your college signed up. We’ve also compiled the answers to your most
+            frequently asked questions here.
+          </p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><a href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/{{ program_label }}/information_packet.pdf">Program Information Packet</a></li>
+          <li class="list-group-item"><a href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/{{ program_label }}/FAQ.pdf">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-6 space-bottom">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title" id="supporting-documents">Supporting Documents</h5>
+          <p class="card-text">
+            The supporting documents here provide more information about the
+            program implementation process, including how you’ll get your
+            college signed up, sample facilitator instructions, and sample
+            student handouts.
+          </p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><a href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/{{ program_label }}/implementation-checklist.pdf">Implementation Checklist</a></li>
+          <li class="list-group-item"><a href="{{ neptune_protocol }}://{{ neptune_domain }}/facilitator_instructions/{{ program_label }}">Sample Facilitator Instructions</a></li>
+          <li class="list-group-item"><a href="{{ neptune_protocol }}://{{ neptune_domain }}/student_handout/{{ program_label }}">Sample Student Handout</a></li>
+          <li class="list-group-item"><a href="/terms-of-use">Terms of Use</a></li>
+          <li class="list-group-item"><a href="/privacy">Privacy Policy</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- INFORMATION PACKET -->
+<div class="section color4 background-image" style="background-image: url(/static/images/programs/cb-doc-preview.png);">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 id="pip">Information Packet</h2>
+      <p>
+        Download the Program Information Packet to learn more about the research
+        and how to run {{ program_name }} at your college.
+      </p>
+      <p><a class="btn btn-white" href="{{ neptune_protocol }}://{{ neptune_domain }}/static/programs/{{ program_label }}/information_packet.pdf">Download Now</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+{# No sidebar #}
+{% endblock %}
+
+{% block aboutperts %}
+<div id="about-perts" class="section color5">
+  <h2>About PERTS</h2>
+  <p>
+    PERTS is an applied research center based out of Stanford University. We
+    believe that evidence-based strategies should benefit all students, not just
+    the privileged few. To make research accessible to all, we empower educators
+    everywhere to implement evidence-based strategies cost-effectively. We are
+    so excited to bring you {{ program_name }} and to make the latest research
+    on social belonging strategies actionable to every college in the United
+    States.
+  </p>
+</div>
+{% endblock %}

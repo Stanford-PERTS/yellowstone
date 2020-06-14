@@ -1,0 +1,37 @@
+<!--Nav Bar -->
+<nav id="engage-navbar" class="col-md-3 hidden-sm hidden-xs bs-docs-sidebar">
+  <ul id="sidebar" class="nav nav-stacked">
+    <li>
+      <a class="nav-link" href="/engage">The Engagement Project</a>
+      <hr />
+    </li>
+    <li>
+      <!-- /conditions is a short link in production, and may 404 in other
+           environments -->
+      <a class="nav-link" href="/conditions">Learning Conditions</a>
+      <hr />
+    </li>
+    <li><a class="nav-link" href="/engage/administrator">The Engagement Project: Guide for School Leaders</a></li>
+    <li><a class="nav-link" href="#benefits-for-school-leaders">The benefits for school leaders</a></li>
+    <li><a class="nav-link" href="#how-does-it-work">How does it work?</a></li>
+    <li><a class="nav-link" href="#what-do-the-surveys-measure">What do the surveys measure?</a></li>
+    <li><a class="nav-link" href="#what-is-the-time-commitment">What is the time commitment?</a></li>
+    <li><a class="nav-link" href="#what-is-the-cost">What is the cost?</a></li>
+    <li><a class="nav-link" href="#who-can-participate">Who can participate?</a></li>
+    <li><a class="nav-link" href="#how-can-i-get-involved">How can I get involved?</a></li>
+    <li>
+      <a class="nav-link" href="#get-started">Get Started</a>
+      <ul class="nav nav-stacked">
+        {% if registration_open %}
+        <li>
+          <a class="nav-link" href="#start-team">Start a team now</a>
+        </li>
+        {% endif %}
+        <li>
+          <a class="nav-link" href="#contact-perts">Contact PERTS</a>
+        </li>
+      </ul>
+    </li>
+    <li><a class="nav-link" href="#acknowledgements">Acknowledgements</a></li>
+  </ul>
+</nav>

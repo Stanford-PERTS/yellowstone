@@ -1,0 +1,113 @@
+<div class="section banner masthead">
+  <div class="container text-center">
+
+    <!-- Program Name and Description -->
+    <div class="row space-bottom">
+      <div class="col masthead-section">
+        <h1>{{ program_name }}</h1>
+        <p>
+          {# The `safe` filter disables automatic escaping, this allows HTML  #}
+          {# entities such as &rsquo; and &mdash;.                            #}
+          {{ program_description | safe }}
+        </p>
+      </div>
+    </div>
+
+    <!-- Play Button -->
+    {% if youtube %}
+    <div class="row space-bottom">
+      <div class="col masthead-section">
+        <div class="play-button" data-toggle="modal" data-target="#videoModal">
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if wistia %}
+    <script src="https://fast.wistia.com/embed/medias/{{wistia}}.jsonp" async></script>
+    <script src="https://fast.wistia.com/assets/external/E-v1.js" async></script>
+    <span
+      class="wistia_embed wistia_async_{{wistia}} popover=true popoverAnimateThumbnail=true"
+      style="display:inline-block;height:180px;position:relative;width:350px;margin-bottom:20px;"
+    >&nbsp;</span>
+    {% endif %}
+
+    <!-- Get Started / Get Updates / Login -->
+    <div class="row">
+      <div class="col-md-6 ml-md-auto mr-md-auto">
+
+        {% if not enrollment_is_unlimited %}
+        <!-- Slots -->
+        <div class="row space-bottom">
+          <div class="col masthead-section">
+            <div class="spot-counter">
+              <div class="spot-count">
+                {{ participation_enrolled }} / {{ participation_slots }}
+              </div>
+              <div class="spot-text">
+                Spots Filled
+                {% if program_cohort %}
+                for <strong>{{ program_cohort }}</strong>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% elif unlimited_enrollment_message or not participation_is_open %}
+        <div class="row space-bottom">
+          <div class="col masthead-section">
+            <div class="spot-counter">
+              <div class="spot-text">
+                {% if participation_is_open %}
+                  {{ unlimited_enrollment_message }}
+                {% else %}
+                  Currently closed
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        <!-- Links -->
+        <div class="row hide-max-991">
+          <div class="col">
+            <a class="btn btn-lg btn-block btn-accent btn-shadow" href="#get-started">
+              {% if participation_is_open %}
+                Get Started
+              {% else %}
+                Get Updates
+              {% endif %}
+            </a>
+          </div>
+        </div>
+
+        {% if participation_is_open %}
+          <div class="row">
+            <div class="col">
+              <a class="btn btn-lg btn-block btn-alternate btn-shadow" href="//perts.me">
+                Students Enter Here
+              </a>
+            </div>
+          </div>
+        {% endif %}
+
+        <div class="row">
+          <div class="col">
+            {% if login_url is defined %}
+              <a href="{{ login_url }}">
+                Already registered? Sign in
+              </a>
+            {% else %}
+              <a href="{{ neptune_protocol }}://{{ neptune_domain }}/login">
+                Already registered? Sign in
+              </a>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

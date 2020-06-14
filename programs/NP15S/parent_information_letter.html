@@ -1,0 +1,234 @@
+{% extends "templates/base.html" %}
+
+{# This template is handled by page_handlers.ProgramStaticHandler. #}
+
+{% block title %}
+Parent Information Form
+{% endblock %}
+
+{% block header %}
+
+<style>
+
+body {
+    color: #333; /* dark-gray */
+}
+
+h3 {
+    font-size: 18px;
+}
+
+strong {
+    font-weight: normal;
+    text-decoration: underline;
+}
+
+p, ul, ol {
+    font-size: 1em;
+    font-family: helvetica, arial, freesans, clean, sans-serif;
+    line-height: 1.2em;
+}
+
+blockquote {
+    border: 1px solid #777; /* very-light-gray */
+    margin-top: 10px;
+    font-size: 1.1em;
+}
+
+.list-of-contents {
+    list-style: none;
+}
+
+.list-of-contents li {
+    width: 600px;
+    border-bottom: 1px dotted black;
+}
+
+.list-of-contents li .page-number {
+    float: right;
+}
+
+section#content a {
+    color: blue;
+    text-decoration: underline;
+}
+
+#content img.print-only {
+    margin-bottom: 10mm;
+}
+
+/* http://stackoverflow.com/questions/10732690/offsetting-an-html-anchor-to-adjust-for-fixed-header */
+a.anchor {
+    display: block;
+    position: relative;
+    top: -150px;
+    visibility: hidden;
+}
+
+p.title {
+    font-size: 2em;
+    margin-bottom: 0;
+    line-height: 1.4em;
+}
+
+p.letter-greeting {
+    /*font-style: italic;*/
+}
+
+p.letter-body {
+    text-indent: 1.5em;
+}
+
+p.letter-closing {
+    /*margin-left: 60%;*/
+}
+
+.cohort_code {
+    font-size: 1.25em;
+    font-weight: bold;
+    color: #CB0000;
+    padding: 10px 10px 10px 10px;
+    border: 1px #CB0000 solid;
+
+}
+
+span.blank-line {
+    width: 75%;
+    border-bottom:1px solid black;
+    display: inline-block;
+}
+
+#make_up_table {
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+#make_up_table th {
+    color: black;
+    background-color: #ddd !important; /* very-light-gray */
+    border: 1px solid black;
+    padding: 5px;
+}
+
+#make_up_table tr {
+    background-color: transparent;
+}
+
+#make_up_table td {
+    border: 1px solid black;
+    padding: 11px 10px;
+}
+
+.well {
+    float:left;
+    padding: 19px 19px 5px 19px;
+    font-size: 0.8em;
+}
+
+.well h4 {
+    text-align: center;
+    margin-top: 0;
+}
+
+.well td {
+    padding: 0 5px;
+    border: none;
+}
+
+</style>
+
+<script type="text/javascript">
+
+$().ready(function () {
+    $('.navbar, #footer').addClass('no-print');
+});
+
+</script>
+{% endblock %}
+
+
+
+{% block content %}
+
+<button id="print-button" class="no-print glyphicon glyphicon-print"
+        onclick="print()">
+</button>
+
+<img src="/static/images/pertslogo.png" height="50" class="print-only">
+
+<p class="title"><h1><center>Parent Information Form</center></h1></p>
+
+<hr>
+<p>
+<center>Study Title: Internet-based classroom motivation and performance research</center>
+</p>
+
+<p>
+<center>Dave Paunesku, Protocol Director</center>
+</p>
+<hr>
+<p class="letter-greeting">Dear Parent or Guardian:</p>
+
+<p>
+Your child is invited to participate in a research study on motivation and academic achievement.
+</p>
+
+<p>
+DESCRIPTION:
+</P>
+<P>
+Past research has shown that the way students think about school and their abilities affects their academic achievement. When students learn to think about school and their abilities in more adaptive ways, they do better in school. In previous studies conducted by our research team, an online program designed to change the way students think about school and their abilities led some students to earn higher grades and to pass more courses. The goal of the current study is to improve the online program so that the benefits are greater and extend to more students.
+</P>
+<P>
+If you allow your child to participate, he or she will answer survey questions about his or her beliefs about school and his or her own abilities, read short passages, and engage in short writing exercises. Your child will either participate in the previous version of the program or the new version of the program. All students will get a program designed to help them think about school in adaptive ways. This is different from other more typical studies where some students are assigned to a control group that does not get any form of the treatment.
+</P>
+
+<P>
+RISKS AND BENEFITS:
+</P>
+<P>
+There are no risks associated with participation. In past versions of the program, students have not experienced negative effects from participation.
+</P>
+<P>
+We cannot guarantee that your child will receive any benefits from this study, but in past research some students have seen benefits to their motivation and academic achievement. Additionally, past students have said they enjoyed participating and that they learned useful information. Your decision about whether or not to allow your child to participate in this study will not be counted against you or your child in any way.
+</P>
+<P>
+The knowledge gained from this study may help teachers, coaches, and parents increase students’ motivation and achievement. So we hope you will be eager to allow your child to participate.
+</P>
+<p>
+    Your child’s school has requested that our team conduct this study at their school. The school’s request, the potential benefits to the school and students, and the lack of risks associated with the program allow us to use passive consent for this study. If you would like your child to participate in this study, you do not need to take any further action after you read this letter. If you <i>do not</i> want your child to participate, please notify the school. Even after agreeing to participate in the study, you or your child may choose to withdraw your child from the study at any time (see Subject’s Rights below).
+</p>
+<P>
+TIME INVOLVEMENT:
+</P>
+<P>
+Your child’s participation in this study will consist of two sessions lasting approximately 30 minutes to 1 hour each, and, in some cases, your child may be offered extra credit for participating. If your child should choose not to participate, they will be given an alternate activity of similar length and effort for the same credit.
+</P>
+<P>
+SUBJECT’S RIGHTS:
+</P>
+<P>
+If you do not allow your child to participate in this project, you should inform their teacher and the protocol director. Please understand your child’s participation is voluntary and your child has the right to withdraw his/her consent or discontinue participation at any time without penalty or loss of benefits to which he/she is otherwise entitled. Your child also has the right to refuse to answer particular questions.
+</P>
+<P>
+Your child’s individual privacy will be maintained in all published data resulting from the study. All confidential data we receive will be digital and will be kept in electronic spreadsheets stored in encrypted folders on study staff password-protected computers or in password-protected databases. We will not be requesting any school transcript or grade data for this study, but students may be asked to provide their name and date of birth or another unique identifier (so our system will recognize them when they sign in for session two). When we receive confidential data it will be immediately stripped of identifiable information. For example, names are replaced with a unique identification number. Identifiable data will not be shared with anyone outside the trained research team. All confidential data will be deleted when no longer needed for the purposes for which the study was conducted.
+</P>
+<P>
+CONTACT INFORMATION:
+</P>
+<P>
+If you have any questions, concerns or complaints about this research study, its procedures, risks and benefits, please contact the Protocol Director, Dave Paunesku, by calling 877-445-6993 or emailing at .
+</P>
+<P>
+If you are not satisfied with how this study is being conducted, or if you have any concerns, complaints, or general questions about the research or your rights as a participant, please contact the Stanford Institutional Review Board (IRB) to speak to someone independent of the research team at (650) -723-2480 or toll free at 1-866-680-2906. You can also write to the Stanford IRB, Stanford University, Stanford, CA 94305-5401.
+</P>
+<P>
+Approval Date: January 15, 2015 
+</P>
+<P>
+Expiration Date: March 31, 2015
+</P>
+
+{% endblock %}
+
+

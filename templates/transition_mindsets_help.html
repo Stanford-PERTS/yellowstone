@@ -1,0 +1,104 @@
+{# A little message to let users know pegasus is still in development. #}
+
+{% extends "base.html" %}
+
+{% block title %}
+Help
+{% endblock %}
+
+{% block header %}
+
+<script src="/static/js/client_test.js"></script>
+<script type="text/javascript">
+
+{# For the cross site qualtrics test. #}
+PertsApp.value('testProgramId', '{{ test_program.id }}');
+
+</script>
+
+{% endblock %}
+
+
+{% block top_bar %}
+
+<!-- Drop the navigation links in the header -->
+<header id="header" class="navbar navbar-fixed-top">
+    <div class="row">
+        <div class="col-xs-6 logo">
+            <a href="/" id="logo">
+                <img src="/static/images/pertslogo.png" alt="PERTS"
+                     width="165" height="44">
+            </a>
+        </div>
+
+        <div id="user_message" class="user_message alert"></div>
+    </div>
+</header>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-7">
+        <h1>Thank you for participating!</h1>
+        <p>To ask questions or report a bug, you can contact us:</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-3 col-sm-1">
+        Phone:
+    </div>
+    <div class="col-xs-9 col-sm-5">
+        (650) 714-7308
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-3 col-sm-1">
+        Email:
+    </div>
+    <div class="col-xs-9 col-sm-5">
+        
+    </div>
+</div>
+
+<br><br><br>
+<div class="row">
+    <div id="client_test_div" class="col-md-7"
+         ng-controller="ClientTestController" ng-show="showClientTests">
+        <h1>Test your device</h1>
+        <p>
+            To find out if our technology will work with your device and
+            internet connection, please click the button below.
+        </p>
+        <p>
+            Be sure to put headphones on first, because the test plays sound.
+        </p>
+        <button id="client_test_button" ng-click="runClientTests()"
+                ng-disabled="testRun">
+            Run test
+        </button>
+        <img id="client_test_busy" src="/static/images/loading.gif"
+             ng-show="testRunning">
+        <br><br>
+        <div class="alert alert-success" role="alert"
+             ng-show="allTestsSuccessful == true">
+            Everything works great!
+        </div>
+        <div class="alert alert-danger" role="alert"
+             ng-show="allTestsSuccessful == false">
+            <p>
+                We found some problems. Please email the following to
+                :
+            </p>
+            <ul>
+                <li ng-repeat="testMessage in failedTests">
+                    [[ testMessage ]]
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

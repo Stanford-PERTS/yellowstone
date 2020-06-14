@@ -1,0 +1,160 @@
+###############################################################################
+##                                                                           ##
+##                          !!  DO NOT EDIT !!                               ##
+##                                                                           ##
+##  instead, edit branch_environment.json, and then generate app.yaml by     ##
+##  running `python branch_environment.py` at the command line.              ##
+##                                                                           ##
+###############################################################################
+
+# This line means that requests to yellowstoneplatform.appspot.com (and any
+# domain that aliases it, like www.perts.net) will go to this module by
+# default.
+module: default
+# Versions are separate run times with different code in the same app, in
+# contact with the same datastore. One version at a time is set as the default,
+# which is what you get when you don't specify a version in the URL. You can
+# target a specific version with a URL like this:
+# > acceptance-dot-mindsetkit.appspot.com
+env_variables:
+  TRITON_DOMAIN: copilot.perts.net
+  PROJECT_ID: yellowstoneplatform
+  NEPTUNE_DOMAIN: neptune.perts.net
+  APP_ENGINE_VERSION: production
+###############################################################################
+##                                                                           ##
+##                    !!  EDIT ONLY IN TEMPLATE  !!                          ##
+##                                                                           ##
+##  Only edit the following if this is the app.template.yaml file; then      ##
+##  generate app.yaml by running `python branch_environment.py` at the       ##
+##  command line.                                                            ##
+##                                                                           ##
+###############################################################################
+
+runtime: python27
+api_version: 1
+threadsafe: yes
+# 256 MB, 1.2 GHz, $0.10/hr.
+# https://developers.google.com/appengine/docs/python/modules/#instance_classes
+instance_class: F2
+
+# "based on request rate, response latencies, and other application metrics"
+automatic_scaling:
+  min_pending_latency: 40ms
+  min_idle_instances: 1
+  max_pending_latency: 3.0s
+handlers:
+  # # Redirection / Rewrite Rules
+  #
+  # These are old links we gave people. They might come back, and we don't
+  # want them to see the original page. Even though they were procedurally
+  # processed originally (by the file path of the page template), we have to
+  # explicitly disallow the ones we want taken down. To make them work again,
+  # they'll have to be removed from this list.
+- url: /(go|login|logout|perts|PERTS|orientation/ep|orientation/cb17|orientation/cg17|orientation/hg17|orientation/highschool|jobs|ctc|team|cloud-security)
+  script: redirector.app
+
+- url: /initialize_connection
+  script: connection.app
+  login: admin
+  secure: always
+
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+  secure: always
+
+- url: /static
+  static_dir: static
+  secure: always
+  # Allow cross-domain requests for these resources.
+  # https://developers.google.com/appengine/docs/python/config/appconfig#cors_support
+  http_headers:
+    Access-Control-Allow-Origin: '*'
+
+- url: /static_readable
+  static_dir: static_readable
+  secure: always
+  application_readable: true
+
+- url: /msk_report_2017
+  static_files: static/reports/msk_report_2017/MSKEngagementReport-January2017.pdf
+  upload: MSKEngagementReport-January2017.pdf
+
+- url: /programs/(.+?)/static/(.*)
+  static_files: programs/\1/static/\2
+  upload: programs/(.+?)/static/(.*)
+  secure: always
+  # Allow cross-domain requests for these resources.
+  # https://developers.google.com/appengine/docs/python/config/appconfig#cors_support
+  http_headers:
+    Access-Control-Allow-Origin: '*'
+
+- url: /api.*
+  script: api_handlers.app
+  secure: always
+
+- url: /cron.*
+  script: cron_handlers.app
+  # Make sure that the big bad internet can't hit our cron URLs.
+  # https://developers.google.com/appengine/docs/python/config/cron#Python_app_yaml_Securing_URLs_for_cron
+  login: admin
+  secure: always
+
+# A simple control panel for starting and viewing mapreduce jobs. Handled
+# by code in the mapreduce library.
+- url: /mapreduce(/.*)?
+  # Yes, the APP is in upper case. Yes, it's annoying. Leave it alone.
+  script: mapreduce.main.APP
+  login: admin
+  secure: always
+
+# URLs to initiate our map reduce jobs.
+- url: /map.*
+  script: map_handlers.app
+  login: admin
+  secure: always
+
+# Only app admins can run tests
+- url: /unit_test.*
+  script: test_handlers.app
+  login: admin
+  secure: always
+
+- url: /robots.txt
+  static_files: static/robots.txt
+  upload: robots.txt
+
+- url: .*
+  script: page_handlers.app
+  secure: always
+
+builtins:
+- appstats: on
+- remote_api: on
+
+libraries:
+- name: webapp2
+  version: 2.5.2
+- name: jinja2
+  version: latest
+- name: numpy
+  version: latest
+
+skip_files:
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+# SDK files
+- datastore.db
+- sdk_logs
+- logs.db
+- logs.db-journal
+- search_indexes
+- xsrf
+# Cypress
+- cypress
+# Node
+- ^.*node\_modules$

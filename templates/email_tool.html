@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block header %}
+
+<style>
+    .perts-blurred.ng-invalid, select.ng-invalid + .perts-blurred {
+        border: 2px solid red;
+    }
+</style>
+
+<script src="/static/js/jquery.csv-0.71.min.js"></script>
+<script src="/static/js/showdown.min.js"></script>
+<script>
+PertsApp.controller('ToolController', [
+    '$scope', '$pertsAjax', '$sce', '$forEachAsync',
+    function ($scope, $pertsAjax, $sce, $forEachAsync) {
+        $scope.fromAddresses = [
+            '',
+            '',
+            '',
+            ''
+        ];
+
+        $scope.from = '';
+
+        $scope.userMessage = function (type, message) {
+            $scope.alert = {type: type, message: message};
+            $('body,html').animate({scrollTop:0},0);
+        };
+
+        $scope.buildEmails = function (n) {
+            $scope.alert = false;
+
+            if ($scope.emailForm.$invalid) {
+                $scope.userMessage('danger', "All fields are required.");
+                return;
+            }
+
+            var badData = $.csv.toObjects($scope.emailData, {separator: "\t"});
+            // The csv library annoying inserts instance methods into the
+            // data objects. Remove them.
+            var data = forEach(badData, function (badRow) {
+                var row = {}
+                forEach(badRow, function (k,v ) {
+                    if (typeof v === 'string') { row[k] = v; }
+                });
+                return row;
+            });
+
+            if (!('recipients' in data[0])) {
+                $scope.userMessage('danger', "No 'recipients' column.");
+                return;
+            }
+
+            forEach(data[0], function name(field, value) {
+                if (field.charAt(0) === ' ') {
+                    $scope.userMessage(
+                        'danger',
+                        "Unexpected spaces in column names. Please copy and " +
+                        "paste from a spreadsheet."
+                    )
+                }
+            });
+
+            return forEach(data, function (row, index) {
+                if (n !== undefined && index + 1 > n) { return; }
+
+                // Replace data tokens in subject and body.
+                var s = $scope.subject,
+                    b = $scope.body;
+                forEach(row, function (field, value) {
+                    var pattern = '\\{\\{ *' + field + ' *\\}\\}';
+                    s = s.replace(new RegExp(pattern, 'g'), value);
+                    b = b.replace(new RegExp(pattern, 'g'), value);
+                });
+
+                return {
+                    to_address:     row.recipients,
+                    from_address:   $scope.from,
+                    reply_to:       $scope.from,
+                    subject:        s,
+                    body:           b,
+                    scheduled_date: (new Date()).toDateString('local')
+                };
+            });
+        };
+
+        $scope.preview = function () {
+            var firstEmail = $scope.buildEmails(1)[0];
+
+            // Generate html from the first email to display.
+            var converter = new Showdown.converter();
+            var htmlBody = converter.makeHtml(firstEmail.body);
+
+            $scope.previewEmail = angular.copy(firstEmail);
+            $scope.previewEmail.body = $sce.trustAsHtml(htmlBody);
+        };
+
+        $scope.send = function () {
+            var emails = $scope.buildEmails();
+
+            if (!confirm("Really send " + emails.length + " emails?")) {
+                return;
+            }
+
+            $forEachAsync(emails, function (email) {
+                return $pertsAjax({url: '/api/put/email', params: email});
+            }, 'parallel').then(function () {
+                $scope.userMessage('success', "Emails sent.");
+            });
+        };
+    }
+]);
+</script>
+
+{% endblock %}
+
+{% block content %}
+
+<h1>Email Tool</h1>
+
+<p>
+    Use this tool to send an email to many recipients with embedded data for
+    each. Create a spreadsheet with at least one column,
+    <b>recipients</b>, which is a comma-separated list of email addresses.
+    Further columns are optional, and will be available for embedding in
+    the body or subject, using <a href="http://jinja.pocoo.org/docs/dev/">
+    jinja syntax</a>.
+</p>
+
+<p>
+    For instance, if your spreadsheet contains the columns <b>recipients</b>
+    and <b>name</b>, you may write the subject:
+</p>
+
+<pre>
+    Thank You, &#123;&#123; name &#125;&#125;!
+</pre>
+
+<p>
+    Copy and paste the desired cells from your spreadsheet into the <b>Email
+    Data</b> field. The body text will be parsed as markdown. Click the
+    <b>preview</b> button to view a sample email before sending.
+</p>
+
+<hr>
+
+<div ng-controller="ToolController">
+
+    <div class="alert alert-[[alert.type]]" ng-show="alert">
+        [[ alert.message ]]
+    </div>
+
+    <form role="form" name="emailForm" novalidate onsubmit="return false">
+
+        <div class="form-group">
+            <label for="from">From Address</label> 
+
+<!--             <input id="from" type="text" class="form-control"
+                   ng-model="from" required ng-blur
+                   placeholder="from">
+ -->
+            <select id="from" class="form-control"
+                    required ng-model="from"
+                    width="'100%'"
+                    chosen-select select-options="fromAddresses"
+                    placeholder-text-single="'choose from address'"
+                    ng-options="email for email in fromAddresses">
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="subject">Subject</label> 
+            <input id="subject" type="text" class="form-control"
+                   ng-model="subject" required ng-blur
+                   placeholder="subject">
+        </div>
+
+        <div class="form-group">
+            <label for="body">Body</label> 
+            <textarea id="body" rows="8" class="form-control"
+                   ng-model="body" required ng-blur
+                   placeholder="body"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="emailData">Email Data</label> 
+            <textarea id="emailData" rows="8" class="form-control"
+                   ng-model="emailData" required ng-blur
+                   placeholder="emailData"></textarea>
+        </div>
+
+        <h3>Email Preview</h3>
+
+        <div style="border: 1px solid gray; min-height: 10px; margin-bottom: 20px">
+            <p><b>To:&nbsp;</b>[[ previewEmail.to_address ]]</p>
+            <p><b>From:&nbsp;</b>[[ previewEmail.from_address ]]</p>
+            <p><b>Subject:&nbsp;</b>[[ previewEmail.subject ]]</p>
+            <div ng-bind-html="previewEmail.body"></div>
+        </div>
+
+        <button type="button" ng-click="preview()">Preview</button>
+        <button type="button" ng-click="send()">Send</button>
+
+    </form>
+
+</div>
+
+{% endblock %}

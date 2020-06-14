@@ -1,0 +1,90 @@
+@import 'colors';
+
+@mixin btn($background, $color: $font-color) {
+  background: $background;
+  color: $color !important;
+  border: 0;
+
+  font-weight: 600;
+  text-decoration: none !important;
+
+  &:active,
+  &:hover {
+    background: lighten($background, 5%) !important;
+    color: $color !important;
+    border: 0 !important;
+  }
+}
+
+.btn {
+  padding: 0.475rem 2rem;
+
+  &.btn-shadow {
+    box-shadow: 1px 1px $font-color;
+  }
+
+  &.btn-white {
+    @include btn($white);
+  }
+
+  &.btn-default {
+    @include btn($light-blue-color, $white);
+  }
+
+  &.btn-accent {
+    @include btn($accent-color, $white);
+  }
+
+  &.btn-secondary {
+    @include btn($secondary-color, $white);
+  }
+
+  &.btn-alternate,
+  .banner.masthead &.btn-alternate {
+    @include btn($bold-blue-color, $white);
+    width: 75%;
+    margin: 15px auto;
+    font-size: 0.75em;
+  }
+}
+
+// Mobile Get Started Button
+$btn-mobile-height: 60px;
+
+.btn {
+  &.btn-mobile {
+    @include btn($accent-color, $white);
+
+    position: fixed;
+    bottom: 0;
+
+    // Needs to be greater than Bootstrap .sticky z-index
+    z-index: 1050;
+
+    padding: 0;
+
+    width: 100%;
+    height: $btn-mobile-height;
+    line-height: $btn-mobile-height;
+
+    border-radius: 0;
+    text-transform: uppercase;
+
+    display: none;
+  }
+}
+
+@media (max-width: 991px) {
+  // Only display btn-mobile below Bootstrap md width.
+  .btn {
+    &.btn-mobile {
+      display: inline-block;
+    }
+  }
+
+  // Adjust bottom padding to allow for button.
+  body {
+    padding-bottom: $btn-mobile-height;
+  }
+}
+

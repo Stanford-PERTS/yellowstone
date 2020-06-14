@@ -1,0 +1,180 @@
+{#
+
+Requires jinja variables defined in a parent scope:
+
+* `program_label`, e.g. `ccp19`
+* `platform`, either `neptune` or `triton`, default is unset, which means
+   neptune.
+* `domain`, where the emailed link should go, default is unset, which changes
+   based on neptune's environment variables.
+* `ga_event_role`, optional, for google analytics
+
+#}
+<form
+  class="get-started"
+  id="invite-form"
+  onsubmit="return perts.invite(this);"
+>
+  <div class="form-group">
+    <label for="email">Email address</label>
+    <input
+      type="email"
+      class="form-control"
+      id="email"
+      name="email"
+      placeholder="Enter email"
+      required
+    >
+  </div>
+
+  {% if not invite_hide_role %}
+  <div class="form-group">
+    <label for="role">Role</label>
+    <select class="form-control" id="role" name="role" required>
+      {% if platform == 'triton' %}
+        {% include 'engage/_includes.form.copilot-role-options.html' %}
+      {% else %}
+        {% include 'orientation/_includes.form.neptune-role-options.html' %}
+      {% endif %}
+    </select>
+  </div>
+  {% endif %}
+
+  {% if program_label == 'hg17' %}
+    <div class="form-group">
+      <label for="cohort">Desired Cohort</label>
+      <select class="form-control" id="cohort" name="cohort" required>
+        <!-- <option value="" selected></option> -->
+        <option value="2019">2019-20: Students will participate by April 25th, 2020</option>
+        <option value="2020" selected>2020-21: Students will participate beginning or after June 1st, 2020</option>
+      </select>
+    </div>
+  {% endif %}
+
+  {% if program_label == 'cg17' %}
+    <div class="form-group">
+      <label for="cohort">Desired Cohort</label>
+      <select class="form-control" id="cohort" name="cohort" required>
+        <!-- <option value="" selected></option> -->
+        <option value="2019">2019-20: Students will participate by March 25th, 2020</option>
+        <option value="2020" selected>2020-21: Students will participate beginning or after June 1st, 2020</option>
+      </select>
+    </div>
+  {% endif %}
+
+  <input type="hidden" name="program_label" value="{{ program_label }}">
+
+  {% if platform %}
+    <input type="hidden" name="platform" value="{{ platform }}">
+  {% endif %}
+  {% if domain %}
+    <input type="hidden" name="domain" value="{{ domain }}">
+  {% endif %}
+  <div class="form-submit">
+    <button type="submit" class="btn btn-block btn-shadow btn-accent">
+      Request an Invitation
+    </button>
+  </div>
+
+  <div class="form-loading">
+    <i class="fas fa-2x fa-spinner fa-pulse"></i>
+  </div>
+
+  <div class="form-completed">
+    Please check your email for an invitation.
+  </div>
+
+  <div class="form-student-message">
+    <strong>Students</strong> &mdash; enter at <a
+    href="https://perts.me">perts.me</a>.
+  </div>
+
+</form>
+
+<script src="/static/js/URI.base.min.js"></script>
+<script>
+window.perts = (function(window, $) {
+  'use strict';
+
+  var perts = window.perts || {};
+  var neptuneUrl = '{{ neptune_protocol }}://{{ neptune_domain }}';
+
+  perts.invite = function(form) {
+    $('#invite-form').addClass('loading');
+
+    var formFields = [
+      'cohort',
+      'domain',
+      'email',
+      'platform',
+      'program_label',
+      'role'
+    ];
+    var googleAnalyticsFields = [
+      'utm_source',
+      'utm_medium',
+      'utm_campaign',
+      'utm_term',
+      'utm_content'
+    ];
+    var queryStringData = (new URI(window.location.href)).search(true);
+    var postData = {};
+    var requiredMissing = false;
+    var f, v;
+
+    // Get user's input from form, add it to what we want to POST.
+    for (var x = 0; x < formFields.length; x += 1) {
+      f = formFields[x];
+      if (form[f]) {
+        v = form[f].value;
+        if (form[f].required && !v) {
+          requiredMissing = true;
+        }
+        if (f === 'role' && v === 'student') {
+          $('#invite-form').removeClass('loading');
+          $('#invite-form').addClass('student');
+          return false;
+        }
+
+        postData[f] = v;
+      }
+    }
+
+    // Get google analytics campaign data from form, add it to what we want to
+    // POST.
+    for (x = 0; x < googleAnalyticsFields.length; x += 1) {
+      f = googleAnalyticsFields[x];
+      v = queryStringData[f];
+      if (v !== undefined) {
+        postData[f] = v;
+      }
+    }
+
+    if (requiredMissing) {
+      $('#invite-form').removeClass('loading');
+      return false;
+    }
+
+    $.post(neptuneUrl + '/api/register', postData).always(function(r) {
+      $('#invite-form').removeClass('loading');
+      $('#invite-form').addClass('completed');
+    });
+
+    if (window.ga) {
+      // Track Invite Request Event
+      // https://developers.google.com/analytics/devguides/collection/analyticsjs/sending-hits
+      ga('send', {
+        hitType: 'event',
+        eventCategory: 'Form',
+        eventAction: 'submit',
+        eventLabel: '{{program_label}}:{{ga_event_role}}:invite'
+      });
+    }
+
+    // Don't submit the page.
+    return false;
+  };
+
+  return perts;
+})(this, jQuery);
+</script>

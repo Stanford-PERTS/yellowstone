@@ -1,0 +1,111 @@
+{% set page_title = "PERTS : " + program_name %}
+{% set page_description = program_description.replace('\n', ' ') %}
+{% set page_body_class = program_label %}
+
+{# Allow easier neptune linking #}
+{% set neptune_prefix = neptune_protocol ~ '://' ~ neptune_domain %}
+
+{# Necessary to pass through to included templates: #}
+{% set youtube = youtube %}
+{% set wistia = wistia %}
+{% set program_cohort = program_cohort %}
+{% set enrollment_is_unlimited = enrollment_is_unlimited %}
+{% set unlimited_enrollment_message = unlimited_enrollment_message %}
+{% set participation_enrolled = participation_enrolled %}
+{% set participation_slots = participation_slots %}
+{% set participation_full = participation_enrolled >= participation_slots %}
+{% set participation_is_open = participation_is_open and participation_full != true %}
+
+<!doctype html>
+<html lang="en">
+
+<head>
+  {% include "_includes.head-2018.html" %}
+</head>
+<body class="orientation {{ page_body_class }}"  data-spy="scroll" data-target="#sidebar-menu" data-offset="2">
+
+{# blocks have a different scope: need to pass variable through #}
+{% set login_url = login_url %}
+
+{% include "orientation/_includes.navbar.html" %}
+
+{% block masthead %}
+  {% set login_url = login_url %}
+  {% set program_name = program_name %}
+  {% set program_description = program_description %}
+  {% set youtube = youtube %}
+  {% set wistia = wistia %}
+  {% set enrollment_is_unlimited = enrollment_is_unlimited %}
+  {% set participation_enrolled = participation_enrolled %}
+  {% set participation_slots = participation_slots %}
+  {% set program_cohort = program_cohort %}
+  {% set unlimited_enrollment_message = unlimited_enrollment_message %}
+  {% set participation_is_open = participation_is_open %}
+  {% include "orientation/_includes.section-banner.html" %}
+{% endblock %}
+
+<div class="container">
+  <div class="row">
+    <div class="content-main col-12">
+      {% block content %}
+      {# blocks have a different scope: need to pass variable through #}
+      {% set neptune_prefix = neptune_prefix %}
+      {% include "orientation/_includes.content.html" %}
+      {% endblock %}
+
+      {% block form %}
+        {# blocks have a different scope: need to pass variable through #}
+        {% set program_label = program_label %}
+        {% set platform = platform %}
+        {% set domain = domain %}
+        {% set invite_hide_role = invite_hide_role %}
+        {% if show_invite != false %}
+          {% if participation_is_open %}
+            <div id="get-started" class="section get-started">
+              {% block get_started_text %}
+                <h2>Ready to get started?</h2>
+                <p>
+                  <strong>Enter your email</strong> &mdash; You will receive a link to our
+                  online platform where you will be able to sign-up and prepare to participate.
+                </p>
+              {% endblock %}
+              {% include "orientation/_includes.form.invite.html" %}
+            </div>
+          {% else %}
+            {% include "orientation/_includes.form.updates.html" %}
+          {% endif %}
+        {% endif %}
+      {% endblock %}
+
+      {% block aboutperts %}
+      {# blocks have a different scope: need to pass variable through #}
+      {% set program_name = program_name %}
+      {% include "orientation/_includes.about-perts.html" %}
+      {% endblock %}
+
+      {% block aboutctc %}
+      {% include "orientation/_includes.about-ctc.html" %}
+      {% endblock %}
+
+      {% block moreinfo %}
+      {% include "orientation/_includes.about-more-info.html" %}
+      {% endblock %}
+
+      {% block thankyou %}
+      {% endblock %}
+    </div>
+  </div>
+</div>
+
+{% if youtube %}
+  {% include "orientation/_includes.youtube.html" %}
+{% endif %}
+
+{% include "orientation/_includes.footer.html" %}
+
+<a class="btn btn-mobile" href="#get-started">Get Started</a>
+
+{% include "base_google_analytics.html" %}
+
+</body>
+</html>

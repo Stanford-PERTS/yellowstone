@@ -1,0 +1,581 @@
+{% extends "templates/base_programs.html" %}
+
+{% block program_header %}
+
+<script>
+
+/* defined in programs.js: */
+/*global setupProgramController*/
+
+PertsApp.controller('ProgramController', [
+    '$scope', '$pertsAjax', '$q', '$emptyPromise', '$timeout', '$window',
+    function ($scope, $pertsAjax, $q, $emptyPromise, $timeout, $window) {
+        'use strict';
+
+        // load all the generic program code from programs.js
+        setupProgramController($scope, $pertsAjax, $q, $emptyPromise, $window);
+
+        ////// Yosemite initialization for qualtrics redirection.
+
+        $scope.getQualtricsLink = function (activityOrdinal) {
+            // If link for this ordinal not present, use default.
+            var pdName = 's' + activityOrdinal + '__qualtrics_link';
+            var linkPd = $scope.pd[pdName];
+            var link = linkPd || $window.defaultQualtricsLinks[activityOrdinal];
+
+            // Construct redirection url.
+            var params = {
+                condition: $scope.pd.condition,
+                yosemite_user_id: $window.userId
+            };
+
+            return link + '&' + util.buildQueryString(params);
+        };
+
+        ////// Function node defintions
+
+        // WARNING: Do not write AJAX calls into these functions. Doing so will
+        // break automated testing. See programs.js -> $scope.stratify().
+        // WARNING: If you call $scope.stratify(), you must return what it returns
+        // (a promise object);
+
+        // the markProgress() node is defined in programs.js
+
+        $scope.checkConsent = function () {
+            if ($scope.pd.consent !== 'true') {
+                return;
+            } else {
+                return new $scope.Position('start/menuBranch()');
+            }
+        };
+
+        $scope.menuBranch = function () {
+            $scope.pd.consent = 'true';
+            return new $scope.Position('menu/menu/1');
+        };
+
+        $scope.randomizeCondition = function () {
+            //  if condition is already set, send it back
+            //  in a promise to simluate real behavior
+            if ($scope.pd.condition) {
+                return $emptyPromise($scope.pd.condition);
+            }
+            var promise = $scope.stratify('student_condition', {
+                race: $scope.pd.race,
+                gender: $scope.pd.gender
+            }).then(function (condition) {
+                $scope.pd.condition = condition;
+            });
+            return promise;
+        };
+
+        $scope.prepareToRedirect = function (activityOrdinal) {
+            // In Yosemite, students are redirected to Qualrics fairly quickly.
+            // We don't want to wait for a every-once-in-awhile synchronize call,
+            // otherwise important pd like condition might not be saved. Returning
+            // the promise from synchronize() makes sure the program flow pauses
+            // while it's busy, guaranteeing the user never even sees the
+            // redirection page until data is saved.
+            var force = true;
+            return $scope.synchronize(force).then(function () {
+                // Create timeout to redirect student.
+                $timeout(function () {
+                    $window.location.href = $scope.getQualtricsLink(activityOrdinal);
+                }, 5 * 1000);
+            });
+        };
+    }
+]);
+
+PertsApp.controller('ActivityMenuController', [
+    '$scope', '$window',
+    function ($scope, $window) {
+        'use strict';
+        // In Yosemite we only want to show the menu when the user hasn't provided
+        // a session ordinal, i.e. when there is no target module.
+        $scope.displayMenu = false;
+
+        $scope.$watch('$parent.activeSegment', function (segment) {
+            if (segment === 'menu') {
+                $scope.determineAvailableModule();
+            }
+        });
+
+        $scope.toggleActivityOverride = function () {
+            if (util.queryString('activity_override') === 'true') {
+                util.queryString('activity_override', 'false');
+            } else {
+                util.queryString('activity_override', 'true');
+            }
+        };
+
+        $scope.determineAvailableModule = function () {
+            if (util.queryString('activity_override') === 'true') {
+                forEach($scope.$parent.outline, function (id, module) {
+                    module.available = true;
+                });
+                return;
+            }
+
+            // Yosemite student participation codes include the session ordinal,
+            // referred to here as the one 'targeted' by the code.
+            var targetOrdinal, targetModule;
+            if (util.isStringNumeric(util.queryString('session_ordinal'), 'strict')) {
+                targetOrdinal = Number(util.queryString('session_ordinal'));
+            }
+
+            // Otherwise use the current date and the program config to determine
+            // which sessions are available to the user and show them a menu.
+            var today = $window.serverDateTime;
+            var determined = false;
+            var previousDateWindowOpen;
+            var valuesToLog = [];
+            forEach($scope.$parent.outline, function (id, module) {
+                if (module.type !== 'activity') { return; }
+
+                if (targetOrdinal && targetOrdinal === module.activity_ordinal) {
+                    targetModule = module;
+                }
+
+                // date window
+                var dateOpen = Date.createFromString(module.date_open, 'local');
+                var dateClosed = Date.createFromString(module.date_closed, 'local');
+                var dateWindowOpen = dateOpen < today && today < dateClosed;
+
+                // is done
+                var key = 's' + module.activity_ordinal + '__progress';
+                var progress = Number($scope.$parent.pd[key]) || 0;  // turn undefined into 0
+
+                // delay
+                var delaySatisfied, dateDone;
+                if (module.activity_ordinal > 1) {
+                    var prevKey  = 's' + (module.activity_ordinal - 1) + '__progress';
+                    dateDone = $scope.$parent.progressDates[prevKey] || today;
+                    if (!previousDateWindowOpen) {
+                        delaySatisfied = true;
+                    } else {
+                        delaySatisfied = Date.dayDifference(today, dateDone) > 2;
+                    }
+                } else {
+                    delaySatisfied = true;
+                }
+                previousDateWindowOpen = dateWindowOpen;
+
+                if (!determined && dateWindowOpen && progress !== 100) {
+                    // Then this is the session they should be doing according to
+                    // a normal progression. Let them through.
+                    module.available = true;
+                    module.menuMessage = 'Click the button to the left to begin.';
+                    determined = true;
+                } else {
+                    // We have some kind of weird case.
+                    if (determined) {
+                        if (targetOrdinal && targetOrdinal === module.activity_ordinal) {
+                            // This means that the user SHOULD be doing a previous
+                            // session, but they asked for this one. For Yosemite,
+                            // we'll allow this, but they get a special condition
+                            // that flags them as problematic.
+                            module.available = true;
+                            // Having the user's condition set here will mean the
+                            // randomizeCondition() function node will be a no-op.
+                            $scope.$parent.pd.condition = 'skipped_session_1';
+                        } else {
+                            // The user should be doing a previous session but they
+                            // didn't ask for this one anyway. Mark it as
+                            // unavailable just in case.
+                            module.menuMessage = "You must finish the previous session first.";
+                            module.available = false;
+                        }
+                    } else if (!dateWindowOpen) {
+                        module.available = false;
+                        module.menuMessage = "This session is only available between " +
+                            dateOpen.toLocaleDateString() + " to " +
+                            dateClosed.toLocaleDateString();
+                    } else if (progress === 100) {
+                        module.available = false;
+                        module.menuMessage = "You have already finished this session. Thanks!";
+                    }
+                    // For Yosemite we don't care about delaySatisfied.
+                }
+
+                // Extra Yosemite logic: don't let a student into session 1 if
+                // they've done session 2.
+                if (module.activity_ordinal === 1 &&
+                    $scope.$parent.pd.s2__progress !== undefined) {
+                    module.available = false;
+                    module.menuMessage = "You've already started session 2. " +
+                        "Session 1 is no longer available. Please work quietly " +
+                        "at your desk.";
+                }
+
+                valuesToLog.push({
+                    module: id,
+                    today: today,
+                    dateOpen: dateOpen,
+                    dateClosed: dateClosed,
+                    dateDone: module.activity_ordinal > 1 ? dateDone : null,
+                    delaySatisfied: delaySatisfied,
+                    progress: progress,
+                    available: module.available,
+                    message: module.menuMessage || ''
+                });
+            });
+
+            // For Yosemite, where a target module will be specified via the
+            // participation code, we want to provide fewer options. Either
+            if (targetModule) {
+                if (targetModule.available) {
+                    // forward them directly to their destination
+                    targetModule.goToNextHash();
+                } else {
+                    // or lock out the user for the calculated reason.
+                    $scope.lockOutMessage = targetModule.menuMessage;
+                    // Log an error so we are notified that a student got stuck
+                    // (which shouldn't happen normally).
+                    $window.onerror("A student was locked out of a session. " +
+                        "See the logs for menu logic details.");
+                }
+            } else {
+                // The target module couldn't be found, possibly because the
+                // session ordinal wasn't specified or didn't match anything.
+                // Show the menu.
+                $scope.displayMenu = true;
+            }
+
+            $window.pertsLog('info', {
+                activityMenuDetails: JSON.stringify(valuesToLog)
+            });
+        };
+
+        $scope.menuItems = forEach($scope.$parent.outline, function (id, module) {
+            if (module.type === 'activity') {
+                return module;
+            }
+        });
+    }
+]);
+
+PertsApp.controller('SessionOneRedirectController', ['$scope',
+    function ($scope) {
+        'use strict';
+        $scope.redirectUrl = $scope.$parent.getQualtricsLink(1);
+    }
+]);
+
+PertsApp.controller('SessionOneRedirectController', ['$scope',
+    function ($scope) {
+        'use strict';
+        $scope.redirectUrl = $scope.$parent.getQualtricsLink(2);
+    }
+]);
+
+</script>
+<style>
+
+/* ------------------------------------------------------------ */
+/* make the loading mask last all the way until a page displays */
+/* ------------------------------------------------------------ */
+
+#loading, #loading.ng-hide {
+    display: block;
+}
+
+#loading, #loading.ng-hide.program_page_loaded {
+    display: none;
+}
+</style>
+
+{% endblock %}
+
+{% block program_content %}
+
+<div id="module_start" show-module="start">
+    <div show-segment="consent">
+        <div show-page class="container clearfix"
+             hide-previous-button="start/consent/1">
+            <div class="two-third">
+                <p>To learn more about the study before you get started, read the section below.</p>
+                <!-- iframe div for ipad height control
+                http://stackoverflow.com/questions/6139564/iframe-size-on-ipad -->
+                <div class="iframe_container">
+                    <iframe src="/static/consent/adult_consent.html"></iframe>
+                </div>
+                <p>
+                    If you understand the study and you are willing to
+                    participate, please click the "Next" button below. If you
+                    do not want to participate, complete this
+                    <span class='pseudolink' ng-click="outline['alternate_menu'].goToNextHash()">
+                        alternate assignment</span>. 
+                    It involves writing an essay about the ethics of research with human subjects. 
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="module_demo_end" show-module="demo_end">
+    <div show-segment="demo_end">
+        <div show-page class="container clearfix">
+            <div class="two-third">
+                <p>
+                    This demo is over!
+                    <br><br>
+                    If you are a student or teacher participating in this program,
+                    you are seeing this message because of an error. Please contact
+                    us at  to report the problem and provide:
+                </p>
+                <ul>
+                    <li>Your browser, e.g., Firefox, Chrome, Internet Explorer...</li>
+                    <li>The name or email you use to sign into PERTS</li>
+                    <li>Your school name</li>
+                </ul>
+                <p>
+                    <br><br>
+                    Thank you!
+                    <br>
+                    The PERTS Team
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="module_menu" show-module="menu">
+    <div show-segment="menu">
+        <div show-page class="container clearfix"
+             ng-controller="ActivityMenuController"
+             hide-previous-button="menu/menu/1"
+             hide-next-button="menu/menu/1">
+            <div ng-show="displayMenu">
+                <p>Session Menu</p>
+                <span class="align-right quiet"
+                      ng-click="toggleActivityOverride()">choose other</span>
+                <ul class="menu">
+                    <li ng-repeat="module in menuItems">
+                        <button ng-click="module.goToNextHash()"
+                                ng-disabled="!module.available">
+                            Begin [[ module.name ]]
+                        </button>
+                        <span class="module_menu_message">
+                            [[ module.menuMessage ]]
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <div ng-show="lockOutMessage">
+                <p>[[ lockOutMessage ]]</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="module_alternate_menu" show-module="alternate_menu">
+    <div show-segment="alternate_menu">
+        <div show-page class="container clearfix">
+            <p>Alternate Session Menu</p>
+            <ul class="menu">
+                <li ng-repeat="m in staticOutline | filter:{type:'alternate'}">
+                    <button ng-click="outline[m.id].goToNextHash()">
+                        [[ m.name ]]
+                    </button>
+                    <span class="module_menu_message">
+                        Click the button to the left to begin.
+                    </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="module_session_1" show-module="session_1">
+    <div show-segment="intro">
+        <div show-page class="container clearfix"
+             ng-controller="SessionOneRedirectController"
+             hide-previous-button="session_1/intro/1"
+             hide-next-button="session_1/intro/1">
+            <div class="two-third">
+                <h2>Ready??</h2>
+                <p>
+                    You'll be sent to another site to do this activity in
+                    about 5 seconds.
+                </p>
+                <p> If that doesn't work, you can also click this link:</p>
+                <p><a href="[[ redirectUrl ]]">Go to activity</a></p>
+            </div>
+            <div class="one-third last"></div>
+        </div>
+    </div>
+    <div show-segment="goodbye">
+        <div show-page class="container clearfix">
+         <div class="two-third">
+                <h2>Thanks</h2>
+                <p>
+                    We really appreciate your help reviewing and reflecting on
+                    these topics. We hope that we will be able to use what we
+                    learn from you to improve the way we present these
+                    materials to other students. You are done with the program
+                    for today. Please close this window and ask your teacher
+                    what to do next.
+                </p>    
+            </div>
+            <div class="one-third last">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div id="module_session_1_alternate" show-module="session_1_alternate">
+    <h3>Session 1 Alternate</h3>
+    <div show-segment="alternate">
+        <h4>Alternate Activity</h4>
+        <div show-page class="container clearfix">
+        <div class="two-third">
+            <h2>Alternative Activity</h2>
+            <p><i>
+                If you would rather participate in the research study, please
+                click
+                <span class='pseudolink'
+                      ng-click="outline['menu'].goToNextHash()">Here</span>.
+            </i></p>
+            <p>
+                Your assignment is to read the following article and write an essay responding to the prompts on the next page.
+            </p>
+            <p>
+                Click the link below and read the article on ethical research.  Once you are finished reading the article, please click 'Next.'
+            </p>
+            <center><p style="font-size:150%">
+                <a href="http://www.nytimes.com/1982/09/12/magazine/research-through-deception.html?pagewanted=print" target="_blank">Article Link</a>
+            </p></center>
+        </div>
+        <div class="one-third last">
+            </div>
+        </div>
+        <div show-page class="container clearfix">
+            <div class="two-third">
+                <p>Thank you for reading the article.</p>
+                <p>
+                    Please write a 400-600 word essay based on the questions below:
+                </p>
+                <ul>
+                    <li>What led to the debate discussed in the article?</li>
+                    <li>What are the arguments for using deception in research?</li>
+                    <li>What are the criticisms of using deception in research?</li>
+                    <li>What is your opinion about whether or not it is ethical to use deception in research?</li>
+                </ul>
+                <p>
+                    <i>Do not worry about spelling or grammar. We just want to know what you think.</i>
+                </p>
+                <p>
+                    <textarea placeholder="type your response here..." name="pd.or_alternate_1" ng-model="pd.or_alternate_1" style="width:500px;height:850px"></textarea>
+                </p>
+            </div>
+            <div class="one-third last"></div>
+        </div>
+        <div show-page class="container clearfix">
+            <div class="two-third">
+                <h2>All Done!</h2>
+                <p>
+                    Thank you for submitting the assignment!  You may now close this window.
+                </p>
+            </div>
+            <div class="one-third last"></div>
+        </div>
+    </div>
+</div>
+<div id="module_session_2_alternate" show-module="session_2_alternate">
+    <h3>Session 2 Alternate</h3>
+    <div show-segment="alternate">
+        <h4>Alternate Activity</h4>
+        <div show-page class="container clearfix">
+            <div class="two-third">
+                <h2>Alternative Activity</h2>
+                <p><i>
+                    If you would rather participate in the research study,
+                    please click
+                    <span class='pseudolink'
+                          ng-click="outline['menu'].goToNextHash()">Here</span>.
+                </i></p>
+                <p>
+                    Your assignment is to read the following article and write an
+                    essay responding to the prompts on the next page.
+                </p>
+                <p>
+                    Click the link below and read the article on ethical research.
+                    Once you are finished reading the article, please click 'Next.'
+                </p>
+                <center><p style="font-size:150%">
+                    <a href="http://alumni.stanford.edu/get/page/magazine/article/?article_id=40741" target="_blank">Article Link</a>
+                </p></center>
+            </div>
+            <div class="one-third last"></div>
+        </div>
+        <div show-page class="container clearfix">
+            <div class="two-third">
+                <p>Thank you for reading the article.</p>
+                <p>
+                    Please write a 400-600 word essay based on the questions below:
+                </p>
+                <ul>
+                    <li>Why was this study now considered to be so unethical?</li>
+                    <li>What is your opinion about whether or not Zimbardo should have done this study?</li>
+                    <li>How did you feel about how the fake guards treated the fake prisoners? Did this surprise you?</li>
+                    <li>Why do you think this study had such powerful effects on how people behaved?</li>
+                </ul>
+                <p>
+                    <i>Do not worry about spelling or grammar. We just want to
+                    know what you think.</i>
+                </p>
+                <p>
+                    <textarea placeholder="type your response here..." name="pd.or_alternate_2" ng-model="pd.or_alternate_2" style="width:500px;height:850px"></textarea>
+                </p>
+            </div>
+            <div class="one-third last"></div>
+        </div>
+        <div show-page class="container clearfix">
+            <div class="two-third">
+                <h2>All Done!</h2>
+                <p>
+                    Thank you for submitting the assignment!  You may now close
+                    this window.
+                </p>
+            </div>
+            <div class="one-third last"></div>
+        </div>
+    </div>
+</div>
+<div id="module_session_2" show-module="session_2">
+    <div show-segment="intro">
+        <div show-page class="container clearfix"
+             ng-controller="SessionTwoRedirectController"
+             hide-previous-button="session_2/intro/1"
+             hide-next-button="session_2/intro/1">
+            <div class="two-third">
+                <h2>Ready??</h2>
+                <p>
+                    You'll be sent to another site to do this activity in
+                    about 5 seconds.
+                </p>
+                <p> If that doesn't work, you can also click this link:</p>
+                <p><a href="[[ redirectUrl ]]">Go to activity</a></p>
+            </div>
+            <div class="one-third last"></div>
+        </div>
+    </div>
+    <div show-segment="goodbye">
+        <div show-page class="container clearfix">
+            <div class="two-third">
+                <h2>Thanks</h2>
+                <p>
+                    We really appreciate your help reviewing and reflecting on
+                    these topics. We hope that we will be able to use what we
+                    learn from you to improve the way we present these
+                    materials to other students. You are done with the program
+                    for today. Please close this window and ask your teacher
+                    what to do next.
+                </p>    
+            </div>
+            <div class="one-third last"></div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+

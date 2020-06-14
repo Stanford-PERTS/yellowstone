@@ -1,0 +1,25 @@
+<!-- Secondary navbar for lower content -->
+<nav class="navbar" ng-class="{open: navOpen}">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="nav-left">
+        <a href="/" class="logo-link">
+          <img src="/static/images/pertslogo.png" height="36px" alt="PERTS">
+        </a>
+        <div class="nav-toggler"
+             ng-click="toggleNav()"
+             ng-show="navOpen">
+          <i class="fa fa-times"></i>
+        </div>
+        <div class="nav-toggler"
+             ng-click="toggleNav()"
+             ng-hide="navOpen">
+          <i class="fa fa-bars"></i>
+        </div>
+      </div>
+      <div class="nav-right">
+        {% include 'components/navbar_links.html' %}
+      </div>
+    </div>
+  </div>
+</nav>

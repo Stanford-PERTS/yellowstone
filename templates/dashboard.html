@@ -1,0 +1,35 @@
+{# The many pages of the dashboard are just small html templates loaded #}
+{# dynamically into the ng-view directive below. See the two dashboard #}
+{# folders inside the templates folder. #}
+
+{% extends "base.html" %}
+
+{% block header %}
+
+<link rel="stylesheet" href="/static/css/dashboard.css">
+
+<script type="text/javascript">
+    var user = {{ user.to_dict()|tojson|safe }};
+    var statusCodes = {{ config.status_codes|tojson|safe }};
+    var programInfo = {{ program_info | tojson | safe }};
+    var cohortAggregationDataTemplate = {{ cohort_aggregation_data_template|tojson|safe }};
+</script>
+<script src="/static/js/datepickr.js"></script>
+<script src="/static/js/dashboard.js"></script>
+
+{% endblock %}
+
+{% block content %}
+
+    {% if user.user_type in ['god', 'researcher', 'school_admin'] %}
+
+        <div ng-view></div>
+
+    {% else %}
+
+        <h2 style="margin-bottom: 20px">Thank you for registering</h2>
+        <p class="lead">Please wait for your account to be verified.</p>
+
+    {% endif %}
+    
+{% endblock %}

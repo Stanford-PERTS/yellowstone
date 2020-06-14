@@ -1,0 +1,209 @@
+{% extends "templates/base.html" %}
+
+{# This template is handled by page_handlers.ProgramStaticHandler. #}
+
+{% block title %}
+PERTS Coordinator Instructions
+{% endblock %}
+
+{% block header %}
+
+<style>
+
+body {
+    color: #333; /* dark-gray */
+}
+
+h2 {
+    font-size: 18px;
+}
+
+h3 {
+    font-size: 14px;
+}
+
+p, #content ul, #content ol {
+    font-size: 1em;
+    font-family: helvetica, arial, freesans, clean, sans-serif;
+    line-height: 1.2em;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.indented {
+    margin-left: 30px;
+}
+
+ol ol {
+    list-style: lower-alpha;
+}
+
+section#content a {
+    color: blue;
+    text-decoration: underline;
+}
+
+#content img.print-only {
+    margin-bottom: 10mm;
+}
+
+/* http://stackoverflow.com/questions/10732690/offsetting-an-html-anchor-to-adjust-for-fixed-header */
+a.anchor {
+    display: block;
+    position: relative;
+    top: -150px;
+    visibility: hidden;
+}
+
+</style>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+<button id="print-button" class="no-print glyphicon glyphicon-print"
+        onclick="print()">
+</button>
+<img src="/static/images/pertslogo.png" height="50" class="print-only">
+
+<h1>Coordinator Instructions</h1>
+
+<p>
+    Thank you for agreeing to coordinate the High School Transition Program program
+    at your school! Your role is particularly important. You will be our main
+    point of contact with your school and will be responsible for helping
+    teachers schedule their classes, arranging computer lab access, and making
+    sure that the program runs smoothly.
+</p>
+<p>
+    Below is the contact information for the study coordinator and a checklist
+    of what will be required to oversee this project.
+</p>
+<p>
+    <font color="red"><span class="bold">**Note: Your school is using Student Aliases. Students will be required to enter in an alias code we have provided to access the program. Please see the Student Alias Instructions below for more details.</font></span>
+</p>
+<h2>Study Coordinator Contact Information</h2>
+
+<p>
+    This study will be coordinated by PERTS at Stanford University. The study
+    coordinator is:
+</p>
+<p class="bold indented">
+Rachel Herter<br>
+<br>413-687-5008<br>
+<a href="http://www.perts.net">perts.net</a><br>
+</p>
+<p>
+    If you encounter a problem during the delivery of the program and you
+    cannot reach Rachel, please call (650) 241 9056 to speak with another PERTS
+    team member.
+</p>
+
+<h2>Scheduling</h2>
+
+<p>
+    Sessions 1 and 2 will each take about 45 miuntes.
+    The program will open on January 12th and close on March 
+    27th. All three sessions must be completed within that window.
+</p>
+<ul>
+<li><strong>Session 1</strong> should be completed in January or early February.</li>
+<li><strong>Session 2</strong> should be completed about 1 month after Session 1.</li>
+</ul>
+<p>
+    **Note - Each session should take place at a time when students can pay full attention. Based on our previous data, it is best not to schedule sessions during the following times:
+</p>
+<ul>
+    <li>The period before or after lunch</li>
+    <li>The last period of the day</li>
+    <li>On a Friday</li>
+    <li>In the week leading up to a break</li>
+    <li>During the week of standardized testing</li>
+</ul>
+<h2>Student Alias Instructions</h2>
+
+<p>
+    Your school is using student aliases, which means that students will enter alias names instead of their real names to access the program. Students MUST enter the exact alias name or they will not be able to move past the sign-in page. To insure students use an alias name, please follow these steps.
+</p>
+<ol>
+<li><strong>Download the <em>Student Alias List.</em></strong> You can also find the link to this sheet on the <em>Documents</em> page.</li>
+<li><strong>Assign an alias name</strong> to every student for each participating class. We suggest you copy and paste your student rosters into the <em>Student Alias List<em> excel sheet. Every participating student must be assigned an alias name. The alias names can be the same across classrooms, but no two students in the same class can have the same name. 
+</li>
+<li><strong>Give participating teachers the assigned Student Alias List</strong> and make sure they understand that students must to use their assigned alias name <b>FOR BOTH SESSIONS.</b> We suggest you print out a copy of the Student Alias List for each classroom and instruct teachers to cut up slips of paper that include students’ real name and alias name that they can hand out to students during the program.</li>
+<li><strong>Make sure you have a copy of the assigned student list,</strong> as students will need to use the same code name for Session 1 and Session 2.</li>
+</ol>
+
+<h2>Coordinator Checklist</h2>
+
+<p>To insure smooth program implementation, please follow these steps.</p>
+<ol>
+    <li>
+        <strong>Email your PERTS coordinator</strong> a signed copy of the
+        School Letter of Agreement.
+    </li>
+    <li>
+        <strong>Notify parents</strong> about the study at least 2 weeks before students are scheduled to participate by sending home the
+        parent information letter provided under the <em>Documents</em> tab. Parents
+        do not need to sign these, but can choose to opt their child out if
+        they wish.
+    </li>
+    <li>
+        <strong>Work with teachers to schedule</strong> when their students
+        will complete both sessions and help coordinate computer lab
+        access.
+    </li>
+    <li>
+        <strong>Login at perts.net</strong> to add and schedule
+        participating classrooms under the <em>Schedule</em> tab.
+    </li>
+    <li>
+        <strong>Assign each participating classroom</strong> a set of student alias names and make sure teachers understand how to use these names. 
+    </li>
+    <li>
+        <strong>Send the <em>High School Transition Program Session
+        Instructions</em></strong>to participating teachers and provide support if needed. This document is located on the <em>Documents</em> page.
+    </li>
+    <li>
+        <strong>Prepare computer labs.</strong> Test the students’ survey link
+        on a computer in your school’s computer lab:
+        <ol>
+            <li>
+                Sign into a computer using the same type of login credentials a
+                student would use (i.e., don’t log in as an administrator).
+            </li>
+            <li>
+                <span class="bold">Important: Our program supports Chrome,
+                Firefox, Safari, and Internet Explorer versions 8 and
+                up. Please note that Windows XP has known issues with audio. If audio doesn't work in one browser, try another one.</span>
+            </li>
+            <li>
+                Go to <a href="http://www.perts.me">perts.me</a> to check that
+                you are able to access the student login page.
+            </li>
+            <li>
+                If you are, go to <a href="http://www.perts.net/help">perts.net/help</a> and click
+                all the way through to the end to make sure you do not
+                encounter any issues. If you do, please call your coordinator
+                at the above number.
+            </li>
+        </ol>
+    </li>
+    <li>
+        <strong>Provide students with headphones</strong> during the program so
+        they can listen along to the audio. If you are NOT able provide
+        headphones, please let your PERTS coordinator know as soon as possible.
+    </li>
+    <li>
+        <strong>Collect the <em>Student Make-up List</em></strong> from
+        teachers after each session. Update students’ participation status
+        under the <em>Participation Code</em> column in the <em>Classroom Roster</em> tab.
+    </li>
+</ol>
+
+{% endblock %}
+
+

@@ -1,0 +1,144 @@
+{% extends "p3-base.html" %}
+
+{% set title = "Educator Resources | PERTS" %}
+{% set description = "PERTS offers educators resources, professional development, and tools for learning about and promoting adaptive academic mindsets." %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block meta_description %}
+{{ description }}
+{% endblock %}
+
+{% block content %}
+
+<div class="resources-page">
+
+  <div class="page-masthead page-masthead--light">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-md-7">
+          <h1>Resources</h1>
+          <p>
+            Explore products, papers, partners, and some useful links relating to the research and work we do here at PERTS.
+          </p>
+        </div>
+      </div>
+    </div>
+    {% include 'components/navbar_top.html' %}
+  </div>
+
+  <div class="page-section page-section--resources">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="resource-wrapper">
+            <div class="resource_image resource_image--1"></div>
+            <h3>
+              The Mindset Kit
+            </h3>
+            <p>
+              Learn about adaptive learning mindsets and strategies that promote them with this free, online resource designed for educators and parents.
+            </p>
+            <a class="perts-button outlined"
+               href="https://www.mindsetkit.org">
+              Get started
+            </a>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="resource-wrapper">
+            <div class="resource_image resource_image--2"></div>
+            <h3>
+              PERTS Blog
+            </h3>
+            <p>
+              Read about the latest news and research involving adaptive learning mindsets, and get perspective and guidance from psychology experts.
+            </p>
+            <a class="perts-button outlined"
+               href="https://medium.com/@pertslab">
+                Start reading
+            </a>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="resource-wrapper">
+            <div class="resource_image resource_image--3"></div>
+            <h3>
+              Mindset Meter
+            </h3>
+            <p>
+              Quickly understand the prevalence and distribution of the various adaptive learning mindsets in your  school or classroom with this surveying tool.
+            </p>
+            <a class="perts-button outlined"
+               href="http://survey.perts.net">
+              Learn more
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-section page-section--resources-research">
+    <div class="background-image"
+       image-loader
+       image="/static/images/home/research-background.png"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+          <h2>Our Research</h2>
+          <p class="text-shadow">
+            Our team has produced several groundbreaking research papers in the
+            field of psychology. We continue to validate and test
+            these findings in all of the work that we do.
+          </p>
+          <a class="perts-button btn-accent" href="/research">
+            View research
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-section page-section--wedge-left">
+    <div class="graphic-left">
+      <div class="background-image"
+       image-loader
+       image="/static/images/home/mailboxes.jpg"></div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 col-md-5 col-sm-offset-6">
+          <h2>Keep up with PERTS</h2>
+          <p>
+            Subscribe to our mailing list or follow us on Facebook and Twitter to join the discussion and keep up on the latest developments.
+          </p>
+
+          <form action="//mindsetkit.us10.list-manage.com/subscribe/post?u=7edccf60df2a8af6ca924978b&amp;id=fb3a4dfa59" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+            <div class="signup-form">
+              <input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL" placeholder="Enter your email">
+              <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+              <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_7edccf60df2a8af6ca924978b_fb3a4dfa59" tabindex="-1" value=""></div>
+              <input type="submit" name="" value="Join">
+            </div>
+          </form>
+          <div class="social-link-wrapper">
+            <div class="spacer"></div>
+            <a class="social-link" href="https://facebook.com/pertslab">
+              <i class="fa fa-facebook"></i>
+            </a>
+            <a class="social-link" href="https://twitter.com/pertslab">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+{% endblock %}

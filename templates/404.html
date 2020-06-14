@@ -1,0 +1,32 @@
+{% extends "p3-base.html" %}
+
+{% set title = "Page Not Found" %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+
+<div class="work-page">
+
+  <div class="page-masthead page-masthead--secondary">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6 col-md-5 col-md-offset-1">
+          <h1>404</h1>
+          <p>Sorry &mdash; we can&rsquo;t find that page!</p>
+          <p>
+            <a href="/">Return to home page</a>
+          </p>
+        </div>
+        <div class="col-sm-6 col-md-6 image-wrapper">
+          <img src="/static/images/home/research-preview-image.png" alt="magnifying glass" width="400" />
+        </div>
+      </div>
+    </div>
+    {% include 'components/navbar_top.html' %}
+  </div>
+</div>
+
+{% endblock %}

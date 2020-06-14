@@ -1,0 +1,146 @@
+// ===========================================================
+// OUR WORK PAGE
+// ===========================================================
+
+.page-section--partnerships {
+  background-color: $pale-blue-color;
+  padding: 75px 0 120px 0;
+
+  h2, h4 {
+    font-family: $font-serif;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  @include mobile {
+
+    h2 {
+      font-size: 32px;
+    }
+  }
+
+  h4 {
+    margin-top: 60px;
+    font-size: 32px;
+  }
+
+  .partnership-wrapper {
+    padding: 20px;
+    background-color: white;
+    margin-top: 30px;
+
+    height: 550px;
+
+    .partnership_image {
+      border: 1px solid #e3e3e3;
+    }
+
+    @include laptop {
+      height: 460px;
+    }
+    @include mobile {
+      height: auto;
+      padding-bottom: 30px;
+    }
+  }
+
+  .partner-logos {
+    margin-top: 30px;
+    text-align: center;
+  }
+}
+
+.page-section--work-research {
+  padding: 90px 0;
+  background-color: white;
+
+  p {
+    font-size: 21px;
+  }
+
+  .image-wrapper {
+    text-align: center;
+  }
+}
+
+.page-section--national-reach {
+  height: 500px;
+  padding-top: 90px;
+  background-color: $indigo-color;
+  overflow-y: hidden;
+
+  .graphic-left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 500px;
+    width: 60%;
+    background-color: white;
+
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      right: 0px; top: 0px;
+      border-left: 150px solid transparent;
+      border-bottom: 500px solid $indigo-color;
+      pointer-events: none;
+    }
+
+    iframe {
+      height: 500px;
+    }
+
+    .map-overlay {
+      height: 500px;
+    }
+  }
+
+  h2, p {
+    color: white;
+  }
+
+  p {
+    font-size: 22px;
+    letter-spacing: 0.5px;
+  }
+
+  // Less spacing above text when compressed
+  @include tablet {
+    padding-top: 60px;
+  }
+
+  @include mobile {
+    height: auto;
+    padding-top: 0;
+
+    .graphic-left {
+      position: relative;
+      width: 100%;
+      height: auto;
+
+      &:after {
+        content: none;
+      }
+
+      iframe {
+        height: 350px;
+      }
+
+      .map-overlay {
+        height: 350px;
+      }
+    }
+
+    .container {
+      padding-top: 60px;
+      padding-bottom: 60px
+    }
+  }
+}
+
+.page-section--partner {
+  padding: 90px 0;
+  background-color: white;
+  text-align: center;
+}

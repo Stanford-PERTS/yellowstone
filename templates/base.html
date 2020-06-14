@@ -1,0 +1,370 @@
+{#
+
+Base template for all pegasus pages
+
+Inheriting templates may extend:
+
+title - the <title> tag
+css - all standard <link> tags are here, can override them by defining this block
+header - good for js and css stuff
+nav_menu - for adding things to the Home drop-down menu
+godbar - for developer tools
+content - this is where your page goes, obviously
+
+You can switch parts of the template on or off with these variables. If any of
+them are not defined, their corresponding section will be displayed. Set to
+False to turn off.
+
+show_nav_bar
+show_loading_mask
+show_footer
+
+#}<!Doctype html>
+
+<!-- Condition comments are only supported up to IE 9. -->
+<!--[if IE 6]>
+<html class="ie ie6" lang="en" ng-app="PertsApp" id="ng-app">
+<![endif]--><!--[if IE 7]>
+<html class="ie ie7" lang="en" ng-app="PertsApp" id="ng-app">
+<![endif]--><!--[if IE 8]>
+<html class="ie ie8" lang="en" ng-app="PertsApp" id="ng-app">
+<![endif]--><!--[if IE 9]>
+<html class="ie ie9" lang="en" ng-app="PertsApp" id="ng-app">
+<![endif]--><!--[if !IE]><!-->
+<html lang="en" ng-app="PertsApp" id="ng-app">
+<!--<![endif]-->
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>
+            {% block title %}
+            PERTS
+            {% endblock %}
+        </title>
+
+        {% block css %}
+        <!-- css block -->
+
+        <link rel="stylesheet" href="/static/vendor/css/bootstrap.min.css">
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <!-- fonts for header -->
+        <link rel="stylesheet" href="/static/home/css/fonts.css">
+        <!-- a select box plugin -->
+        <link rel="stylesheet" href="/static/css/chosen.css">
+        <link rel="stylesheet" href="/static/css/main.css">
+
+        <!-- end css block -->
+        {% endblock %}
+
+        <!--[if !IE]><!--><script>
+
+// Hack to target ie10 with CSS
+// http://www.impressivewebs.com/ie10-css-hacks/#comment-27811
+// http://msdn.microsoft.com/en-us/library/ie/8ka90k2e(v=vs.94).aspx
+if (/*@cc_on!@*/false && document.documentMode === 10) {
+    document.documentElement.className += ' ie ie10';
+}
+
+        </script><!--<![endif]-->
+
+        <script type="text/javascript">
+
+var normalUserType = '{{ normal_user.user_type if normal_user else '' }}' || undefined;
+var userType = '{{ user.user_type if user else '' }}' || undefined;
+var userId = '{{ user.id if user else '' }}' || undefined;
+var userEmail = '{{ user.email if user else '' }}' || undefined;
+
+        </script>
+
+        <!-- Sentry error logging, see app.getsentry.com -->
+        <script src="/static/js/raven.min.js"></script>
+        <script>
+
+// Unique URL for Yellowstone
+Raven.config('29659', {
+    // we highly recommend restricting exceptions to a domain in order to filter out clutter
+    whitelistUrls: ['www.perts.net', 'p3.perts.net', 'yellowstoneplatform.appspot.com']
+}).install();
+// Additional info about the user sent with error reports
+Raven.setUser({
+    userType: userType,
+    email: userEmail,
+    userId: userId
+});
+
+        </script>
+
+        <script src="/static/js/stacktrace.js"></script>
+        <script src="/static/js/util.js"></script>
+        <script src="/static/js/json2.js"></script>
+        <!-- jQuery must precede angular to allow for certain ng-includes in dashboard -->
+        <script src="/static/js/jquery-1.11.1.min.js"></script>
+        <script src="/static/js/bootstrap.min.js"></script>
+        <!-- BEFORE UPGRADING ANGULAR -->
+        <!-- CAM has hacked the file below to fix certain bugs. Don't replace -->
+        <!-- this file without demonstrating these bugs won't return. -->
+        <script src="/static/js/angular-1.2.3.min.js"></script>
+        <script src="/static/js/angular-route-1.3.0.min.js"></script>
+        <script src="/static/js/angular-ui-bootstrap-tpls-0.11.0.min.js"></script>
+        <!-- a select box plugin -->
+        <script src="/static/js/chosen.jquery.min.js"></script>
+        <!-- a textarea plugin -->
+        <script src="/static/js/jquery-autogrow_textarea.js"></script>
+        <!-- keyboard shortcut support -->
+        <script src="/static/js/mousetrap.min.js"></script>
+        <script src="/static/js/keyboardShortcuts.js"></script>
+
+        <script src="/static/js/base.js"></script>
+
+
+        <!-- header block -->
+
+        {% block header %}
+        {% endblock %}
+
+        <!-- end header block -->
+
+    </head>
+    <body>
+
+        <div class="container">
+
+        {% block top_bar %}
+
+                {% if show_nav_bar is not defined or show_nav_bar %}
+
+                <header id="header" class="navbar navbar-fixed-top">
+                    <div class="row">
+
+
+    <div class="col-xs-6 logo">
+        <a href="/" id="logo">
+            <img src="/static/images/pertslogo.png" alt="PERTS"
+                 width="165" height="44">
+        </a>
+    </div>
+
+    <div id="user_message" class="user_message alert"></div>
+
+    <!-- <nav id="main-nav" class="col-xs-6"> -->
+    <ul class="nav col-xs-6">
+
+        <li>
+            {% if user and user.user_type != 'public' %}
+                <a href="/yellowstone_logout" data-description="">Log Out</a>
+            {% else %}
+                <a href="/yellowstone_login" data-description="">Log In</a>
+            {% endif %}
+        </li>
+
+        <li>
+            <a href="/help">Help</a>
+        </li>
+
+        {% if show_main_nav is not defined or show_main_nav %}
+
+            {% if not user %}
+            {# then show a home button which does nothing #}
+
+                <li>
+                    <a href="#">Home</a>
+                </li>
+
+            {% elif user and user.user_type in ['student', 'public'] %}
+            {# then show a home button which is a link but not a dropdown #}
+
+                <li>
+                    <a href="{{config.user_home_page[user.user_type]}}">Home</a>
+                </li>
+
+            {% else %}
+            {# then show a dropdown menu #}
+
+                <li class="dropdown">
+                    <a href="{{config.user_home_page[user.user_type]}}">
+                        Home
+                        <i class="glyphicon glyphicon-chevron-down"></i>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+
+                        {% block nav_menu %}
+
+                            {% if google_admin %}
+                                <li><a href="/god">Play god</a></li>
+                                <li><a href="/test">Testing</a></li>
+                            {% endif %}
+
+                            {% if user.user_type in ['god','researcher','school_admin'] %}
+                                <li><a href="/d">Dashboard</a></li>
+                            {% endif %}
+
+                            {% if user.user_type in ['god','researcher'] %}
+                                <li><a href="/impersonate">Impersonate</a></li>
+                            {% endif %}
+
+                            {% if user.user_type not in ['student','public'] %}
+                                <li><a href="/documents">Documents</a></li>
+                                <li><a href="/account">My account</a></li>
+                            {% endif %}
+
+                        {% endblock %}
+
+                    </ul>
+                </li>
+
+            {% endif %} {# end if user #}
+
+        {% endif %} {# end if show_main_nav #}
+
+    </ul>
+
+
+                    </div>
+                </header>
+
+
+                <div class="navbar navbar-fixed-top admin-control">
+                    {% if user %}
+                        {% if user.user_type == 'god' or normal_user.user_type == 'god' %}
+                            <header id="godbar" class="clearfix">
+
+                                <!--
+                                Search Bar
+                                HACK ALERT - Notice random argument hack forces reload
+                                when searching on the entity page.  Otherwhise it
+                                breaks as you can see if you remove it and try to
+                                conduct a search using this form on the results page.
+                                If someone can get rid of this hack, much obliged
+                                -->
+                                <div class="pull-left">
+                                    <form action="
+                                        javascript:
+                                            window.location.href =
+                                                '/entity' +
+                                                '?seed=' + Math.floor((Math.random()*10000)+1) +
+                                                '#' + $('#search').val();
+                                        ">
+                                        <input id='search' placeholder="search" autocomplete="off">
+                                    </form>
+                                </div>
+
+                                <!-- godbar -->
+
+                                {% if user %}
+                                    {% if user.user_type == 'god' or normal_user.user_type == 'god' %}
+                                        {% block godbar %}
+                                        {% endblock %}
+                                    {% endif %}
+                                {% endif %}
+
+                                <!-- end godbar -->
+
+                                {% if user %}
+                                <div class="pull-right">
+                                    PERTS: {{ user.first_name }} ({{ user.user_type }})
+                                    <br>
+
+                                    Google:
+
+                                    {% if connected_to_google %}
+                                        {{ google_user.email() }}
+                                        {% if google_admin %}
+                                            (admin)
+                                        {% endif %}
+                                    {% else %}
+                                        not connected
+                                    {% endif %}
+                                    <br>
+
+                                    {% if currently_impersonating %}
+                                        <a href="/impersonate?page_action=stop_impersonating">
+                                            stop impersonating
+                                        </a>
+                                    <br>
+                                    {% endif %}
+                                        <a href="https://docs.google.com/document/d/1nToiqzsKvffWF2Vxi5y_gFeUqhdwnXbLl8e8wH_7gqs/edit" target="_blank">
+                                            docs
+                                        </a>
+                                    <br>
+                                </div>
+                                {% endif %}
+                            </header>
+                        {% endif %}
+                    {% endif %}
+                </div>
+
+            {% endif %}
+
+            {% if show_loading_mask is not defined or show_loading_mask %}
+
+                <!-- ng cloak prevents screen flicker from unloaded/uncompiled stuff -->
+                <!-- http://docs.angularjs.org/api/ng.directive:ngCloak -->
+                <section id="loading" cloak-mask>
+                    Loading
+                    <p class="notice old_browser_only">
+                        Internet Explorer 6 and 7 are known to be very slow. Please be
+                        patient or use another browser.
+                    </p>
+                </section>
+
+            {% endif %}
+
+        {% endblock %}
+
+
+            <section id="content" class="ng-cloak" ng-cloak>
+
+                <!-- content block -->
+
+                {% block content %}
+                {% endblock %}
+
+                <!-- end content block -->
+
+            </section>
+
+        {% block footer %}
+
+            {% if show_footer is not defined or show_footer %}
+
+                <footer id="sticky_footer" class="no-print">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <span>
+                                <i class="glyphicon glyphicon-home"></i>
+                                450 Serra Mall, Stanford, CA 94305
+                            </span>
+                            <span>
+                                <i class="glyphicon glyphicon-earphone"></i>
+                                (650) 241-9056
+                            </span>
+                            <span>
+                                <a href="">
+                                    <i class="glyphicon glyphicon-envelope"></i>
+                                    
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            &copy; PERTS 2015
+                        </div>
+                    </div>
+                </footer>
+
+            </div>
+
+            {% endif %}
+
+        {% endblock %}
+
+    </body>
+</html>

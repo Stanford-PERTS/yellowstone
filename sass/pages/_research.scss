@@ -1,0 +1,74 @@
+// ===========================================================
+// RESEARCH PAGE
+// ===========================================================
+
+.page-section--about-research {
+  text-align: center;
+  background-color: $light-blue-color;
+  background-image: url('/static/images/background-stripes.png');
+  padding: 90px 0;
+
+  h3 {
+    font-size: 26px;
+    color: white;
+    letter-spacing: 0.5px;
+  }
+
+  p {
+    font-size: 21px;
+    color: white;
+  }
+}
+
+.page-section--research {
+  background-color: $pale-blue-color;
+  padding: 90px 0 120px 0;
+
+  .research-preview {
+    background-color: white;
+    @include box-shadow(0 0 10px 0 rgba(0,0,0,0.15));
+    padding: 20px 35px 30px 35px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+
+    > h3 {
+      font-weight: 600;
+      font-size: 22px;
+      line-height: 1.5em;
+
+      a {
+        color: $indigo-color;
+      }
+    }
+
+    > p {
+      margin-top: 20px;
+      font-size: 20px;
+
+      &.citation {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.page-section--enroll-preview {
+  padding: 120px 0;
+  background-color: $indigo-color;
+
+  h2 {
+    color: white;
+    letter-spacing: 1px;
+  }
+
+  p {
+    color: white;
+    letter-spacing: 0.5px;
+  }
+
+  @include tablet {
+    .research-image {
+      margin-top: 30px;
+    }
+  }
+}
